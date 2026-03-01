@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/tools";
 import Image from "next/image";
@@ -10,13 +11,15 @@ export default function NotFound() {
       <p className="mt-2 text-slate-500">
         The page you're looking for doesn't exist or has been moved.
       </p>
+      <Link
+        href="/"
+        className="rounded-xl mt-2 border border-red-600 px-4 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700"
+      >
+        back to home
+
+      </Link>
+
       <div className="mt-8 flex flex-wrap justify-center gap-2">
-        <Link
-          href="/"
-          className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
-        >
-          Go Home
-        </Link>
         {CATEGORIES.map((cat) => (
           <Link
             key={cat.slug}
