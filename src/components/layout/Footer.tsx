@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
+import Image from "next/image";
 
 export default function Footer() {
   const toolsByCategory = CATEGORIES.reduce(
@@ -27,7 +28,8 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-6">
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-2">
-            <Link href="/" className="inline-block">
+            <Link href="/" className="inline-flex items-center gap-2">
+              <Image src={"/icons/logo.png"} width={32} height={32} alt="toolify logo" />
               <span className="text-2xl font-bold text-slate-900">
                 tool<span className="text-red-600">ify</span>
               </span>
