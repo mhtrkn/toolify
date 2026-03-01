@@ -104,20 +104,20 @@ export default function PdfToJpgClient() {
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              JPG Quality: <span className="text-blue-600">{quality}%</span>
+              JPG Quality: <span className="text-red-600">{quality}%</span>
             </label>
             <input
               type="range" min={50} max={100} step={5}
               value={quality}
               onChange={(e) => setQuality(Number(e.target.value))}
-              className="w-full accent-blue-600"
+              className="w-full accent-red-600"
             />
           </div>
 
           <div className="flex gap-3">
             <button
               onClick={convert}
-              className="flex-1 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
             >
               Convert to JPG
             </button>
@@ -154,7 +154,7 @@ export default function PdfToJpgClient() {
               {results.length > 1 && (
                 <button
                   onClick={downloadAll}
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
                 >
                   Download All
                 </button>
@@ -181,7 +181,7 @@ export default function PdfToJpgClient() {
                   <span className="text-sm text-slate-600">Page {r.pageNumber}</span>
                   <button
                     onClick={() => downloadPage(r)}
-                    className="text-sm font-medium text-blue-600 hover:underline"
+                    className="text-sm font-medium text-red-600 hover:underline"
                   >
                     Download JPG
                   </button>

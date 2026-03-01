@@ -101,7 +101,7 @@ export default function OcrClient() {
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none"
             >
               {LANGUAGES.map((l) => (
                 <option key={l.code} value={l.code}>{l.label}</option>
@@ -130,7 +130,7 @@ export default function OcrClient() {
           <div className="flex gap-3">
             <button
               onClick={extract}
-              className="flex-1 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
             >
               Extract Text with OCR
             </button>
@@ -176,7 +176,7 @@ export default function OcrClient() {
               </button>
               <button
                 onClick={downloadTxt}
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
               >
                 Download .txt
               </button>
@@ -203,7 +203,7 @@ export default function OcrClient() {
               <textarea
                 value={extractedText}
                 onChange={(e) => setExtractedText(e.target.value)}
-                className="h-80 w-full resize-none rounded-xl border border-slate-200 p-4 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="h-80 w-full resize-none rounded-xl border border-slate-200 p-4 text-sm text-slate-800 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                 aria-label="Extracted text"
               />
             </div>

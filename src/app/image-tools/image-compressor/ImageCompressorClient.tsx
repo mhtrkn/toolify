@@ -106,7 +106,7 @@ export default function ImageCompressorClient() {
           <div className="rounded-xl border border-slate-200 bg-white p-5">
             <label className="block text-sm font-semibold text-slate-700">
               Compression Quality:{" "}
-              <span className="text-blue-600">{quality}%</span>
+              <span className="text-red-600">{quality}%</span>
             </label>
             <input
               type="range"
@@ -115,7 +115,7 @@ export default function ImageCompressorClient() {
               step={5}
               value={quality}
               onChange={(e) => setQuality(Number(e.target.value))}
-              className="mt-3 w-full accent-blue-600"
+              className="mt-3 w-full accent-red-600"
               aria-label="Compression quality"
             />
             <div className="mt-1 flex justify-between text-xs text-slate-400">
@@ -163,7 +163,7 @@ export default function ImageCompressorClient() {
               {results.length > 1 && (
                 <button
                   onClick={downloadAll}
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
                 >
                   Download All
                 </button>
@@ -205,7 +205,7 @@ export default function ImageCompressorClient() {
                   const base = r.name.replace(/\.[^/.]+$/, "");
                   downloadBlob(r.blob, `${base}-compressed.${ext}`);
                 }}
-                className="shrink-0 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                className="shrink-0 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
               >
                 Download
               </button>

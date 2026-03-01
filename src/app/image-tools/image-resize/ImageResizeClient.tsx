@@ -139,7 +139,7 @@ export default function ImageResizeClient() {
                   min={1}
                   max={10000}
                   onChange={(e) => onWidthChange(Number(e.target.value))}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                 />
               </div>
               <div>
@@ -152,7 +152,7 @@ export default function ImageResizeClient() {
                   min={1}
                   max={10000}
                   onChange={(e) => onHeightChange(Number(e.target.value))}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                 />
               </div>
             </div>
@@ -163,7 +163,7 @@ export default function ImageResizeClient() {
                   type="checkbox"
                   checked={keepAspect}
                   onChange={(e) => setKeepAspect(e.target.checked)}
-                  className="rounded border-slate-300 accent-blue-600"
+                  className="rounded border-slate-300 accent-red-600"
                 />
                 Keep aspect ratio
               </label>
@@ -176,7 +176,7 @@ export default function ImageResizeClient() {
                     onClick={() => setFormat(f)}
                     className={`rounded px-2.5 py-1 text-xs font-medium uppercase transition-colors ${
                       format === f
-                        ? "bg-blue-600 text-white"
+                        ? "bg-red-600 text-white"
                         : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
                   >
@@ -200,7 +200,7 @@ export default function ImageResizeClient() {
                   <button
                     key={p.label}
                     onClick={() => { setWidth(p.w); setHeight(p.h); }}
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 hover:border-blue-300 hover:text-blue-600"
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 hover:border-red-300 hover:text-red-600"
                   >
                     {p.label}
                   </button>
@@ -269,7 +269,7 @@ export default function ImageResizeClient() {
                   const base = r.name.replace(/\.[^/.]+$/, "");
                   downloadBlob(r.blob, `${base}-${r.width}x${r.height}.${format}`);
                 }}
-                className="shrink-0 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                className="shrink-0 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
               >
                 Download
               </button>

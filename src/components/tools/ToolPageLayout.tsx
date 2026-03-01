@@ -45,7 +45,7 @@ export default function ToolPageLayout({
             <div className="mt-6 grid gap-6 sm:grid-cols-3">
               {howToSteps.map((step, i) => (
                 <div key={i} className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 text-sm font-bold text-red-700">
                     {i + 1}
                   </span>
                   <div>

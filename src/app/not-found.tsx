@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/tools";
+import Image from "next/image";
 
 export default function NotFound() {
   return (
     <main className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center">
-      <p className="text-6xl font-bold text-slate-200">404</p>
+      <Image src={"/icons/404.png"} alt="404 not found" width={256} height={256} />
       <h1 className="mt-4 text-2xl font-bold text-slate-900">Page Not Found</h1>
       <p className="mt-2 text-slate-500">
         The page you're looking for doesn't exist or has been moved.
@@ -12,7 +13,7 @@ export default function NotFound() {
       <div className="mt-8 flex flex-wrap justify-center gap-2">
         <Link
           href="/"
-          className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+          className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
         >
           Go Home
         </Link>

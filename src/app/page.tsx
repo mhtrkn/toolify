@@ -135,7 +135,7 @@ export default function HomePage() {
             Toolify offers a comprehensive suite of free online tools to handle
             your everyday file conversion, editing, and optimization needs.
             Whether you need to convert a{" "}
-            <Link href="/pdf-tools/pdf-to-jpg" className="text-blue-600 hover:underline">
+            <Link href="/pdf-tools/pdf-to-jpg" className="text-red-600 hover:underline">
               PDF to JPG
             </Link>
             , compress images, extract audio from video, or convert documents —

@@ -4,6 +4,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata, SITE_URL } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
+import Image from "next/image";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Image Tools",
@@ -46,8 +47,8 @@ export default function ImageToolsPage() {
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl">
-              {category.icon}
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-2xl">
+              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt={category.description} />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">

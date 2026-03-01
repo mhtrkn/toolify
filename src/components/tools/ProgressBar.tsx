@@ -20,7 +20,7 @@ export default function ProgressBar({ progress, label }: ProgressBarProps) {
         className="h-2.5 w-full overflow-hidden rounded-full bg-slate-200"
       >
         <div
-          className="h-full rounded-full bg-blue-600 transition-all duration-300"
+          className="h-full rounded-full bg-red-600 transition-all duration-300"
           style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
         />
       </div>

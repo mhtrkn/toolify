@@ -5,6 +5,7 @@ import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/metadata";
+import Image from "next/image";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "PDF Tools",
@@ -52,7 +53,7 @@ export default function PdfToolsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-2xl">
-              {category.icon}
+              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt={category.description} />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">

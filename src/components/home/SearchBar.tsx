@@ -29,7 +29,7 @@ export default function SearchBar() {
 
   return (
     <div ref={wrapperRef} className="relative mx-auto w-full max-w-xl">
-      <div className="flex items-center gap-3 rounded-2xl border border-slate-300 bg-white px-4 py-3 shadow-sm focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100">
+      <div className="flex items-center gap-3 rounded-2xl border border-slate-300 bg-white px-4 py-3 shadow-sm focus-within:border-red-400 focus-within:ring-2 focus-within:ring-red-100">
         <svg
           className="h-5 w-5 shrink-0 text-slate-400"
           fill="none"

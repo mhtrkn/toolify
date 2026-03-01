@@ -80,15 +80,15 @@ export default function FileUploader({
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         aria-label={label}
-        className={`flex min-h-52 w-full cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+        className={`flex min-h-52 w-full cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 ${
           isDragging
-            ? "border-blue-400 bg-blue-50"
-            : "border-slate-300 bg-slate-50 hover:border-blue-300 hover:bg-blue-50/30"
+            ? "border-red-400 bg-red-50"
+            : "border-slate-300 bg-slate-50 hover:border-red-300 hover:bg-red-50/30"
         }`}
       >
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
           <svg
-            className="h-7 w-7 text-blue-600"
+            className="h-7 w-7 text-red-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -107,7 +107,7 @@ export default function FileUploader({
           </p>
           <p className="mt-1 text-sm text-slate-500">
             Drag & drop or{" "}
-            <span className="font-medium text-blue-600">browse files</span>
+            <span className="font-medium text-red-600">browse files</span>
           </p>
           {hint && <p className="mt-1 text-xs text-slate-400">{hint}</p>}
           <p className="mt-1 text-xs text-slate-400">

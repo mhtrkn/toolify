@@ -101,14 +101,14 @@ export default function VideoToMp3Client() {
             </div>
           </div>
 
-          <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800">
+          <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-800">
             <strong>Output:</strong> MP3 audio — 192kbps, 44.1kHz stereo
           </div>
 
           <div className="flex gap-3">
             <button
               onClick={convert}
-              className="flex-1 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
             >
               Extract MP3 Audio
             </button>
@@ -150,7 +150,7 @@ export default function VideoToMp3Client() {
           <div className="flex gap-3">
             <button
               onClick={download}
-              className="flex-1 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
             >
               Download MP3
             </button>

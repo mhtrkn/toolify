@@ -164,7 +164,7 @@ export default function MergePdfClient() {
           {files.length >= 2 && (
             <button
               onClick={merge}
-              className="w-full rounded-xl bg-blue-600 py-3.5 text-base font-semibold text-white hover:bg-blue-700"
+              className="w-full rounded-xl bg-red-600 py-3.5 text-base font-semibold text-white hover:bg-red-700"
             >
               Merge {files.length} PDFs
             </button>
@@ -201,7 +201,7 @@ export default function MergePdfClient() {
           <div className="flex gap-3 justify-center">
             <button
               onClick={download}
-              className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
+              className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700"
             >
               Download Merged PDF
             </button>
