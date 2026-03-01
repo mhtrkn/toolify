@@ -28,3 +28,8 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, .025) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, .025) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

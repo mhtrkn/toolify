@@ -8,8 +8,8 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="text-xl font-bold text-slate-900">
-              Tool<span className="text-blue-600">ify</span>
+            <Link href="/" className="text-3xl font-bold text-slate-900">
+              tool<span className="text-red-600">ify</span>
             </Link>
             <p className="mt-3 text-sm text-slate-500">
               Free online tools for PDF, image, video, and file conversion.

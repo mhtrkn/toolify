@@ -6,6 +6,7 @@ import { CATEGORIES, getPopularTools } from "@/lib/tools";
 import { buildWebSiteSchema } from "@/lib/structured-data";
 import { SITE_DESCRIPTION } from "@/lib/metadata";
 import SearchBar from "@/components/home/SearchBar";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Free Online Tools – PDF, Image, Video & File Converter",
@@ -21,11 +22,11 @@ export default function HomePage() {
       <JsonLd data={buildWebSiteSchema()} />
 
       {/* Hero */}
-      <section className="border-b border-slate-200 bg-white px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
+      <section className="bg-grid-pattern border-b border-slate-200 bg-white px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
             Free Online Tools –{" "}
-            <span className="text-blue-600">
+            <span className="text-red-600">
               PDF, Image, Video & File Converter
             </span>
           </h1>
@@ -53,7 +54,7 @@ export default function HomePage() {
                 href={`/${cat.slug}`}
                 className={`group flex flex-col items-center gap-3 rounded-xl border p-6 text-center transition-all hover:shadow-md ${cat.bgColor} ${cat.borderColor}`}
               >
-                <span className="text-3xl">{cat.icon}</span>
+                <Image src={`/icons/${cat.icon}.png`} alt={cat.description} width={36} height={36} />
                 <div>
                   <p className={`font-semibold ${cat.color}`}>{cat.name}</p>
                 </div>

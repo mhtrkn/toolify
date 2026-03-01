@@ -7,7 +7,7 @@ export const CATEGORIES: Category[] = [
     name: "PDF Tools",
     description:
       "Convert, merge, split, and edit PDF files online for free. No installation required.",
-    icon: "📄",
+    icon: "pdfv2",
     color: "text-red-600",
     bgColor: "bg-red-50",
     borderColor: "border-red-200",
@@ -18,7 +18,7 @@ export const CATEGORIES: Category[] = [
     name: "Image Tools",
     description:
       "Compress, resize, convert, and edit images online. Supports JPG, PNG, WebP and more.",
-    icon: "🖼️",
+    icon: "image",
     color: "text-blue-600",
     bgColor: "bg-blue-50",
     borderColor: "border-blue-200",
@@ -29,7 +29,7 @@ export const CATEGORIES: Category[] = [
     name: "Video Tools",
     description:
       "Convert video formats, extract audio, compress videos online without software.",
-    icon: "🎬",
+    icon: "record",
     color: "text-purple-600",
     bgColor: "bg-purple-50",
     borderColor: "border-purple-200",
@@ -40,7 +40,7 @@ export const CATEGORIES: Category[] = [
     name: "File Converter",
     description:
       "Convert files between formats instantly. Supports documents, spreadsheets, and more.",
-    icon: "🔄",
+    icon: "file",
     color: "text-green-600",
     bgColor: "bg-green-50",
     borderColor: "border-green-200",
@@ -51,7 +51,7 @@ export const CATEGORIES: Category[] = [
     name: "OCR Tools",
     description:
       "Extract text from images and PDFs using AI-powered optical character recognition.",
-    icon: "🔍",
+    icon: "qcr",
     color: "text-orange-600",
     bgColor: "bg-orange-50",
     borderColor: "border-orange-200",
