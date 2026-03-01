@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildOrganizationSchema, buildWebSiteSchema } from "@/lib/structured-data";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/metadata";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import "./globals.css";
 
 const inter = Inter({
@@ -56,6 +58,8 @@ export default function RootLayout({
       <body>
         <JsonLd data={buildWebSiteSchema()} />
         <JsonLd data={buildOrganizationSchema()} />
+        <Analytics />
+        <SpeedInsights />
         <Header />
         {children}
         <Footer />
