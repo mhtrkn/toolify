@@ -33,7 +33,7 @@ export default function PdfToJpgClient() {
     try {
       // Dynamically import pdfjs-dist to keep bundle small
       const pdfjsLib = await import("pdfjs-dist");
-      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -55,9 +55,7 @@ export default function PdfToJpgClient() {
       setResults(pages);
       setProgress(100);
     } catch (e) {
-      setError(
-        "Could not process this PDF. Make sure pdfjs-dist is installed: npm install pdfjs-dist"
-      );
+      setError("Could not process this PDF. The file may be corrupted or password-protected.");
       console.error(e);
     } finally {
       setProcessing(false);

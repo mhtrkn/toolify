@@ -24,7 +24,7 @@ export default function HomePage() {
       <JsonLd data={buildWebSiteSchema()} />
 
       {/* Hero */}
-      <section className="bg-grid-pattern border-b border-slate-200 bg-white px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
+      <section className="bg-grid-pattern border-b border-slate-200 bg-white px-4 py-16 text-center sm:px-6 sm:py-26 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
             Free Online Tools –{" "}
@@ -43,7 +43,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="px-4 py-14 sm:px-6 lg:px-8">
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-2xl font-bold text-slate-900">Tool Categories</h2>
           <p className="mt-2 text-slate-500">
