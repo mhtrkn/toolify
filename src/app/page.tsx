@@ -7,6 +7,7 @@ import { buildWebSiteSchema } from "@/lib/structured-data";
 import { SITE_DESCRIPTION } from "@/lib/metadata";
 import SearchBar from "@/components/home/SearchBar";
 import Image from "next/image";
+import { whyChooseData } from "@/lib/mockdata";
 
 export const metadata: Metadata = {
   title: "Free Online Tools – PDF, Image, Video & File Converter",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const popularTools = getPopularTools();
+
 
   return (
     <main>
@@ -86,37 +88,14 @@ export default function HomePage() {
             Why Choose Toolify?
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                icon: "⚡",
-                title: "Lightning Fast",
-                description:
-                  "Process files instantly in your browser. No waiting for uploads to remote servers.",
-              },
-              {
-                icon: "🔒",
-                title: "100% Secure",
-                description:
-                  "Your files never leave your device. We process everything locally when possible.",
-              },
-              {
-                icon: "💸",
-                title: "Completely Free",
-                description:
-                  "All core tools are free with no hidden fees. No registration required.",
-              },
-              {
-                icon: "📱",
-                title: "Works Everywhere",
-                description:
-                  "Fully responsive design. Use on desktop, tablet, or mobile — any browser.",
-              },
-            ].map((feature) => (
+            {whyChooseData.map((feature) => (
               <div
                 key={feature.title}
                 className="rounded-xl border border-slate-200 bg-white p-6 text-center"
               >
-                <div className="mb-3 text-3xl">{feature.icon}</div>
+                <div className="flex items-center justify-center mb-2">
+                  <Image src={`/icons/${feature.icon}.png`} alt={feature.description} width={32} height={32} />
+                </div>
                 <h3 className="font-semibold text-slate-900">{feature.title}</h3>
                 <p className="mt-2 text-sm text-slate-500">{feature.description}</p>
               </div>

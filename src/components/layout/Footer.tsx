@@ -39,10 +39,10 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 sm:flex-row">
           <p className="text-sm text-slate-400">
-            © {new Date().getFullYear()} Toolify. All rights reserved.
+            © {new Date().getFullYear()} toolify. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link href="/privacy" className="text-sm text-slate-400 hover:text-slate-600">
+            <Link href="/privacy-and-policy" className="text-sm text-slate-400 hover:text-slate-600">
               Privacy Policy
             </Link>
             <Link href="/terms" className="text-sm text-slate-400 hover:text-slate-600">
