@@ -49,7 +49,7 @@ export default function HomePage() {
           <p className="mt-2 text-slate-500">
             Choose a category to find the right tool for your task.
           </p>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}

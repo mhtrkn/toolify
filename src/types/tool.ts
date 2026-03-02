@@ -1,4 +1,4 @@
-export type ToolCategoryType = "pdf" | "image" | "video" | "file" | "ocr";
+export type ToolCategoryType = "pdf" | "image" | "video" | "file" | "ocr" | "web";
 
 export interface Tool {
   slug: string;

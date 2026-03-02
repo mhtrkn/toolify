@@ -56,6 +56,17 @@ export const CATEGORIES: Category[] = [
     bgColor: "bg-orange-50",
     borderColor: "border-orange-200",
   },
+  {
+    id: "web",
+    slug: "web-tools",
+    name: "Web Tools",
+    description:
+      "Free online utilities for developers and designers — QR codes, color palettes, Base64, JSON/CSV editor, HTML tools, and more.",
+    icon: "web",
+    color: "text-indigo-600",
+    bgColor: "bg-indigo-50",
+    borderColor: "border-indigo-200",
+  },
 ];
 
 export const TOOLS: Tool[] = [
@@ -307,6 +318,104 @@ export const TOOLS: Tool[] = [
     keywords: ["excel to pdf", "xlsx to pdf", "spreadsheet to pdf"],
     acceptedFormats: [".xls", ".xlsx"],
     outputFormat: "PDF",
+  },
+  // Web Tools
+  {
+    slug: "qr-code-generator",
+    name: "QR Code Generator",
+    description:
+      "Generate QR codes for URLs, WiFi networks, and vCards online for free. Customize size and color.",
+    shortDescription: "Generate QR codes for links, WiFi, and contacts",
+    category: "web",
+    categorySlug: "web-tools",
+    categoryName: "Web Tools",
+    icon: "⬛",
+    keywords: ["qr code generator", "create qr code", "free qr code maker", "wifi qr code", "vcard qr code"],
+    popular: true,
+    outputFormat: "PNG",
+  },
+  {
+    slug: "color-palette",
+    name: "Color Palette Generator",
+    description:
+      "Generate complementary and analogous color palettes from any hex color. Convert hex to RGB and HSB instantly.",
+    shortDescription: "Generate color palettes from any hex color",
+    category: "web",
+    categorySlug: "web-tools",
+    categoryName: "Web Tools",
+    icon: "🎨",
+    keywords: ["color palette generator", "complementary colors", "hex to rgb", "color scheme generator", "analogous colors"],
+    popular: true,
+    outputFormat: "HEX/RGB",
+  },
+  {
+    slug: "json-csv-editor",
+    name: "JSON / CSV Editor",
+    description:
+      "Preview, edit, and export JSON and CSV files online. Drag & drop files, edit inline, and download the result.",
+    shortDescription: "Preview and edit JSON and CSV files online",
+    category: "web",
+    categorySlug: "web-tools",
+    categoryName: "Web Tools",
+    icon: "📋",
+    keywords: ["json editor online", "csv editor", "json viewer", "csv viewer", "edit json online"],
+    popular: true,
+    acceptedFormats: [".json", ".csv"],
+    outputFormat: "JSON/CSV",
+  },
+  {
+    slug: "base64",
+    name: "Base64 Encoder / Decoder",
+    description:
+      "Encode and decode Base64 strings online. Supports text and file input with instant results.",
+    shortDescription: "Encode or decode Base64 text and files",
+    category: "web",
+    categorySlug: "web-tools",
+    categoryName: "Web Tools",
+    icon: "🔢",
+    keywords: ["base64 encoder", "base64 decoder", "encode base64 online", "decode base64 string", "base64 converter"],
+    acceptedFormats: ["*"],
+    outputFormat: "TXT/Base64",
+  },
+  {
+    slug: "html-to-pdf",
+    name: "HTML to PDF Converter",
+    description:
+      "Convert HTML code to a downloadable PDF file online. Choose page size and preserve styling.",
+    shortDescription: "Convert HTML code to a PDF document",
+    category: "web",
+    categorySlug: "web-tools",
+    categoryName: "Web Tools",
+    icon: "📄",
+    keywords: ["html to pdf", "convert html to pdf online", "html pdf converter", "html page to pdf"],
+    outputFormat: "PDF",
+  },
+  {
+    slug: "html-minifier",
+    name: "HTML Minifier",
+    description:
+      "Minify HTML code online by removing comments, whitespace, and redundant characters. Instantly reduce file size.",
+    shortDescription: "Minify and compress HTML code online",
+    category: "web",
+    categorySlug: "web-tools",
+    categoryName: "Web Tools",
+    icon: "⚡",
+    keywords: ["html minifier", "minify html online", "compress html", "html compressor", "reduce html size"],
+    outputFormat: "HTML",
+  },
+  {
+    slug: "url-shortener",
+    name: "URL Shortener",
+    description:
+      "Shorten long URLs online for free. Generate compact, shareable short links instantly.",
+    shortDescription: "Shorten long URLs into compact links",
+    category: "web",
+    categorySlug: "web-tools",
+    categoryName: "Web Tools",
+    icon: "🔗",
+    keywords: ["url shortener", "shorten url online", "free link shortener", "short url generator"],
+    popular: true,
+    outputFormat: "Short URL",
   },
   // OCR Tools
   {
