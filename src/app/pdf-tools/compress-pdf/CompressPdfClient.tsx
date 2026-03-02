@@ -41,8 +41,8 @@ export default function CompressPdfClient() {
     pdfDoc.setAuthor("");
     pdfDoc.setSubject("");
     pdfDoc.setKeywords([]);
-    pdfDoc.setProducer("Fasttoolify");
-    pdfDoc.setCreator("Fasttoolify");
+    pdfDoc.setProducer("toolify");
+    pdfDoc.setCreator("toolify");
     setProgress(70);
     return pdfDoc.save({ useObjectStreams: true });
   };

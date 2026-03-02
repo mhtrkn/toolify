@@ -8,37 +8,52 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "PDF to JPG",
   toolDescription:
-    "Convert PDF pages to high-quality JPG images online for free. Fast, accurate PDF to JPEG conversion with adjustable quality. No software needed.",
+    "Convert PDF pages to high-quality JPG images free online. Adjust quality settings, extract all pages, and download as a ZIP. No uploads — 100% private and instant.",
   categorySlug: "pdf-tools",
   toolSlug: "pdf-to-jpg",
   keywords: [
-    "pdf to jpg",
-    "convert pdf to image",
-    "pdf to jpeg online",
-    "pdf to jpg free",
-    "pdf page to image",
+    "pdf to jpg converter",
+    "convert pdf to image online free",
+    "pdf to jpg high quality",
+    "extract images from pdf",
+    "pdf page to jpeg",
+    "pdf to image converter",
+    "convert pdf to jpg without adobe",
+    "pdf to jpg bulk download",
+    "export pdf pages as images",
+    "pdf to jpeg free online",
   ],
 });
 
 const FAQS = [
   {
-    question: "How do I convert PDF to JPG?",
+    question: "Can I convert a multi-page PDF to JPG at once?",
     answer:
-      "Upload your PDF file, adjust the JPG quality if needed, click 'Convert to JPG', and download each page as a separate JPG image.",
+      "Yes. Every page is converted simultaneously and you can download them all at once in a ZIP file.",
   },
   {
-    question: "Is the PDF to JPG conversion free?",
-    answer: "Yes, it is completely free with no file size limits and no registration.",
+    question: "What quality settings are available?",
+    answer:
+      "Use the quality slider to adjust output from low (small files) to maximum (sharpest images). Default is 90%.",
   },
   {
-    question: "Can I convert a multi-page PDF?",
+    question: "Will the JPG images be blurry or low quality?",
     answer:
-      "Yes. Each page of the PDF will be converted to a separate JPG image that you can download individually or all at once.",
+      "No. Pages are rendered at high resolution using the PDF.js rendering engine for crisp, clear output.",
   },
   {
-    question: "What quality are the output JPG images?",
+    question: "Can I convert just one page of a PDF?",
     answer:
-      "Images are rendered at 2x scale for sharp results. You can adjust the JPG quality (50–100%) before converting.",
+      "Currently the tool converts all pages. To convert a single page, use our Split PDF tool first to extract it, then convert.",
+  },
+  {
+    question: "Is there a file size limit?",
+    answer: "PDFs up to 100MB are supported.",
+  },
+  {
+    question: "Is my PDF data private?",
+    answer:
+      "Yes. All conversion runs locally in your browser using PDF.js. Nothing is uploaded to any server.",
   },
 ];
 
@@ -57,18 +72,18 @@ export default function PdfToJpgPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "PDF to JPG" },
         ]}
-        title="PDF to JPG – Convert PDF Pages to Images Free"
-        description="Convert every page of a PDF into high-quality JPG images. Adjustable quality, instant download, no file size limits."
+        title="PDF to JPG Converter – Extract PDF Pages as Images"
+        description="Convert every page of a PDF into a high-quality JPG image. Adjust quality, download all images as a ZIP, and keep your files 100% private."
         howToSteps={[
-          { title: "Upload PDF", description: "Click or drag and drop your PDF file to upload." },
-          { title: "Set Quality", description: "Choose the JPG quality level (default 90% is recommended)." },
-          { title: "Download JPGs", description: "Download each page as a JPG or get all pages at once." },
+          { title: "Upload Your PDF", description: "Click or drag and drop your PDF file into the uploader." },
+          { title: "Set Image Quality", description: "Use the quality slider to choose your preferred image resolution." },
+          { title: "Convert & Download", description: "Click 'Convert to JPG', then download all images in a ZIP file." },
         ]}
         benefits={[
-          { title: "All Pages Converted", description: "Every page in your PDF becomes a separate high-quality JPG." },
-          { title: "Adjustable Quality", description: "Control the output quality from 50% to 100%." },
-          { title: "No File Size Limit", description: "Convert large PDFs with many pages without restrictions." },
-          { title: "No Watermarks", description: "Clean, watermark-free output every time." },
+          { title: "Batch Page Extraction", description: "Convert every PDF page to a separate JPG image in one click." },
+          { title: "Adjustable Quality", description: "Balance file size vs. sharpness with the quality slider (50–100%)." },
+          { title: "ZIP Download", description: "Download all converted images packaged in a single ZIP file." },
+          { title: "100% Browser-Based", description: "No file uploads. All processing stays on your device." },
         ]}
         faqs={FAQS}
       >

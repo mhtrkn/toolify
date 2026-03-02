@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Delete PDF Pages",
   toolDescription:
-    "Remove specific pages from a PDF file online for free. Select pages by number, delete them instantly, and download your edited PDF.",
+    "Remove specific pages from a PDF file online for free. Enter page numbers or ranges to delete. Download your edited PDF instantly — no uploads, fully private.",
   categorySlug: "pdf-tools",
   toolSlug: "delete-pdf-pages",
   keywords: [
-    "delete pdf pages",
-    "remove pages from pdf",
-    "pdf page remover online",
-    "extract pages pdf",
-    "edit pdf pages free",
+    "delete pages from pdf online free",
+    "remove pdf pages",
+    "pdf page remover",
+    "delete specific pages from pdf",
+    "remove pages from pdf without acrobat",
+    "pdf page deleter online",
+    "how to delete a page from pdf online",
+    "online pdf editor remove pages",
+    "cut pages from pdf free",
+    "pdf page removal tool",
   ],
 });
 
@@ -27,8 +32,18 @@ const FAQS = [
       'Enter page numbers or ranges separated by commas — for example "1, 3, 5-7" deletes pages 1, 3, and 5 through 7.',
   },
   {
+    question: "Can I delete multiple pages at once?",
+    answer:
+      "Yes — enter comma-separated pages or ranges (e.g., 1,3,5-8) to delete multiple pages in a single operation.",
+  },
+  {
     question: "Can I delete all pages?",
     answer: "No. At least one page must remain in the PDF after deletion.",
+  },
+  {
+    question: "Will quality be affected?",
+    answer:
+      "No. Pages are extracted losslessly — remaining pages keep their original quality.",
   },
   {
     question: "Does the tool work with encrypted PDFs?",
@@ -65,8 +80,8 @@ export default function DeletePdfPagesPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "Delete PDF Pages" },
         ]}
-        title="Delete PDF Pages – Remove Pages from PDF Online Free"
-        description="Upload a PDF, enter the page numbers you want to remove, and download the result instantly. No software, no account required."
+        title="Delete PDF Pages Online – Remove Pages from PDF Free"
+        description="Upload a PDF, enter page numbers or ranges you want to remove, and download the result instantly. No software, no uploads, no account required."
         howToSteps={[
           { title: "Upload PDF", description: "Click or drag your PDF file into the upload area." },
           { title: "Enter Pages to Delete", description: 'Type the page numbers or ranges (e.g. "2, 4-6") to remove.' },

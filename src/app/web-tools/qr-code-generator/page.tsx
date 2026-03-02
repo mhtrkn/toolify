@@ -8,16 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "QR Code Generator",
   toolDescription:
-    "Generate QR codes for URLs, WiFi networks, and vCards online for free. Customize size and color, then download instantly.",
+    "Generate QR codes for URLs, WiFi networks, and vCards online for free. Customize colors and size, then download as a high-quality PNG. No registration needed.",
   categorySlug: "web-tools",
   toolSlug: "qr-code-generator",
   keywords: [
-    "qr code generator",
-    "create qr code online",
-    "free qr code maker",
+    "qr code generator free online",
+    "create qr code for url",
     "wifi qr code generator",
-    "vcard qr code",
-    "custom qr code",
+    "vcard qr code creator",
+    "custom qr code free",
+    "qr code maker no signup",
+    "qr code for business card free",
+    "qr code generator download png",
+    "free qr code with custom color",
+    "qr code generator for link sharing",
   ],
 });
 
@@ -33,9 +37,19 @@ const FAQS = [
       "Yes. You can change the foreground (dark) and background (light) colors using the color pickers, and adjust the QR code size.",
   },
   {
+    question: "What size should I use for print vs. screen?",
+    answer:
+      "For print, use 400px or larger for a sharp result. For digital screens, 256px works well.",
+  },
+  {
+    question: "Are QR codes generated here permanent?",
+    answer:
+      "Yes — QR codes encode the data directly and have no expiry. They work as long as the destination URL stays live.",
+  },
+  {
     question: "How do I download the QR code?",
     answer:
-      "Click the 'Download QR Code' button to save the QR code as a PNG image file.",
+      "Click the 'Download QR Code' button to save the QR code as a high-quality PNG image file.",
   },
   {
     question: "Is my data sent to a server?",
@@ -68,8 +82,8 @@ export default function QrCodeGeneratorPage() {
           { label: "Web Tools", href: "/web-tools" },
           { label: "QR Code Generator" },
         ]}
-        title="QR Code Generator – Free Online QR Maker"
-        description="Create QR codes for links, WiFi networks, and contact cards. Customize size and color, then download instantly."
+        title="Free QR Code Generator – Create QR Codes for Links, WiFi & Contacts"
+        description="Create QR codes for URLs, WiFi networks, and contact vCards. Customize colors and size, then download as a high-quality PNG — no registration needed."
         howToSteps={[
           { title: "Choose QR Type", description: "Select URL, WiFi, or vCard as your QR code type." },
           { title: "Enter Your Data", description: "Fill in the URL, WiFi credentials, or contact information." },

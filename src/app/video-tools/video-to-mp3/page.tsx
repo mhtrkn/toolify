@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Video to MP3",
   toolDescription:
-    "Extract MP3 audio from any video file online for free. Supports MP4, AVI, MOV, MKV, WebM. High-quality 192kbps output. No registration needed.",
+    "Extract audio from video files and convert to MP3 online for free. Supports MP4, AVI, MOV, MKV, and WebM. Browser-based — no uploads, fast and private.",
   categorySlug: "video-tools",
   toolSlug: "video-to-mp3",
   keywords: [
-    "video to mp3",
-    "extract audio from video",
-    "mp4 to mp3",
-    "convert video to audio",
-    "youtube to mp3",
+    "video to mp3 converter free",
+    "extract audio from video online",
+    "mp4 to mp3 free",
+    "convert video to audio online",
+    "video audio extractor browser",
+    "mov to mp3 converter free",
+    "mkv to mp3 online free",
+    "webm to mp3 converter",
+    "video to mp3 no software",
+    "free audio extractor from video",
   ],
 });
 
@@ -58,8 +63,8 @@ export default function VideoToMp3Page() {
           { label: "Video Tools", href: "/video-tools" },
           { label: "Video to MP3" },
         ]}
-        title="Video to MP3 – Extract Audio from Video Online Free"
-        description="Convert MP4, AVI, MOV and other video files to high-quality MP3 audio. Fast extraction with 192kbps output. No account needed."
+        title="Video to MP3 Converter – Extract Audio from Video Free"
+        description="Extract MP3 audio from MP4, AVI, MOV, MKV, and WebM video files online. 192kbps output quality. No uploads — all processing runs in your browser."
         howToSteps={[
           { title: "Upload Video", description: "Select or drag your video file (MP4, AVI, MOV, MKV, WebM)." },
           { title: "Convert", description: "Click 'Extract MP3 Audio' to start the conversion." },

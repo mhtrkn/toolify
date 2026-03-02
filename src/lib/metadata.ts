@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://fasttoolify.com").replace(/\/$/, "");
 const SITE_NAME = "toolify";
 const SITE_DESCRIPTION =
-  "Free online tools for PDF, image, video, and file conversion. Fast, secure, and no registration required.";
+  "Free online tools for PDF, image, video, and file conversion. Merge PDFs, compress images, convert Word to PDF — fast, secure, no registration required.";
 
 export function buildMetadata({
   title,
@@ -57,15 +57,17 @@ export function buildToolMetadata({
   categorySlug,
   toolSlug,
   keywords,
+  customTitle,
 }: {
   toolName: string;
   toolDescription: string;
   categorySlug: string;
   toolSlug: string;
   keywords: string[];
+  customTitle?: string;
 }): Metadata {
   return buildMetadata({
-    title: `${toolName} – Free Online Tool`,
+    title: customTitle ?? `${toolName} – Free Online Tool`,
     description: toolDescription,
     path: `/${categorySlug}/${toolSlug}`,
     keywords,

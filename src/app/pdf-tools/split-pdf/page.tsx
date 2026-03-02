@@ -12,15 +12,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Split PDF",
   toolDescription:
-    "Split a PDF into separate pages or custom page ranges online for free. Extract exactly the pages you need — no registration required.",
+    "Split a PDF into separate pages or custom page ranges online for free. Extract exactly the pages you need. No file uploads — 100% private and instant.",
   categorySlug: "pdf-tools",
   toolSlug: "split-pdf",
   keywords: [
-    "split pdf online",
+    "split pdf online free",
     "extract pages from pdf",
-    "pdf splitter free",
-    "separate pdf pages",
-    "divide pdf",
+    "pdf page extractor",
+    "split pdf by page range",
+    "separate pdf pages online",
+    "cut pdf pages online",
+    "pdf splitter no upload",
+    "divide pdf into parts",
+    "extract specific pages from pdf",
+    "split pdf without adobe",
   ],
 });
 
@@ -28,7 +33,7 @@ const FAQS = [
   {
     question: "Can I extract specific page ranges from a PDF?",
     answer:
-      "Yes. Use 'Custom Range' mode and enter ranges like '1-3, 5, 7-9'. Each segment becomes its own PDF file.",
+      "Yes. Enter ranges like '1-3, 5, 7-9' — each segment becomes its own PDF file.",
   },
   {
     question: "Can I extract every page as a separate PDF?",
@@ -36,14 +41,24 @@ const FAQS = [
       "Yes. Choose 'All Pages' mode and every page will be extracted as an individual PDF file.",
   },
   {
-    question: "Is my PDF uploaded to a server?",
+    question: "Can I extract just one page?",
     answer:
-      "No. The entire splitting process runs locally in your browser using pdf-lib. Your file never leaves your device.",
+      "Yes — enter a single page number to extract it as a standalone PDF document.",
+  },
+  {
+    question: "Will the extracted PDF preserve quality?",
+    answer:
+      "Yes. Pages are extracted losslessly using pdf-lib with no quality change.",
   },
   {
     question: "Is there a page limit?",
     answer:
-      "There is no hard page limit. However, very large PDFs with hundreds of pages may take longer to process.",
+      "There is no hard page limit. Very large PDFs with hundreds of pages may take a moment to process.",
+  },
+  {
+    question: "Is my PDF uploaded to a server?",
+    answer:
+      "No. The entire splitting process runs locally in your browser using pdf-lib. Your file never leaves your device.",
   },
 ];
 
@@ -71,8 +86,8 @@ export default function SplitPdfPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "Split PDF" },
         ]}
-        title="Split PDF – Extract Pages Online Free"
-        description="Upload a PDF and extract individual pages or custom page ranges. Download each segment as a separate PDF file instantly."
+        title="Split PDF Online – Extract Pages from PDF Free"
+        description="Upload a PDF and extract individual pages or custom page ranges. Download each segment as a separate PDF file — no uploads, 100% private."
         howToSteps={[
           {
             title: "Upload Your PDF",

@@ -10,9 +10,18 @@ import Image from "next/image";
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "PDF Tools",
   categoryDescription:
-    "Free online PDF tools — convert, merge, split, compress PDFs instantly. No software needed.",
+    "Free online PDF tools to merge, split, compress, convert, and protect PDF files. All tools run in your browser — no uploads, no registration, completely free.",
   categorySlug: "pdf-tools",
-  keywords: ["pdf tools", "pdf converter online", "merge pdf free", "compress pdf"],
+  keywords: [
+    "pdf tools online free",
+    "pdf converter online",
+    "merge pdf free",
+    "compress pdf online",
+    "split pdf online",
+    "pdf editor online free",
+    "pdf tools no upload",
+    "free pdf utilities",
+  ],
 });
 
 const FAQS = [
@@ -53,7 +62,7 @@ export default function PdfToolsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-2xl">
-              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt={category.description} />
+              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="PDF tools icon" />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -90,7 +99,7 @@ export default function PdfToolsPage() {
           <p className="mt-3 text-slate-600">
             Whether you need to convert a PDF to a JPG image, combine several
             PDFs into one document, or reduce a large PDF file size for emailing
-            — Toolify has the right tool for the job.
+            — toolify has the right tool for the job.
           </p>
         </div>
       </section>

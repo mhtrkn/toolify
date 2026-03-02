@@ -12,15 +12,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Excel to PDF",
   toolDescription:
-    "Convert Excel spreadsheets (XLS, XLSX) to PDF online for free. All sheets included — convert and download instantly in your browser.",
+    "Convert Excel spreadsheets to PDF online for free. Preserves tables, charts, and cell formatting. Supports .xls and .xlsx — no Microsoft Office required.",
   categorySlug: "file-converter",
   toolSlug: "excel-to-pdf",
   keywords: [
-    "excel to pdf",
-    "xlsx to pdf online",
-    "convert excel to pdf free",
-    "xls to pdf",
-    "spreadsheet to pdf",
+    "excel to pdf converter free",
+    "convert xlsx to pdf online",
+    "xls to pdf free",
+    "excel spreadsheet to pdf",
+    "convert excel to pdf no office",
+    "xlsx to pdf online no software",
+    "excel table to pdf converter",
+    "batch excel to pdf free",
+    "excel to pdf best quality",
+    "convert xls to pdf online free",
   ],
 });
 
@@ -74,8 +79,8 @@ export default function ExcelToPdfPage() {
           { label: "File Converter", href: "/file-converter" },
           { label: "Excel to PDF" },
         ]}
-        title="Excel to PDF – Convert Spreadsheets Online Free"
-        description="Convert Excel XLS and XLSX files to PDF format in your browser. All sheets are included, no software installation required."
+        title="Excel to PDF Converter – Convert XLSX to PDF Free"
+        description="Convert Excel XLS and XLSX spreadsheets to PDF in your browser. All sheets included, tables and charts preserved — no Microsoft Office or account needed."
         howToSteps={[
           {
             title: "Upload Excel File",

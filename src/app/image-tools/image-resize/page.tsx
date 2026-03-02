@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Image Resize",
   toolDescription:
-    "Resize images online to custom dimensions for free. Set exact pixel width and height, keep aspect ratio, and choose output format. No quality loss.",
+    "Resize images online for free to any custom width and height. Maintain aspect ratio or set exact dimensions. Supports JPG, PNG, WebP — no account needed.",
   categorySlug: "image-tools",
   toolSlug: "image-resize",
   keywords: [
-    "resize image online",
-    "image resizer free",
-    "change image dimensions",
-    "crop image online",
-    "resize photo free",
+    "resize image online free",
+    "image resizer custom dimensions",
+    "resize photo online",
+    "change image size online free",
+    "resize jpg online free",
+    "resize png online",
+    "image resize pixels free",
+    "resize image without losing quality",
+    "resize image for social media",
+    "online image resizer no signup",
   ],
 });
 
@@ -57,8 +62,8 @@ export default function ImageResizePage() {
           { label: "Image Tools", href: "/image-tools" },
           { label: "Image Resize" },
         ]}
-        title="Image Resize – Resize Images Online Free"
-        description="Resize JPG, PNG, and WebP images to any dimension. Set exact pixel width and height, use quick social media presets, and download instantly."
+        title="Image Resizer – Resize Images to Any Dimension Free"
+        description="Resize JPG, PNG, and WebP images to any pixel dimension. Set exact width and height, lock aspect ratio, use social media presets — download instantly."
         howToSteps={[
           { title: "Set Dimensions", description: "Enter your desired width and height, or pick a preset." },
           { title: "Upload Image", description: "Drag and drop or browse to select your image files." },

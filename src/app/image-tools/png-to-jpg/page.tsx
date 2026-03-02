@@ -12,15 +12,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "PNG to JPG",
   toolDescription:
-    "Convert PNG images to JPG format online for free. Reduce file size while preserving quality — batch convert multiple files with adjustable quality.",
+    "Convert PNG images to JPG format online for free. Set background color for transparent PNGs, reduce file size significantly. Instant conversion — no registration.",
   categorySlug: "image-tools",
   toolSlug: "png-to-jpg",
   keywords: [
-    "png to jpg",
-    "png to jpeg converter",
-    "convert png to jpg online",
-    "png jpg free",
-    "image format converter",
+    "png to jpg converter free",
+    "convert png to jpeg online",
+    "png to jpg no quality loss",
+    "transparent png to jpg converter",
+    "change png to jpg format",
+    "reduce png file size as jpg",
+    "png to jpeg converter online free",
+    "convert png to jpg without software",
+    "batch png to jpg converter",
+    "png to jpg background color",
   ],
 });
 
@@ -71,8 +76,8 @@ export default function PngToJpgPage() {
           { label: "Image Tools", href: "/image-tools" },
           { label: "PNG to JPG" },
         ]}
-        title="PNG to JPG – Convert Images Online Free"
-        description="Convert PNG images to compressed JPG format with adjustable quality. Batch convert multiple files at once — fully private, no uploads."
+        title="PNG to JPG Converter – Convert PNG to JPEG Free"
+        description="Convert PNG images to smaller JPG format. Choose background color for transparent areas, adjust quality, batch convert — all in your browser, no uploads."
         howToSteps={[
           {
             title: "Set Quality",

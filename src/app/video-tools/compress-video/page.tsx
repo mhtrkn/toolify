@@ -12,15 +12,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Compress Video",
   toolDescription:
-    "Reduce video file size online for free. Compress MP4, AVI, MOV, and MKV videos directly in your browser — no uploads, no software required.",
+    "Compress video files online for free without losing quality. Reduce MP4, MOV, and AVI file sizes in your browser using FFmpeg WASM — no uploads, fully private.",
   categorySlug: "video-tools",
   toolSlug: "compress-video",
   keywords: [
-    "compress video online",
-    "reduce video size",
-    "video compressor free",
-    "shrink mp4 online",
-    "video file size reducer",
+    "compress video online free",
+    "reduce video file size online",
+    "mp4 compressor free",
+    "video compressor no upload",
+    "compress video without losing quality",
+    "make video smaller online free",
+    "reduce mp4 file size online",
+    "compress video for email free",
+    "video size reducer browser",
+    "compress mov file online free",
   ],
 });
 
@@ -74,8 +79,8 @@ export default function CompressVideoPage() {
           { label: "Video Tools", href: "/video-tools" },
           { label: "Compress Video" },
         ]}
-        title="Compress Video – Reduce Video File Size Online Free"
-        description="Compress MP4, AVI, MOV, and MKV videos directly in your browser using FFmpeg. Choose from quality presets and download your smaller video instantly."
+        title="Video Compressor – Reduce Video File Size Online Free"
+        description="Compress MP4, AVI, MOV, and MKV videos in your browser using FFmpeg WASM. Choose a quality preset and download your smaller video — no uploads needed."
         howToSteps={[
           {
             title: "Upload Video",

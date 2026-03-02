@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "JPG to PDF",
   toolDescription:
-    "Convert JPG and PNG images to PDF online for free. Combine multiple images into one PDF file — no software needed.",
+    "Convert JPG or PNG images to a PDF file online for free. Add multiple images, arrange them, and download as one PDF document. No registration needed, fully private.",
   categorySlug: "pdf-tools",
   toolSlug: "jpg-to-pdf",
   keywords: [
-    "jpg to pdf",
-    "image to pdf converter",
-    "png to pdf online",
-    "convert photo to pdf",
-    "multiple images to pdf",
+    "jpg to pdf converter",
+    "convert images to pdf online free",
+    "multiple photos to pdf",
+    "jpeg to pdf free",
+    "png to pdf converter",
+    "combine images into pdf",
+    "image to pdf converter online",
+    "photos to pdf no watermark",
+    "jpg to pdf without software",
+    "convert picture to pdf free",
   ],
 });
 
@@ -31,14 +36,24 @@ const FAQS = [
     answer: "JPG (JPEG) and PNG images are supported. Upload one or many files at once.",
   },
   {
+    question: "Can I change the order of images before converting?",
+    answer:
+      "Yes. Use the up/down arrows to rearrange images into your preferred page order before converting.",
+  },
+  {
+    question: "Will the PDF be full quality?",
+    answer:
+      "Yes. Images are embedded at their original resolution. The PDF size depends on the original image sizes.",
+  },
+  {
+    question: "Is there a limit on image count?",
+    answer:
+      "No hard limit — limited only by available browser memory. Most devices handle dozens of images easily.",
+  },
+  {
     question: "Is the PDF conversion done in my browser?",
     answer:
       "Yes. Images are converted entirely in your browser using pdf-lib. No files are sent to any server.",
-  },
-  {
-    question: "What size will the output PDF be?",
-    answer:
-      "Each image is fitted onto an A4 page with margins. The PDF size depends on the original image sizes.",
   },
 ];
 
@@ -66,8 +81,8 @@ export default function JpgToPdfPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "JPG to PDF" },
         ]}
-        title="JPG to PDF – Convert Images to PDF Online Free"
-        description="Convert JPG and PNG images to a PDF file instantly. Upload multiple images, arrange their order, and download a clean PDF."
+        title="JPG to PDF Converter – Combine Images into a PDF"
+        description="Convert JPG and PNG images to a single PDF file. Upload multiple photos, arrange their order, and download a clean PDF — no watermarks, no uploads."
         howToSteps={[
           { title: "Upload Images", description: "Click or drag to add one or more JPG/PNG files." },
           { title: "Reorder Pages", description: "Use the arrows to set the order of pages in the PDF." },

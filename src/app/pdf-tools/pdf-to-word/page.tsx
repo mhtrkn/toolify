@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "PDF to Word",
   toolDescription:
-    "Convert PDF files to editable Word documents online for free. Extract text from PDF and download as an RTF file — no account needed.",
+    "Convert PDF files to editable Word documents online for free. Extract text content and download as RTF format — compatible with Word, LibreOffice, and Google Docs.",
   categorySlug: "pdf-tools",
   toolSlug: "pdf-to-word",
   keywords: [
-    "pdf to word",
-    "pdf to docx converter",
-    "convert pdf to word online free",
-    "pdf text extractor",
-    "pdf to rtf",
+    "pdf to word converter free",
+    "convert pdf to docx online",
+    "extract text from pdf to word",
+    "pdf to editable document",
+    "pdf to word no software",
+    "pdf text to rtf free",
+    "convert pdf to word online no email",
+    "pdf to word without adobe",
+    "pdf to word free online tool",
+    "scanned pdf to word text",
   ],
 });
 
@@ -35,6 +40,16 @@ const FAQS = [
     question: "Does it work with scanned PDFs?",
     answer:
       "No. Scanned PDFs contain images of text, not actual text data. For scanned documents, use our OCR Image to Text tool instead.",
+  },
+  {
+    question: "Is the conversion completely free?",
+    answer:
+      "Yes, completely free with no limits and no account required.",
+  },
+  {
+    question: "Can I convert multiple PDFs?",
+    answer:
+      "One at a time. Repeat the process for additional files.",
   },
   {
     question: "Is my PDF uploaded to a server?",
@@ -67,8 +82,8 @@ export default function PdfToWordPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "PDF to Word" },
         ]}
-        title="PDF to Word – Convert PDF to Editable Document Free"
-        description="Extract text from any PDF and download it as a Word-compatible RTF file. Open directly in Microsoft Word, LibreOffice, or Google Docs."
+        title="PDF to Word Converter – Extract PDF Text Online Free"
+        description="Extract text from any PDF and download as a Word-compatible RTF file. Open directly in Microsoft Word, LibreOffice, or Google Docs — no uploads needed."
         howToSteps={[
           { title: "Upload your PDF", description: "Click or drag your PDF file into the upload area." },
           { title: "Convert", description: "Click 'Convert to Word' — text is extracted instantly." },

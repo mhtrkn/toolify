@@ -9,9 +9,16 @@ import Image from "next/image";
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "File Converter",
   categoryDescription:
-    "Free online file converter — convert Word to PDF, Excel to PDF, and more document formats.",
+    "Convert Word and Excel files to PDF online for free. Preserve formatting perfectly — no Microsoft Office or Adobe Acrobat required. Works directly in your browser.",
   categorySlug: "file-converter",
-  keywords: ["file converter online", "word to pdf", "excel to pdf", "document converter"],
+  keywords: [
+    "file converter online free",
+    "word to pdf free",
+    "excel to pdf converter",
+    "docx to pdf online",
+    "xlsx to pdf converter",
+    "document converter browser",
+  ],
 });
 
 const FAQS = [
@@ -48,7 +55,7 @@ export default function FileConverterPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-2xl">
-              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt={category.description} />
+              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="File converter icon" />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">

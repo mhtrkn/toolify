@@ -8,16 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "URL Shortener",
   toolDescription:
-    "Shorten long URLs into compact, shareable short links for free. Generate short URLs instantly — no account needed.",
+    "Shorten long URLs into compact, shareable links for free. Powered by TinyURL — links never expire. No account needed. Generate your short link in seconds.",
   categorySlug: "web-tools",
   toolSlug: "url-shortener",
   keywords: [
-    "url shortener",
-    "shorten url online",
-    "free link shortener",
-    "short url generator",
-    "tinyurl alternative",
-    "link shortener free",
+    "url shortener free online",
+    "shorten link free",
+    "free short url generator",
+    "url shortener no signup",
+    "link shortener for social media",
+    "tinyurl alternative free",
+    "short url creator online",
+    "compact url generator",
+    "url shortener no expiry",
+    "best free url shortener 2025",
   ],
 });
 
@@ -25,12 +29,17 @@ const FAQS = [
   {
     question: "How does the URL shortener work?",
     answer:
-      "Enter your long URL and click 'Shorten'. We generate a short link via the TinyURL service. The short link redirects to your original URL.",
+      "Enter your long URL and click 'Shorten'. We send it to the TinyURL API via a server-side proxy and return the short link. The short link redirects to your original URL.",
   },
   {
     question: "Do the short links expire?",
     answer:
-      "Short links generated via TinyURL do not expire — they remain active indefinitely.",
+      "No — short links generated via TinyURL do not expire and remain active indefinitely.",
+  },
+  {
+    question: "Can I customize the short link?",
+    answer:
+      "Custom aliases are not available in this tool. Use TinyURL.com directly for custom slug support.",
   },
   {
     question: "Is there a limit on how many URLs I can shorten?",
@@ -40,7 +49,12 @@ const FAQS = [
   {
     question: "Can I track click statistics?",
     answer:
-      "This tool generates basic short links without analytics. For click tracking, consider using a dedicated service like Bitly.",
+      "This tool generates basic short links without analytics. For click tracking, consider a dedicated service like Bitly.",
+  },
+  {
+    question: "Can I combine this with a QR code?",
+    answer:
+      "Yes! Shorten your URL here, then use our free QR Code Generator to create a compact, scannable QR code for the short link.",
   },
 ];
 
@@ -68,8 +82,8 @@ export default function UrlShortenerPage() {
           { label: "Web Tools", href: "/web-tools" },
           { label: "URL Shortener" },
         ]}
-        title="URL Shortener – Free Short Link Generator"
-        description="Turn long URLs into short, shareable links instantly. Free, fast, and no account required."
+        title="Free URL Shortener – Create Short Links Instantly"
+        description="Turn long URLs into short, shareable links in one click. Powered by TinyURL — links never expire. Free, fast, and no account required."
         howToSteps={[
           { title: "Paste URL", description: "Enter or paste your long URL into the input field." },
           { title: "Click Shorten", description: "Press the 'Shorten URL' button to generate a short link." },

@@ -9,9 +9,16 @@ import Image from "next/image";
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Video Tools",
   categoryDescription:
-    "Free online video tools — convert video formats, extract MP3 audio, and compress videos.",
+    "Free online video tools to convert video to MP3 and compress video files in your browser. Supports MP4, MOV, AVI, MKV — no installation or registration required.",
   categorySlug: "video-tools",
-  keywords: ["video converter online", "video to mp3", "extract audio from video", "compress video"],
+  keywords: [
+    "video tools online free",
+    "video converter browser",
+    "mp4 to mp3 free",
+    "compress video online",
+    "video audio extractor",
+    "online video tools no upload",
+  ],
 });
 
 const FAQS = [
@@ -48,7 +55,7 @@ export default function VideoToolsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-50 text-2xl">
-              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt={category.description} />
+              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="Video tools icon" />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">

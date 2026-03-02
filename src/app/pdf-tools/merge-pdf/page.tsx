@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Merge PDF",
   toolDescription:
-    "Combine multiple PDF files into one document online for free. Reorder pages, merge instantly, and download your PDF — no registration required.",
+    "Combine multiple PDF files into one document online. Free, no file size limits. Reorder pages before merging, then download your PDF — no registration needed.",
   categorySlug: "pdf-tools",
   toolSlug: "merge-pdf",
   keywords: [
-    "merge pdf online",
+    "merge pdf online free",
     "combine pdf files",
-    "join pdf",
-    "pdf merger free",
-    "combine pdf into one",
+    "join pdf documents",
+    "pdf merger no upload",
+    "merge multiple pdfs into one",
+    "combine pdf pages online",
+    "pdf combiner free",
+    "merge pdf without adobe",
+    "free pdf merge tool",
+    "combine two pdf files online",
   ],
 });
 
@@ -24,21 +29,30 @@ const FAQS = [
   {
     question: "How many PDF files can I merge at once?",
     answer:
-      "You can merge as many PDF files as you need. There is no limit on the number of files.",
+      "No limit — add as many PDF files as you need and merge them all in one operation.",
   },
   {
-    question: "Can I change the order of pages before merging?",
+    question: "Can I reorder files before merging?",
     answer:
-      "Yes. After uploading, use the up/down arrows to reorder files before merging.",
+      "Yes. After uploading, use the up/down arrows or drag-and-drop to arrange files in the desired order.",
   },
   {
-    question: "Is my PDF data safe?",
+    question: "Will merging reduce the PDF quality?",
+    answer:
+      "No. pdf-lib merges files losslessly — pages are identical to the originals with no quality change.",
+  },
+  {
+    question: "Is there a file size limit per PDF?",
+    answer: "Each PDF can be up to 100MB. Total merged document size depends on available browser memory.",
+  },
+  {
+    question: "Can I merge PDFs from different sources?",
+    answer: "Yes — any standard PDF file works regardless of origin or the app used to create it.",
+  },
+  {
+    question: "Is my data safe?",
     answer:
       "Yes. PDF merging uses pdf-lib and runs entirely in your browser. No files are sent to any server.",
-  },
-  {
-    question: "What is the maximum PDF file size?",
-    answer: "Each PDF can be up to 100MB. Total merged document size depends on your browser memory.",
   },
 ];
 
@@ -57,8 +71,8 @@ export default function MergePdfPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "Merge PDF" },
         ]}
-        title="Merge PDF – Combine PDF Files Online Free"
-        description="Combine multiple PDF files into one document. Upload, reorder pages, and download your merged PDF instantly."
+        title="Merge PDF Files Online – Combine Multiple PDFs Free"
+        description="Combine multiple PDF files into one document. Upload, reorder pages, and download your merged PDF instantly — no file size limits."
         howToSteps={[
           { title: "Upload PDFs", description: "Click or drag to add 2 or more PDF files." },
           { title: "Reorder Files", description: "Drag or use arrows to arrange files in the desired order." },

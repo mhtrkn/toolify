@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Protect PDF",
   toolDescription:
-    "Add password protection to your PDF files online for free. Encrypt and lock PDFs with a secure password — no software needed.",
+    "Password-protect your PDF files online for free. Add user and owner passwords with AES encryption. No uploads — files are encrypted entirely in your browser.",
   categorySlug: "pdf-tools",
   toolSlug: "protect-pdf",
   keywords: [
-    "protect pdf",
-    "password protect pdf online",
-    "encrypt pdf free",
-    "lock pdf with password",
+    "password protect pdf online free",
+    "encrypt pdf with password",
+    "add password to pdf online",
+    "pdf password protection free",
     "secure pdf online",
+    "lock pdf with password free",
+    "pdf encryption tool online",
+    "protect pdf without adobe",
+    "pdf password encryption free tool",
+    "how to password protect a pdf online",
   ],
 });
 
@@ -24,17 +29,27 @@ const FAQS = [
   {
     question: "What type of encryption is used?",
     answer:
-      "pdf-lib applies RC4 128-bit encryption, which is compatible with all major PDF viewers including Adobe Acrobat, Preview, and browser-based readers.",
+      "AES encryption via jsPDF — compatible with Adobe Acrobat, Preview, Chrome, Edge, and all major PDF viewers.",
+  },
+  {
+    question: "What is the difference between user and owner password?",
+    answer:
+      "The user password is required to open the PDF. The owner password controls editing, printing, and copying permissions.",
   },
   {
     question: "What restrictions are added to the PDF?",
     answer:
-      "Viewers can open and read the PDF with the password, and fill in forms. Copying text, editing content, and low-resolution printing are disabled.",
+      "Viewers can open and read the PDF with the user password. Copying text, editing, and printing can be restricted via the owner password.",
   },
   {
     question: "Can I recover the password if I forget it?",
     answer:
-      "No. The password is never stored on our servers (processing is entirely client-side). Keep your password safe — there is no recovery option.",
+      "No. The password is never stored anywhere (processing is entirely client-side). Keep your password safe — there is no recovery option.",
+  },
+  {
+    question: "Is this compatible with all PDF readers?",
+    answer:
+      "Yes — standard AES-encrypted PDFs work in Adobe Reader, Preview, Chrome, Edge, and more.",
   },
   {
     question: "Will the file content change?",
@@ -67,18 +82,18 @@ export default function ProtectPdfPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "Protect PDF" },
         ]}
-        title="Protect PDF – Add Password to PDF Online Free"
-        description="Lock your PDF with a password in seconds. Upload your file, set a password, and download a fully encrypted PDF — all in your browser."
+        title="Password Protect PDF Online – Encrypt PDF for Free"
+        description="Lock your PDF with a password in seconds. Set user and owner passwords with AES encryption — all processed locally in your browser. No uploads."
         howToSteps={[
           { title: "Upload PDF", description: "Click or drag your PDF file into the upload area." },
-          { title: "Set a Password", description: "Enter and confirm your password. Minimum 4 characters." },
-          { title: "Download Protected PDF", description: "Click 'Protect PDF' and download your encrypted file." },
+          { title: "Set Passwords", description: "Enter a user password (to open) and optional owner password (to restrict editing)." },
+          { title: "Encrypt & Download", description: "Click 'Protect PDF' and download your password-locked encrypted file." },
         ]}
         benefits={[
-          { title: "Client-Side Encryption", description: "Your file is encrypted locally — it never touches our servers." },
-          { title: "Universal Compatibility", description: "Protected PDFs open in Acrobat, Preview, and all major viewers." },
-          { title: "Instant & Free", description: "No account, no payment — protect any PDF in seconds." },
-          { title: "Content Preserved", description: "Encryption only adds security — your PDF content is unchanged." },
+          { title: "AES Encryption", description: "Industry-standard AES encryption compatible with all major PDF readers." },
+          { title: "User + Owner Password", description: "Set separate passwords for opening the PDF and for restricting editing." },
+          { title: "No Uploads", description: "Encryption happens 100% in your browser. Files stay private on your device." },
+          { title: "Instant Download", description: "Protected PDF is ready to download in seconds." },
         ]}
         faqs={FAQS}
       >

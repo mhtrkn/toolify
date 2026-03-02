@@ -8,16 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Color Palette Generator",
   toolDescription:
-    "Generate complementary, analogous, and triadic color palettes from any hex color. Convert hex to RGB and HSB instantly.",
+    "Generate color palettes from any hex color free online. Get complementary, analogous, and triadic color schemes with HEX, RGB, and HSB codes — copy with one click.",
   categorySlug: "web-tools",
   toolSlug: "color-palette",
   keywords: [
-    "color palette generator",
-    "complementary colors online",
-    "hex to rgb converter",
-    "analogous colors",
-    "color scheme generator",
-    "triadic color palette",
+    "color palette generator free",
+    "complementary color finder online",
+    "hex color palette",
+    "analogous color scheme generator",
+    "triadic color palette tool",
+    "color scheme generator from hex",
+    "brand color palette generator",
+    "rgb color palette maker",
+    "color combination generator online",
+    "color harmony tool free",
   ],
 });
 
@@ -28,14 +32,29 @@ const FAQS = [
       "We show complementary (opposite on the color wheel), analogous (adjacent colors, ±30°), and triadic (evenly spaced at 120°) color palettes.",
   },
   {
+    question: "What is a complementary color?",
+    answer:
+      "A complementary color sits directly opposite on the color wheel — it creates high contrast and visual impact.",
+  },
+  {
+    question: "What are analogous colors?",
+    answer:
+      "Colors adjacent on the wheel — they create harmonious, soothing palettes ideal for UI and brand design.",
+  },
+  {
     question: "How do I copy a color code?",
     answer:
-      "Click on any color swatch to copy its hex code to your clipboard.",
+      "Click on any color swatch to copy its hex code to your clipboard instantly.",
   },
   {
     question: "What formats are shown for each color?",
     answer:
       "Each color displays its HEX, RGB, and HSB (hue, saturation, brightness) values.",
+  },
+  {
+    question: "Can I use this for brand colors?",
+    answer:
+      "Yes — enter your brand's primary hex color and get a complete matching palette for design systems, CSS, and Figma.",
   },
 ];
 
@@ -63,8 +82,8 @@ export default function ColorPalettePage() {
           { label: "Web Tools", href: "/web-tools" },
           { label: "Color Palette Generator" },
         ]}
-        title="Color Palette Generator – Create Color Schemes Online"
-        description="Enter any hex color and instantly get complementary, analogous, and triadic palettes. View HEX, RGB, and HSB values."
+        title="Color Palette Generator – Create Color Schemes from Any Hex Color"
+        description="Enter any hex color and instantly get complementary, analogous, and triadic palettes with HEX, RGB, and HSB codes. One-click copy — free, no signup."
         howToSteps={[
           { title: "Pick a Color", description: "Enter a hex code or use the color picker to choose your base color." },
           { title: "Explore Palettes", description: "See complementary, analogous, and triadic color harmonies generated instantly." },

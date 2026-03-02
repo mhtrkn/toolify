@@ -8,17 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "JSON / CSV Editor",
   toolDescription:
-    "Preview, edit, and export JSON and CSV files online. Drag & drop files, edit values inline, and download the updated file.",
+    "Edit, view, and convert JSON and CSV files online for free. Tree view, table editing, drag & drop import, and instant JSON↔CSV export. No registration required.",
   categorySlug: "web-tools",
   toolSlug: "json-csv-editor",
   keywords: [
-    "json editor online",
-    "csv editor online",
-    "json viewer",
-    "csv viewer",
+    "json editor online free",
+    "csv editor browser",
+    "json viewer online",
     "edit json file online",
-    "edit csv online",
-    "json formatter",
+    "json to csv converter free",
+    "csv to json converter online",
+    "json formatter and validator",
+    "csv file viewer online",
+    "online json prettifier",
+    "json csv converter no signup",
   ],
 });
 
@@ -68,8 +71,8 @@ export default function JsonCsvEditorPage() {
           { label: "Web Tools", href: "/web-tools" },
           { label: "JSON / CSV Editor" },
         ]}
-        title="JSON / CSV Preview & Editor – Free Online Tool"
-        description="Drag & drop or paste your JSON / CSV data. Edit values inline and export back to file instantly."
+        title="JSON & CSV Editor – View, Edit, and Convert Files Online Free"
+        description="Drag & drop JSON or CSV files, edit values inline, and export instantly. Convert between JSON and CSV formats in one click — no uploads, no signup."
         howToSteps={[
           { title: "Load Data", description: "Drag & drop a .json or .csv file, or paste text directly into the editor." },
           { title: "Edit Inline", description: "Click any value to edit it in place. Switch between JSON and CSV views." },

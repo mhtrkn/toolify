@@ -8,16 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "HTML Minifier",
   toolDescription:
-    "Minify HTML code online by removing comments, extra whitespace, and redundant characters. Instantly reduce HTML file size.",
+    "Minify HTML code online for free. Remove whitespace, comments, and redundant tags. See exact file size savings in real time — no signup, instant results.",
   categorySlug: "web-tools",
   toolSlug: "html-minifier",
   keywords: [
-    "html minifier",
-    "minify html online",
-    "compress html code",
-    "html compressor",
-    "reduce html size",
-    "html optimizer",
+    "html minifier online free",
+    "minify html code online",
+    "compress html file free",
+    "html code optimizer",
+    "remove whitespace from html online",
+    "html uglifier free",
+    "reduce html file size",
+    "minify html javascript free",
+    "html compressor tool",
+    "online html minifier no signup",
   ],
 });
 
@@ -68,8 +72,8 @@ export default function HtmlMinifierPage() {
           { label: "Web Tools", href: "/web-tools" },
           { label: "HTML Minifier" },
         ]}
-        title="HTML Minifier – Compress HTML Code Online"
-        description="Paste your HTML and instantly get a minified version with comments and whitespace removed. See size savings in real-time."
+        title="HTML Minifier – Compress and Minify HTML Online Free"
+        description="Paste your HTML and get a minified version with comments and whitespace removed. See exact size savings in real-time — no account, no uploads."
         howToSteps={[
           { title: "Paste HTML", description: "Paste your HTML code into the input area." },
           { title: "See Minified Output", description: "The minified HTML appears instantly in the output area." },

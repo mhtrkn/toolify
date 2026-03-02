@@ -12,38 +12,52 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Compress PDF",
   toolDescription:
-    "Reduce PDF file size online for free. Optimize and compress PDF documents without losing quality — no registration or software required.",
+    "Reduce PDF file size online for free with 3 compression levels: low, medium, or high. No uploads — files never leave your browser. Download smaller PDFs in seconds.",
   categorySlug: "pdf-tools",
   toolSlug: "compress-pdf",
   keywords: [
-    "compress pdf online",
-    "reduce pdf size",
-    "pdf compressor free",
-    "shrink pdf",
-    "optimize pdf",
+    "compress pdf online free",
+    "reduce pdf file size",
+    "pdf compressor no upload",
+    "shrink pdf to 100kb",
+    "compress pdf without losing quality",
+    "make pdf smaller online",
+    "pdf file size reducer",
+    "compress pdf for email",
+    "pdf compressor free tool",
+    "reduce pdf size online without quality loss",
   ],
 });
 
 const FAQS = [
   {
-    question: "How much can I reduce my PDF size?",
+    question: "What's the difference between Low, Medium, and High compression?",
     answer:
-      "The reduction depends on the PDF content. PDFs with heavy metadata, redundant objects, or unoptimized structure typically see the best results.",
+      "Low strips metadata only — no visual change, lossless. Medium re-renders pages as images at 72% JPEG quality. High applies maximum compression at 45% JPEG quality for the smallest file size.",
   },
   {
-    question: "Will compression affect my PDF quality?",
+    question: "Will High compression make my PDF blurry?",
     answer:
-      "No. Our compressor optimizes the document structure and removes metadata without altering the visual content of your PDF.",
+      "High compression converts pages to images, which reduces visual quality. Use Low compression for documents you need to read or edit clearly.",
   },
   {
-    question: "Is my PDF data kept private?",
+    question: "Can I compress a PDF for email attachment?",
     answer:
-      "Yes. Compression runs entirely in your browser using pdf-lib. Your file is never uploaded to any server.",
+      "Yes. Use Medium or High compression to reduce below typical 25MB email attachment limits.",
   },
   {
-    question: "What is the maximum PDF size I can compress?",
+    question: "Does compressed PDF still have selectable text?",
     answer:
-      "You can compress PDFs up to 100MB. Very large files may take a moment to process.",
+      "Low compression preserves text selection. Medium and High output is image-only — text will not be selectable.",
+  },
+  {
+    question: "What is the maximum file size?",
+    answer: "Up to 100MB PDFs are supported.",
+  },
+  {
+    question: "Is my PDF sent anywhere?",
+    answer:
+      "No. All compression runs in your browser using pdf-lib and PDF.js. Your file never leaves your device.",
   },
 ];
 
@@ -71,44 +85,18 @@ export default function CompressPdfPage() {
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "Compress PDF" },
         ]}
-        title="Compress PDF – Reduce PDF File Size Online Free"
-        description="Optimize and reduce your PDF file size instantly. Removes metadata and compresses document structure — no uploads, 100% private."
+        title="PDF Compressor – Reduce PDF File Size Online Free"
+        description="Choose from 3 compression levels to shrink your PDF. No uploads — all processing is local in your browser. Download your smaller PDF in seconds."
         howToSteps={[
-          {
-            title: "Upload Your PDF",
-            description: "Click or drag to upload your PDF file (up to 100MB).",
-          },
-          {
-            title: "Compress",
-            description:
-              "Click 'Compress PDF' and wait a moment while we optimize your file.",
-          },
-          {
-            title: "Download",
-            description:
-              "Download your smaller, optimized PDF with one click.",
-          },
+          { title: "Upload Your PDF", description: "Click or drag to upload your PDF file (up to 100MB)." },
+          { title: "Choose Compression Level", description: "Select Low (lossless), Medium (balanced), or High (maximum size reduction)." },
+          { title: "Compress & Download", description: "Click 'Compress PDF' and download your smaller optimized file." },
         ]}
         benefits={[
-          {
-            title: "100% Private",
-            description:
-              "All processing happens in your browser. Your file never leaves your device.",
-          },
-          {
-            title: "No Quality Loss",
-            description:
-              "Visual content remains identical — only unnecessary overhead is removed.",
-          },
-          {
-            title: "No Registration",
-            description: "Free to use with no account or sign-up required.",
-          },
-          {
-            title: "Fast Processing",
-            description:
-              "Most PDFs compress in just a few seconds.",
-          },
+          { title: "3 Compression Levels", description: "Low (lossless metadata strip), Medium (re-rendered at 72% quality), High (maximum compression)." },
+          { title: "Email-Ready Size", description: "Quickly reduce PDFs to fit email attachment limits of 25MB." },
+          { title: "Zero Uploads", description: "All processing is local. Your file stays on your device." },
+          { title: "Fast Processing", description: "Most PDFs compress in just a few seconds." },
         ]}
         faqs={FAQS}
       >

@@ -8,16 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Base64 Encoder / Decoder",
   toolDescription:
-    "Encode and decode Base64 strings online. Supports plain text and file input. Fast, free, and 100% browser-based.",
+    "Encode and decode text or files to Base64 format online for free. Supports strings, images, and binary files. Instant results — no registration, no uploads needed.",
   categorySlug: "web-tools",
   toolSlug: "base64",
   keywords: [
-    "base64 encoder",
-    "base64 decoder",
-    "encode base64 online",
-    "decode base64 string",
-    "base64 converter",
-    "base64 file encoder",
+    "base64 encoder online free",
+    "base64 decoder online",
+    "encode text to base64",
+    "decode base64 string online",
+    "base64 file encoder free",
+    "base64 image encoder",
+    "convert base64 to text",
+    "base64 encode decode tool",
+    "online base64 converter",
+    "base64 encode file browser",
   ],
 });
 
@@ -68,8 +72,8 @@ export default function Base64Page() {
           { label: "Web Tools", href: "/web-tools" },
           { label: "Base64 Encoder / Decoder" },
         ]}
-        title="Base64 Encoder / Decoder – Free Online Tool"
-        description="Encode text or files to Base64 and decode Base64 strings back to text or files. Instant results, no uploads."
+        title="Base64 Encoder & Decoder – Encode Files and Text Online Free"
+        description="Encode text or files to Base64 and decode Base64 strings back to text or files. Supports images and binary files — instant results, no uploads needed."
         howToSteps={[
           { title: "Choose Mode", description: "Select Encode or Decode, then pick Text or File input." },
           { title: "Enter Input", description: "Type or paste text, or upload a file to encode/decode." },

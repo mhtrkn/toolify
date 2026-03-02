@@ -9,9 +9,16 @@ import Image from "next/image";
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "OCR Tools",
   categoryDescription:
-    "Free online OCR tools — extract text from images and PDFs using AI-powered recognition. Supports 100+ languages.",
+    "Free online OCR tools to extract text from images and PDFs. AI-powered optical character recognition supports 100+ languages — no registration required.",
   categorySlug: "ocr-tools",
-  keywords: ["ocr online", "image to text", "extract text from image", "pdf to text converter"],
+  keywords: [
+    "ocr tools online free",
+    "extract text from image free",
+    "pdf to text online",
+    "image ocr browser",
+    "text recognition online",
+    "ocr no signup free",
+  ],
 });
 
 const FAQS = [
@@ -48,7 +55,7 @@ export default function OcrToolsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-2xl">
-              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt={category.description} />
+              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="OCR tools icon" />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">

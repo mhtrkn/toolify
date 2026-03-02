@@ -9,16 +9,17 @@ import { SITE_URL } from "@/lib/metadata";
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Web Tools",
   categoryDescription:
-    "Free online utilities for developers and designers — QR code generator, color palette, Base64 encoder, JSON/CSV editor, HTML tools, and more.",
+    "Free online web and developer tools — generate QR codes, build color palettes, edit JSON/CSV, encode Base64, convert HTML to PDF, minify HTML, and shorten URLs. No signup required.",
   categorySlug: "web-tools",
   keywords: [
-    "web tools online",
-    "qr code generator",
+    "web tools online free",
+    "qr code generator free",
+    "json editor online",
+    "base64 encoder",
+    "url shortener free",
+    "html minifier online",
+    "developer tools browser",
     "color palette generator",
-    "base64 encoder decoder",
-    "json csv editor",
-    "html minifier",
-    "url shortener",
   ],
 });
 

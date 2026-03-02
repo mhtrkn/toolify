@@ -12,15 +12,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "JPG to PNG",
   toolDescription:
-    "Convert JPG images to PNG format online for free. Lossless conversion with transparency support — batch convert multiple files instantly.",
+    "Convert JPG images to PNG format online for free. Lossless conversion with transparency support. Fast, secure, no registration — download your PNG instantly.",
   categorySlug: "image-tools",
   toolSlug: "jpg-to-png",
   keywords: [
-    "jpg to png",
-    "jpeg to png converter",
-    "convert jpg to png online",
-    "jpg png free",
-    "image format converter",
+    "jpg to png converter free",
+    "convert jpeg to png online",
+    "jpg to png lossless",
+    "jpeg to png with transparency",
+    "change jpg format to png free",
+    "convert photo to png online",
+    "jpg to png no quality loss",
+    "jpg to png converter without software",
+    "batch jpg to png online",
+    "convert jpg to transparent png",
   ],
 });
 
@@ -71,8 +76,8 @@ export default function JpgToPngPage() {
           { label: "Image Tools", href: "/image-tools" },
           { label: "JPG to PNG" },
         ]}
-        title="JPG to PNG – Convert Images Online Free"
-        description="Convert JPG and JPEG images to lossless PNG format instantly. Batch convert multiple files at once — all processing happens in your browser."
+        title="JPG to PNG Converter – Convert JPEG to PNG Free"
+        description="Convert JPG and JPEG images to lossless PNG format instantly. Batch convert multiple files — supports transparency, no uploads, 100% private."
         howToSteps={[
           {
             title: "Upload JPG Files",

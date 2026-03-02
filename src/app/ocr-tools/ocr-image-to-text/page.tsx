@@ -8,37 +8,52 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "OCR Image to Text",
   toolDescription:
-    "Extract text from images online using AI-powered OCR. Supports JPG, PNG, BMP, TIFF and 100+ languages. Copy or download extracted text instantly.",
+    "Extract text from images online for free using AI-powered OCR. Supports JPG, PNG, BMP, and TIFF. Accurate, fast, and 100+ languages — no registration required.",
   categorySlug: "ocr-tools",
   toolSlug: "ocr-image-to-text",
   keywords: [
-    "ocr image to text",
+    "ocr image to text online free",
     "extract text from image",
-    "image to text online",
-    "photo to text",
-    "free ocr tool",
+    "image to text converter ocr",
+    "jpg to text extractor online",
+    "scan image to text free",
+    "photo to text converter",
+    "online ocr no signup",
+    "ai image text recognition",
+    "convert picture to text free",
+    "handwriting ocr online free",
   ],
 });
 
 const FAQS = [
   {
-    question: "What is OCR and how does it work?",
-    answer:
-      "OCR (Optical Character Recognition) is AI technology that scans images and identifies text characters, converting them to editable digital text.",
-  },
-  {
     question: "What image formats are supported?",
-    answer: "We support JPG, JPEG, PNG, BMP, TIFF, and WebP images.",
+    answer:
+      "JPG, JPEG, PNG, BMP, and TIFF images are all supported.",
   },
   {
-    question: "Can I extract text from handwritten notes?",
+    question: "How accurate is the OCR?",
     answer:
-      "OCR works best with clearly printed text. Handwritten text can be recognized but accuracy may vary depending on handwriting clarity.",
+      "Accuracy is high for clean printed text. Handwriting and stylized fonts may vary. For best results, use high-resolution images (300 DPI or higher).",
   },
   {
-    question: "Can I edit the extracted text?",
+    question: "What languages are supported?",
     answer:
-      "Yes. The extracted text appears in an editable text box. You can edit it before copying or downloading.",
+      "Over 100 languages are supported including English, Spanish, French, German, Arabic, Chinese, Japanese, and more.",
+  },
+  {
+    question: "Can I extract text from scanned documents?",
+    answer:
+      "Yes — scanned document images work well, especially at 300 DPI or higher resolution.",
+  },
+  {
+    question: "Is there a file size limit?",
+    answer: "Images up to 10MB are supported.",
+  },
+  {
+    question: "Is my image sent to a server?",
+    answer:
+      "No. OCR runs locally in your browser using Tesseract.js. Your images never leave your device.",
   },
 ];
 
@@ -57,8 +72,8 @@ export default function OcrImageToTextPage() {
           { label: "OCR Tools", href: "/ocr-tools" },
           { label: "OCR Image to Text" },
         ]}
-        title="OCR Image to Text – Extract Text from Images Free"
-        description="Upload any image and instantly extract all text using AI-powered OCR. Supports 100+ languages, editable output, and one-click download."
+        title="OCR Image to Text – Extract Text from Images Online Free"
+        description="Upload any image and instantly extract all text using AI-powered OCR. Supports 100+ languages, editable output, and one-click download — no registration required."
         howToSteps={[
           { title: "Select Language", description: "Choose the language of text in your image." },
           { title: "Upload Image", description: "Upload a JPG, PNG, BMP, or TIFF image." },

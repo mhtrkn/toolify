@@ -12,38 +12,51 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "PDF to Text",
   toolDescription:
-    "Extract text content from PDF files online for free. Copy, download, and analyze text from any native PDF — no uploads, fully private.",
+    "Extract text from PDF files online for free. Supports both digital and scanned PDFs via OCR. Copy or download extracted text instantly — no registration needed.",
   categorySlug: "ocr-tools",
   toolSlug: "pdf-to-text",
   keywords: [
-    "pdf to text",
-    "extract text from pdf",
-    "pdf text extractor online",
-    "pdf to txt free",
-    "copy text from pdf",
+    "pdf to text converter free",
+    "extract text from pdf online",
+    "pdf text extractor",
+    "scanned pdf to text ocr",
+    "copy text from pdf free",
+    "pdf to txt converter online",
+    "pdf text recognition free",
+    "convert pdf to plain text",
+    "pdf to text no software",
+    "pdf ocr text extractor free",
   ],
 });
 
 const FAQS = [
   {
-    question: "What types of PDFs work with this tool?",
+    question: "Does this work with scanned PDFs?",
     answer:
-      "This tool extracts text from native (text-based) PDFs that contain selectable text. For scanned or image-based PDFs, use the OCR Image to Text tool instead.",
+      "Yes. Scanned PDFs are processed with OCR to recognize text. For best results, use high-quality scans.",
   },
   {
-    question: "Can I download the extracted text?",
+    question: "Will formatting like tables be preserved?",
     answer:
-      "Yes. Click 'Download .txt' to save the extracted text as a plain text file, or use 'Copy Text' to copy it to your clipboard.",
+      "Plain text is extracted. Complex layouts like tables and columns may flatten into linear text.",
   },
   {
-    question: "Is my PDF uploaded to a server?",
+    question: "Can I extract text from password-protected PDFs?",
     answer:
-      "No. Text extraction uses PDF.js and runs entirely in your browser. Your PDF never leaves your device.",
+      "No. Remove the password protection first before uploading the PDF.",
   },
   {
-    question: "Why is the extracted text empty or garbled?",
+    question: "Is there a page limit?",
+    answer: "All pages are extracted with no page limit.",
+  },
+  {
+    question: "What is the max file size?",
+    answer: "PDFs up to 100MB are supported.",
+  },
+  {
+    question: "Is my PDF sent to a server?",
     answer:
-      "The PDF may be image-based (a scan) or use non-standard encoding. For scanned PDFs, use the OCR Image to Text tool which uses AI to recognize text from images.",
+      "No. Text extraction runs in your browser using PDF.js. Your file never leaves your device.",
   },
 ];
 
@@ -71,8 +84,8 @@ export default function PdfToTextPage() {
           { label: "OCR Tools", href: "/ocr-tools" },
           { label: "PDF to Text" },
         ]}
-        title="PDF to Text – Extract Text from PDF Online Free"
-        description="Extract all text content from a PDF file instantly. View, copy, and download the text — processing runs locally in your browser for complete privacy."
+        title="PDF to Text Extractor – Extract Text from PDF Online Free"
+        description="Extract all text content from a PDF file instantly. Supports digital and scanned PDFs — copy or download as .txt. Processing runs locally for complete privacy."
         howToSteps={[
           {
             title: "Upload PDF",

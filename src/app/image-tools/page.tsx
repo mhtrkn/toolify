@@ -9,9 +9,16 @@ import Image from "next/image";
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Image Tools",
   categoryDescription:
-    "Free online image tools — compress, resize, and convert images. Supports JPG, PNG, WebP and more.",
+    "Free online image tools to compress, resize, and convert images in your browser. Supports JPG, PNG, and WebP — fast, secure, no account required.",
   categorySlug: "image-tools",
-  keywords: ["image tools", "compress image online", "resize image free", "image converter"],
+  keywords: [
+    "image tools online free",
+    "image converter free",
+    "compress image online",
+    "resize image online",
+    "jpg png converter free",
+    "image editor browser",
+  ],
 });
 
 const FAQS = [
@@ -48,7 +55,7 @@ export default function ImageToolsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl">
-              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt={category.description} />
+              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="Image tools icon" />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -74,7 +81,7 @@ export default function ImageToolsPage() {
         <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">Free Image Editing Tools</h2>
           <p className="mt-3 text-slate-600">
-            Toolify provides powerful, free image tools that run directly in your
+            toolify provides powerful, free image tools that run directly in your
             browser. Compress large photos before uploading, resize images to
             exact pixel dimensions, or convert between image formats — all without
             installing any software.

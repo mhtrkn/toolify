@@ -12,15 +12,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Word to PDF",
   toolDescription:
-    "Convert Word documents (DOC, DOCX) to PDF online for free. No software installation needed — convert and download instantly in your browser.",
+    "Convert Word documents to PDF online for free. Preserves fonts, layout, and formatting. Supports .doc and .docx files — no Microsoft Office or account required.",
   categorySlug: "file-converter",
   toolSlug: "word-to-pdf",
   keywords: [
-    "word to pdf",
-    "docx to pdf online",
-    "convert word to pdf free",
-    "doc to pdf",
-    "word document to pdf",
+    "word to pdf converter free",
+    "convert docx to pdf online",
+    "doc to pdf converter",
+    "microsoft word to pdf free",
+    "word to pdf no software",
+    "save word as pdf online",
+    "convert word document to pdf free",
+    "docx to pdf without word",
+    "word file to pdf converter online",
+    "word to pdf best quality",
   ],
 });
 
@@ -70,8 +75,8 @@ export default function WordToPdfPage() {
           { label: "File Converter", href: "/file-converter" },
           { label: "Word to PDF" },
         ]}
-        title="Word to PDF – Convert DOCX to PDF Online Free"
-        description="Convert Word documents to PDF format instantly in your browser. No software, no uploads, no account required."
+        title="Word to PDF Converter – Convert DOCX to PDF Free"
+        description="Convert Word documents to PDF format instantly. Upload .doc or .docx and download a clean, formatted PDF — no Microsoft Office or account needed."
         howToSteps={[
           {
             title: "Upload Word File",

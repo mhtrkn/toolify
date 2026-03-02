@@ -8,15 +8,20 @@ import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/
 export const metadata: Metadata = buildToolMetadata({
   toolName: "HTML to PDF Converter",
   toolDescription:
-    "Convert HTML code to a downloadable PDF file online for free. Paste your HTML, preview it, choose page size, and download.",
+    "Convert HTML code to a PDF document online for free. Paste your HTML or URL, choose A4 or Letter size, and download your PDF instantly. No registration needed.",
   categorySlug: "web-tools",
   toolSlug: "html-to-pdf",
   keywords: [
-    "html to pdf",
+    "html to pdf converter free",
     "convert html to pdf online",
-    "html pdf converter",
-    "html page to pdf free",
-    "html code to pdf",
+    "webpage to pdf converter",
+    "html code to pdf download",
+    "html to pdf no software",
+    "save html as pdf online",
+    "url to pdf converter free",
+    "web page to pdf online",
+    "html to pdf a4 format",
+    "convert html file to pdf free",
   ],
 });
 
@@ -66,8 +71,8 @@ export default function HtmlToPdfPage() {
           { label: "Web Tools", href: "/web-tools" },
           { label: "HTML to PDF Converter" },
         ]}
-        title="HTML to PDF Converter – Free Online Tool"
-        description="Paste your HTML, preview it live, choose page size, and download a PDF. Inline styles supported."
+        title="HTML to PDF Converter – Convert HTML Code to PDF Free"
+        description="Paste your HTML, preview it live, choose A4 or Letter size, and download your PDF. Inline styles supported. No server — processed in your browser."
         howToSteps={[
           { title: "Paste HTML", description: "Enter or paste your HTML code into the editor on the left." },
           { title: "Preview", description: "See a live preview of your HTML rendered in the preview pane." },

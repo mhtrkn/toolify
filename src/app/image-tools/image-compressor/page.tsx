@@ -13,16 +13,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Image Compressor",
   toolDescription:
-    "Compress JPG, PNG, and WebP images online for free. Reduce image file size without losing quality. Fast, secure, client-side compression.",
+    "Compress JPG, PNG, and WebP images online for free. Reduce image file size without losing visible quality. Instant results — no uploads, works in your browser.",
   categorySlug: "image-tools",
   toolSlug: "image-compressor",
   keywords: [
-    "image compressor online",
-    "compress image free",
-    "reduce image file size",
-    "jpg compressor",
-    "png compressor",
-    "optimize images for web",
+    "image compressor online free",
+    "compress jpg online",
+    "compress png file size",
+    "reduce image file size without quality loss",
+    "image size reducer free",
+    "compress webp online",
+    "compress images for website free",
+    "image file compressor no upload",
+    "reduce photo size online free",
+    "compress image to 100kb free",
   ],
 });
 
@@ -114,8 +118,8 @@ export default function ImageCompressorPage() {
           { label: "Image Tools", href: "/image-tools" },
           { label: "Image Compressor" },
         ]}
-        title="Image Compressor – Compress Images Online Free"
-        description="Reduce JPG, PNG, and WebP file sizes by up to 90% without losing quality. Fast, browser-based compression — no uploads to any server."
+        title="Image Compressor – Reduce Image File Size Free"
+        description="Compress JPG, PNG, and WebP images by up to 90% without losing visible quality. Set quality level, see instant savings, and download — no uploads needed."
         howToSteps={HOW_TO_STEPS}
         benefits={BENEFITS}
         faqs={FAQS}
