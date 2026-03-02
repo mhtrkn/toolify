@@ -4,147 +4,503 @@ import { useState } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
-import { formatBytes } from "@/lib/utils";
+import { formatBytes, downloadBlob } from "@/lib/utils";
+import { generateDocxBlob } from "@/lib/docx-generator";
 
+// ── Types ─────────────────────────────────────────────────────────────────────
 type Status = "idle" | "ready" | "processing" | "done" | "error";
+type ExportFmt = "txt" | "docx" | "json";
 
+interface PageResult {
+  page: number;
+  text: string;
+  isOcr: boolean;
+}
+
+interface PdfResult {
+  file: File;
+  pages: PageResult[];
+  totalPages: number;
+  hasOcrPages: boolean;
+}
+
+// ── OCR language config ───────────────────────────────────────────────────────
+const LANGUAGES = [
+  { code: "auto", label: "Auto Detect" },
+  { code: "eng", label: "English" },
+  { code: "tur", label: "Turkish" },
+  { code: "deu", label: "German" },
+  { code: "fra", label: "French" },
+  { code: "spa", label: "Spanish" },
+  { code: "ara", label: "Arabic" },
+  { code: "rus", label: "Russian" },
+  { code: "chi_sim", label: "Chinese (Simplified)" },
+  { code: "jpn", label: "Japanese" },
+  { code: "por", label: "Portuguese" },
+];
+
+const AUTO_LANG = "eng+tur+deu+fra+spa+ara+rus";
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+async function renderPdfPageToDataUrl(
+  page: Awaited<ReturnType<import("pdfjs-dist").PDFDocumentProxy["getPage"]>>
+): Promise<string> {
+  const viewport = page.getViewport({ scale: 2.0 }); // 2× scale for OCR quality
+  const canvas = document.createElement("canvas");
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  // pdfjs-dist v5 render API requires the canvas element directly
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (page as any).render({ canvas, viewport }).promise;
+  return canvas.toDataURL("image/jpeg", 0.9);
+}
+
+function buildFullText(result: PdfResult): string {
+  return result.pages
+    .map((p) => `--- Page ${p.page} ---\n${p.text}`)
+    .join("\n\n");
+}
+
+// ── Component ─────────────────────────────────────────────────────────────────
 export default function PdfToTextClient() {
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const [language, setLanguage] = useState("eng");
+  const [ocrFallback, setOcrFallback] = useState(true);
   const [status, setStatus] = useState<Status>("idle");
   const [progress, setProgress] = useState(0);
+  const [progressLabel, setProgressLabel] = useState("");
+  const [results, setResults] = useState<PdfResult[]>([]);
+  const [activeFileIdx, setActiveFileIdx] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [text, setText] = useState("");
-  const [pageCount, setPageCount] = useState(0);
 
-  const handleFiles = (files: File[]) => {
-    setFile(files[0]);
+  const handleFiles = (incoming: File[]) => {
+    setFiles(incoming);
     setStatus("ready");
+    setResults([]);
     setError(null);
-    setText("");
-    setPageCount(0);
-    toast.success("File Selected", { description: `${files[0].name} is ready for text extraction.` });
   };
 
   const extract = async () => {
-    if (!file) return;
+    if (!files.length) return;
     setStatus("processing");
-    setProgress(10);
     setError(null);
+    const allResults: PdfResult[] = [];
+
     try {
       const pdfjsLib = await import("pdfjs-dist");
       pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-      setProgress(20);
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      const total = pdf.numPages;
-      setPageCount(total);
-      setProgress(30);
-      const pages: string[] = [];
-      for (let i = 1; i <= total; i++) {
-        const page = await pdf.getPage(i);
-        const content = await page.getTextContent();
-        const pageText = content.items.map((item) => ("str" in item ? item.str : "")).join(" ").replace(/\s+/g, " ").trim();
-        pages.push(`--- Page ${i} ---\n${pageText}`);
-        setProgress(30 + Math.round((i / total) * 65));
+
+      for (let fi = 0; fi < files.length; fi++) {
+        const f = files[fi];
+        setProgressLabel(`Loading ${f.name} (${fi + 1} / ${files.length})`);
+
+        const arrayBuffer = await f.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const totalPages = pdf.numPages;
+        const pages: PageResult[] = [];
+        let hasOcrPages = false;
+
+        for (let p = 1; p <= totalPages; p++) {
+          const globalDone = fi * totalPages + p;
+          const globalTotal = files.length * totalPages;
+          setProgressLabel(`${f.name} — page ${p} / ${totalPages}`);
+          setProgress(Math.round((globalDone / globalTotal) * 95));
+
+          const page = await pdf.getPage(p);
+          const content = await page.getTextContent();
+          const nativeText = content.items
+            .map((item) => ("str" in item ? item.str : ""))
+            .join(" ")
+            .replace(/\s+/g, " ")
+            .trim();
+
+          if (nativeText.length >= 30 || !ocrFallback) {
+            // Selectable text found OR OCR disabled
+            pages.push({
+              page: p,
+              text: nativeText || "(no text on this page)",
+              isOcr: false,
+            });
+          } else {
+            // Scanned/image page — render to canvas and OCR
+            hasOcrPages = true;
+            setProgressLabel(`${f.name} — page ${p}/${totalPages} (OCR…)`);
+            const dataUrl = await renderPdfPageToDataUrl(page);
+            const { recognize } = await import("tesseract.js");
+            const lang = language === "auto" ? AUTO_LANG : language;
+            const { data } = await recognize(dataUrl, lang);
+            pages.push({
+              page: p,
+              text: data.text.trim() || "(no text recognized)",
+              isOcr: true,
+            });
+          }
+        }
+
+        allResults.push({ file: f, pages, totalPages, hasOcrPages });
       }
-      setText(pages.join("\n\n"));
+
+      setResults(allResults);
       setProgress(100);
       setStatus("done");
-      const wordCount = pages.join(" ").split(/\s+/).filter((w) => w.length > 0).length;
-      toast.success("Text Extracted!", {
-        description: `${total} page${total !== 1 ? "s" : ""} · ${wordCount.toLocaleString()} words extracted.`,
-      });
+      setActiveFileIdx(0);
+      toast.success(
+        files.length === 1
+          ? `${allResults[0].totalPages} page${allResults[0].totalPages !== 1 ? "s" : ""} extracted`
+          : `${files.length} PDFs processed`
+      );
     } catch (e) {
       console.error(e);
-      const msg = "Could not extract text from this PDF. The file may be image-based, encrypted, or corrupted.";
+      const msg =
+        "Could not process this PDF. It may be encrypted, password-protected, or corrupted.";
       setError(msg);
-      toast.error("Extraction Failed", { description: msg });
+      toast.error("Extraction failed", { description: msg });
       setStatus("error");
     }
   };
 
-  const downloadTxt = () => {
-    if (!text || !file) return;
-    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = file.name.replace(".pdf", ".txt");
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success("Downloaded!", { description: "Text file saved to your device." });
+  const handleExport = async (r: PdfResult, fmt: ExportFmt) => {
+    const fullText = buildFullText(r);
+    const base = r.file.name.replace(".pdf", "");
+
+    if (fmt === "txt") {
+      const blob = new Blob([fullText], { type: "text/plain;charset=utf-8" });
+      downloadBlob(blob, base + ".txt");
+      toast.success("Saved as .txt");
+    } else if (fmt === "docx") {
+      try {
+        const blob = await generateDocxBlob(fullText);
+        downloadBlob(blob, base + ".docx");
+        toast.success("Saved as .docx");
+      } catch {
+        toast.error("DOCX export failed");
+      }
+    } else if (fmt === "json") {
+      const data = {
+        filename: r.file.name,
+        totalPages: r.totalPages,
+        ocrUsed: r.hasOcrPages,
+        extractedAt: new Date().toISOString(),
+        pages: r.pages.map((p) => ({
+          page: p.page,
+          text: p.text,
+          method: p.isOcr ? "ocr" : "native",
+        })),
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json",
+      });
+      downloadBlob(blob, base + ".json");
+      toast.success("Saved as .json");
+    }
   };
 
-  const copyToClipboard = async () => {
-    if (!text) return;
-    await navigator.clipboard.writeText(text);
-    toast.success("Copied!", { description: "Text copied to clipboard." });
+  const copyText = (r: PdfResult) => {
+    navigator.clipboard.writeText(buildFullText(r));
+    toast.success("Copied to clipboard");
+  };
+
+  const downloadAllZip = async () => {
+    const { default: JSZip } = await import("jszip");
+    const zip = new JSZip();
+    results.forEach((r) => {
+      zip.file(r.file.name.replace(".pdf", ".txt"), buildFullText(r));
+    });
+    const blob = await zip.generateAsync({ type: "blob" });
+    downloadBlob(blob, "pdf-extractions.zip");
+    toast.success("All results downloaded as ZIP");
   };
 
   const reset = () => {
-    setFile(null);
+    setFiles([]);
+    setResults([]);
     setStatus("idle");
     setProgress(0);
+    setProgressLabel("");
     setError(null);
-    setText("");
-    setPageCount(0);
   };
 
-  const wordCount = text ? text.split(/\s+/).filter((w) => w.length > 0).length : 0;
-  const charCount = text.length;
+  const active = results[activeFileIdx];
 
-  return (
-    <div className="space-y-6">
-      {status === "idle" && (
-        <FileUploader accept=".pdf" maxSizeMB={100} onFiles={handleFiles} label="Upload PDF File" hint="Supports PDF up to 100MB" />
-      )}
-      {status === "ready" && file && (
-        <div className="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">📄</span>
-            <div>
-              <p className="font-medium text-slate-900">{file.name}</p>
-              <p className="text-sm text-slate-500">{formatBytes(file.size)}</p>
+  // ── Idle ──────────────────────────────────────────────────────────────────
+  if (status === "idle") {
+    return (
+      <div className="space-y-5">
+        {/* Options */}
+        <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
+              OCR Fallback Language
+            </label>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+            >
+              {LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code}>
+                  {l.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <label className="flex cursor-pointer items-center gap-3 select-none">
+            <input
+              type="checkbox"
+              checked={ocrFallback}
+              onChange={(e) => setOcrFallback(e.target.checked)}
+              className="h-4 w-4 accent-red-600 cursor-pointer"
+            />
+            <span className="text-sm text-slate-700">
+              Auto-OCR scanned pages{" "}
+              <span className="text-xs text-slate-500">
+                (pages with no selectable text are processed with OCR)
+              </span>
+            </span>
+          </label>
+        </div>
+
+        <FileUploader
+          accept=".pdf"
+          multiple
+          maxSizeMB={100}
+          onFiles={handleFiles}
+          label="Upload PDF Files"
+          hint="Supports digital and scanned PDFs — up to 100 MB each · multi-file supported"
+        />
+      </div>
+    );
+  }
+
+  // ── Ready ─────────────────────────────────────────────────────────────────
+  if (status === "ready") {
+    return (
+      <div className="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+        <p className="text-sm font-semibold text-slate-700">
+          {files.length} file{files.length > 1 ? "s" : ""} ready
+        </p>
+
+        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+          {files.map((f, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-2.5"
+            >
+              <span className="text-xl">📄</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-slate-900 truncate">
+                  {f.name}
+                </p>
+                <p className="text-xs text-slate-500">{formatBytes(f.size)}</p>
+              </div>
             </div>
+          ))}
+        </div>
+
+        {ocrFallback && (
+          <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-xs text-blue-700">
+            OCR fallback is enabled — scanned pages will be recognized
+            automatically (slower for image-heavy PDFs).
           </div>
-          <div className="rounded-lg bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-600">
-            Text is extracted from native PDF text layers. For scanned/image PDFs, use the{" "}
-            <a href="/ocr-tools/ocr-image-to-text" className="text-red-600 underline">OCR Image to Text</a>{" "}
-            tool instead.
+        )}
+
+        <div className="flex gap-3">
+          <button
+            onClick={extract}
+            className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+          >
+            Extract Text
+          </button>
+          <button
+            onClick={reset}
+            className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
+          >
+            Change
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Processing ────────────────────────────────────────────────────────────
+  if (status === "processing") {
+    return (
+      <div className="rounded-xl border border-slate-200 bg-white p-10 text-center space-y-5">
+        <div className="text-5xl">📋</div>
+        <div>
+          <p className="font-semibold text-slate-800">
+            {progressLabel || "Processing PDF…"}
+          </p>
+          <p className="text-xs text-slate-500 mt-1">
+            OCR on scanned pages downloads language data on first use (~5–15 MB).
+          </p>
+        </div>
+        <ProgressBar progress={progress} label="Extracting text" />
+      </div>
+    );
+  }
+
+  // ── Error ─────────────────────────────────────────────────────────────────
+  if (status === "error" && error) {
+    return (
+      <div className="space-y-4">
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+        >
+          {error}
+        </div>
+        <button
+          onClick={reset}
+          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-50"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  // ── Done ──────────────────────────────────────────────────────────────────
+  if (status === "done" && active) {
+    const fullText = buildFullText(active);
+    const wordCount = fullText.split(/\s+/).filter(Boolean).length;
+    const charCount = fullText.length;
+    const ocrPageCount = active.pages.filter((p) => p.isOcr).length;
+
+    return (
+      <div className="space-y-5">
+        {/* Multi-file tabs */}
+        {results.length > 1 && (
+          <div className="flex flex-wrap gap-2">
+            {results.map((r, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveFileIdx(i)}
+                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                  i === activeFileIdx
+                    ? "bg-red-600 text-white"
+                    : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                }`}
+              >
+                {r.file.name.length > 22
+                  ? r.file.name.slice(0, 22) + "…"
+                  : r.file.name}
+              </button>
+            ))}
           </div>
-          <div className="flex gap-3">
-            <button onClick={extract} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700">Extract Text</button>
-            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">Change File</button>
+        )}
+
+        {/* Stats + toolbar */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="font-semibold text-slate-900">Text extracted</p>
+            <p className="text-xs text-slate-500 mt-0.5">
+              {active.totalPages} pages ·{" "}
+              {wordCount.toLocaleString()} words ·{" "}
+              {charCount.toLocaleString()} chars
+              {ocrPageCount > 0 && (
+                <span className="ml-2 text-orange-600 font-medium">
+                  · {ocrPageCount} OCR page{ocrPageCount > 1 ? "s" : ""}
+                </span>
+              )}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => copyText(active)}
+              className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
+            >
+              Copy
+            </button>
+            <button
+              onClick={() => handleExport(active, "txt")}
+              className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+            >
+              .txt
+            </button>
+            <button
+              onClick={() => handleExport(active, "docx")}
+              className="rounded-lg bg-red-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-800"
+            >
+              .docx
+            </button>
+            <button
+              onClick={() => handleExport(active, "json")}
+              className="rounded-lg bg-slate-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-800"
+            >
+              .json
+            </button>
+            {results.length > 1 && (
+              <button
+                onClick={downloadAllZip}
+                className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+              >
+                All (.zip)
+              </button>
+            )}
+            <button
+              onClick={reset}
+              className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
+            >
+              New
+            </button>
           </div>
         </div>
-      )}
-      {status === "processing" && (
-        <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">Extracting text from PDF…</p>
-          <ProgressBar progress={progress} label="Processing" />
-        </div>
-      )}
-      {status === "error" && error && (
-        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>
-      )}
-      {status === "done" && text && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div>
-              <p className="font-semibold text-slate-900">Text extracted</p>
-              <p className="text-sm text-slate-500">
-                {pageCount} page{pageCount > 1 ? "s" : ""} · {wordCount.toLocaleString()} words · {charCount.toLocaleString()} characters
-              </p>
+
+        {/* Page tabs + text view */}
+        <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+          {/* Page list */}
+          {active.pages.length > 1 && (
+            <div className="flex flex-wrap gap-1.5 border-b border-slate-200 px-4 py-3 bg-slate-50">
+              {active.pages.map((p) => (
+                <a
+                  key={p.page}
+                  href={`#page-${p.page}`}
+                  className={`rounded px-2.5 py-1 text-xs font-medium transition-colors ${
+                    p.isOcr
+                      ? "bg-orange-100 text-orange-700 hover:bg-orange-200"
+                      : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+                  }`}
+                  title={p.isOcr ? "OCR recognized" : "Native text"}
+                >
+                  P{p.page}
+                  {p.isOcr && " *"}
+                </a>
+              ))}
+              {active.hasOcrPages && (
+                <span className="self-center text-xs text-orange-600 ml-2">
+                  * = OCR recognized
+                </span>
+              )}
             </div>
-            <div className="flex gap-2">
-              <button onClick={copyToClipboard} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Copy Text</button>
-              <button onClick={downloadTxt} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Download .txt</button>
-              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Extract Another</button>
-            </div>
+          )}
+
+          {/* Scrollable text */}
+          <div className="divide-y divide-slate-100 max-h-150 overflow-y-auto">
+            {active.pages.map((p) => (
+              <div key={p.page} id={`page-${p.page}`} className="p-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Page {p.page}
+                  </span>
+                  {p.isOcr && (
+                    <span className="rounded bg-orange-100 px-1.5 py-0.5 text-xs text-orange-600">
+                      OCR
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-slate-700 font-mono whitespace-pre-wrap leading-relaxed">
+                  {p.text}
+                </p>
+              </div>
+            ))}
           </div>
-          <textarea readOnly value={text} rows={20} className="w-full rounded-xl border border-slate-200 bg-white p-4 text-sm font-mono text-slate-700 focus:outline-none resize-y" aria-label="Extracted text" />
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return null;
 }

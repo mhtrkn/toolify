@@ -12,20 +12,20 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "PDF to Text",
   toolDescription:
-    "Extract text from PDF files online for free. Supports both digital and scanned PDFs via OCR. Copy or download extracted text instantly — no registration needed.",
+    "Extract text from PDF files online for free. Supports digital and scanned PDFs with automatic OCR fallback. Export as TXT, DOCX, or JSON. Batch processing, multi-page support — no registration needed.",
   categorySlug: "ocr-tools",
   toolSlug: "pdf-to-text",
   keywords: [
     "pdf to text converter free",
     "extract text from pdf online",
-    "pdf text extractor",
-    "scanned pdf to text ocr",
-    "copy text from pdf free",
-    "pdf to txt converter online",
-    "pdf text recognition free",
-    "convert pdf to plain text",
-    "pdf to text no software",
-    "pdf ocr text extractor free",
+    "scanned pdf ocr extractor",
+    "pdf to docx converter",
+    "pdf text extraction json",
+    "batch pdf to text",
+    "pdf ocr fallback",
+    "pdf to txt online free",
+    "copy text from scanned pdf",
+    "pdf text extractor no signup",
   ],
 });
 
@@ -33,30 +33,32 @@ const FAQS = [
   {
     question: "Does this work with scanned PDFs?",
     answer:
-      "Yes. Scanned PDFs are processed with OCR to recognize text. For best results, use high-quality scans.",
+      "Yes. When Auto-OCR is enabled, pages with no selectable text are automatically processed with OCR so you get text from scanned documents too.",
   },
   {
-    question: "Will formatting like tables be preserved?",
+    question: "What export formats are available?",
     answer:
-      "Plain text is extracted. Complex layouts like tables and columns may flatten into linear text.",
+      "You can export as .txt (plain text), .docx (Word document), or .json (structured data with per-page metadata).",
+  },
+  {
+    question: "Can I process multiple PDFs at once?",
+    answer:
+      "Yes — upload multiple PDFs and they are all processed in one batch. Results are shown in tabs and can be downloaded as a ZIP.",
+  },
+  {
+    question: "How do I know which pages used OCR?",
+    answer:
+      "Pages processed with OCR are marked with an orange 'OCR' badge and an asterisk (*) in the page navigation tabs.",
   },
   {
     question: "Can I extract text from password-protected PDFs?",
     answer:
-      "No. Remove the password protection first before uploading the PDF.",
+      "No. Remove the password first using a PDF password remover, then upload the unlocked file.",
   },
   {
-    question: "Is there a page limit?",
-    answer: "All pages are extracted with no page limit.",
-  },
-  {
-    question: "What is the max file size?",
-    answer: "PDFs up to 100MB are supported.",
-  },
-  {
-    question: "Is my PDF sent to a server?",
+    question: "Is my PDF uploaded to any server?",
     answer:
-      "No. Text extraction runs in your browser using PDF.js. Your file never leaves your device.",
+      "No. Extraction runs entirely in your browser using PDF.js and Tesseract.js. Your files never leave your device.",
   },
 ];
 
@@ -66,7 +68,8 @@ export default function PdfToTextPage() {
       <JsonLd
         data={buildWebAppSchema({
           name: "PDF to Text Extractor",
-          description: "Extract text content from PDF files online for free.",
+          description:
+            "Extract text from digital and scanned PDFs. Supports OCR fallback, batch processing, and TXT/DOCX/JSON export.",
           slug: "pdf-to-text",
           categorySlug: "ocr-tools",
         })}
@@ -84,44 +87,55 @@ export default function PdfToTextPage() {
           { label: "OCR Tools", href: "/ocr-tools" },
           { label: "PDF to Text" },
         ]}
-        title="PDF to Text Extractor – Extract Text from PDF Online Free"
-        description="Extract all text content from a PDF file instantly. Supports digital and scanned PDFs — copy or download as .txt. Processing runs locally for complete privacy."
+        title="PDF to Text — Extract Text from Any PDF Free"
+        description="Extract text from digital or scanned PDFs in seconds. Auto-OCR recognizes text in image-based pages automatically. Export to TXT, DOCX, or JSON. Multi-file batch processing — all in your browser, no uploads."
         howToSteps={[
           {
-            title: "Upload PDF",
-            description: "Click or drag to upload your PDF file (up to 100MB).",
+            title: "Configure Options",
+            description:
+              "Choose the OCR language and toggle auto-OCR for scanned pages.",
           },
           {
-            title: "Extract Text",
+            title: "Upload PDFs",
             description:
-              "Click 'Extract Text' to parse all pages and gather the text content.",
+              "Drop one or more PDF files. Digital and scanned PDFs are both supported.",
           },
           {
-            title: "Copy or Download",
+            title: "Extract & Export",
             description:
-              "Copy the text to your clipboard or download it as a .txt file.",
+              "Review the extracted text page-by-page, then download as .txt, .docx, or .json.",
           },
         ]}
         benefits={[
           {
-            title: "Full Text Extraction",
+            title: "Auto OCR Fallback",
             description:
-              "Extracts text from all pages with page separators for easy navigation.",
+              "Scanned pages with no selectable text are automatically processed with OCR — no manual steps needed.",
           },
           {
-            title: "Word & Character Count",
+            title: "3 Export Formats",
             description:
-              "See word and character counts at a glance after extraction.",
+              "Download as plain text (.txt), Word document (.docx), or structured JSON with per-page metadata.",
+          },
+          {
+            title: "Batch Processing",
+            description:
+              "Upload multiple PDFs and process them all at once. Results zip-downloadable.",
+          },
+          {
+            title: "Per-Page Navigation",
+            description:
+              "Jump to any page in the result view. OCR-processed pages are clearly marked.",
           },
           {
             title: "100% Private",
             description:
-              "Extraction runs in your browser using PDF.js — no server uploads.",
+              "PDF.js and Tesseract.js run locally in your browser. Zero server uploads.",
           },
           {
-            title: "Download as .txt",
+            title: "No File Size Limit",
             description:
-              "Save the extracted text as a plain text file for further use.",
+              "Processes PDFs up to 100 MB with no page limit.",
           },
         ]}
         faqs={FAQS}
