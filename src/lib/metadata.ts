@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://fasttoolify.com").replace(/\/$/, "");
-const SITE_NAME = "Fasttoolify";
+const SITE_NAME = "toolify";
 const SITE_DESCRIPTION =
   "Free online tools for PDF, image, video, and file conversion. Fast, secure, and no registration required.";
 

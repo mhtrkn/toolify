@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
+import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
 
 interface PageResult {
@@ -22,6 +24,7 @@ export default function PdfToJpgClient() {
     setFile(files[0]);
     setResults([]);
     setError(null);
+    toast.success("File Selected", { description: `${files[0].name} is ready to convert.` });
   };
 
   const convert = async () => {
@@ -29,17 +32,13 @@ export default function PdfToJpgClient() {
     setProcessing(true);
     setProgress(10);
     setError(null);
-
     try {
-      // Dynamically import pdfjs-dist to keep bundle small
       const pdfjsLib = await import("pdfjs-dist");
       pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
       const total = pdf.numPages;
       const pages: PageResult[] = [];
-
       for (let i = 1; i <= total; i++) {
         const page = await pdf.getPage(i);
         const viewport = page.getViewport({ scale: 2 });
@@ -51,11 +50,15 @@ export default function PdfToJpgClient() {
         pages.push({ pageNumber: i, dataUrl: canvas.toDataURL("image/jpeg", quality / 100) });
         setProgress(Math.round(10 + (i / total) * 85));
       }
-
       setResults(pages);
       setProgress(100);
+      toast.success("Conversion Complete!", {
+        description: `${pages.length} page${pages.length !== 1 ? "s" : ""} converted to JPG.`,
+      });
     } catch (e) {
-      setError("Could not process this PDF. The file may be corrupted or password-protected.");
+      const msg = "Could not process this PDF. The file may be corrupted or password-protected.";
+      setError(msg);
+      toast.error("Conversion Failed", { description: msg });
       console.error(e);
     } finally {
       setProcessing(false);
@@ -69,7 +72,10 @@ export default function PdfToJpgClient() {
     a.click();
   };
 
-  const downloadAll = () => results.forEach(downloadPage);
+  const downloadAll = () => {
+    results.forEach(downloadPage);
+    toast.success("Downloading All Pages", { description: `${results.length} JPG files are being downloaded.` });
+  };
 
   const reset = () => {
     setFile(null);
@@ -81,13 +87,7 @@ export default function PdfToJpgClient() {
   return (
     <div className="space-y-6">
       {!file && !processing && (
-        <FileUploader
-          accept=".pdf"
-          maxSizeMB={100}
-          onFiles={handleFiles}
-          label="Upload PDF File"
-          hint="Supports PDF up to 100MB"
-        />
+        <FileUploader accept=".pdf" maxSizeMB={100} onFiles={handleFiles} label="Upload PDF File" hint="Supports PDF up to 100MB" />
       )}
 
       {file && results.length === 0 && !processing && (
@@ -99,30 +99,17 @@ export default function PdfToJpgClient() {
               <p className="text-sm text-slate-500">{formatBytes(file.size)}</p>
             </div>
           </div>
-
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
               JPG Quality: <span className="text-red-600">{quality}%</span>
             </label>
-            <input
-              type="range" min={50} max={100} step={5}
-              value={quality}
-              onChange={(e) => setQuality(Number(e.target.value))}
-              className="w-full accent-red-600"
-            />
+            <input type="range" min={50} max={100} step={5} value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="w-full accent-red-600" />
           </div>
-
           <div className="flex gap-3">
-            <button
-              onClick={convert}
-              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-            >
+            <button onClick={convert} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700">
               Convert to JPG
             </button>
-            <button
-              onClick={reset}
-              className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
+            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">
               Change File
             </button>
           </div>
@@ -131,15 +118,13 @@ export default function PdfToJpgClient() {
 
       {processing && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">Converting PDF pages…</p>
-          <ProgressBar progress={progress} label="Processing" />
+          <LottieLoader message="Converting PDF pages…" />
+          <div className="mt-4"><ProgressBar progress={progress} label="Processing" /></div>
         </div>
       )}
 
       {error && (
-        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          {error}
-        </div>
+        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>
       )}
 
       {results.length > 0 && (
@@ -150,37 +135,22 @@ export default function PdfToJpgClient() {
             </h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button
-                  onClick={downloadAll}
-                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-                >
+                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">
                   Download All
                 </button>
               )}
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-              >
+              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
                 Convert Another
               </button>
             </div>
           </div>
-
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {results.map((r) => (
               <div key={r.pageNumber} className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <img
-                  src={r.dataUrl}
-                  alt={`Page ${r.pageNumber}`}
-                  className="w-full object-contain"
-                  loading="lazy"
-                />
+                <img src={r.dataUrl} alt={`Page ${r.pageNumber}`} className="w-full object-contain" loading="lazy" />
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-sm text-slate-600">Page {r.pageNumber}</span>
-                  <button
-                    onClick={() => downloadPage(r)}
-                    className="text-sm font-medium text-red-600 hover:underline"
-                  >
+                  <button onClick={() => { downloadPage(r); toast.success("Downloading", { description: `page-${r.pageNumber}.jpg` }); }} className="text-sm font-medium text-red-600 hover:underline">
                     Download JPG
                   </button>
                 </div>

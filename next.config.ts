@@ -8,8 +8,19 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  // Enable gzip compression for better performance
   compress: true,
+  async headers() {
+    return [
+      {
+        // SharedArrayBuffer required for FFmpeg WASM (video tools)
+        source: "/video-tools/:path*",
+        headers: [
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+          { key: "Cross-Origin-Embedder-Policy", value: "require-corp" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

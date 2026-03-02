@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
@@ -24,6 +25,7 @@ export default function OcrClient() {
     setStatus("ready");
     setError(null);
     setExtractedText("");
+    toast.success("Image Selected", { description: `${f.name} is ready for OCR.` });
   };
 
   const extract = async () => {
@@ -31,7 +33,6 @@ export default function OcrClient() {
     setStatus("processing");
     setProgress(5);
     setError(null);
-
     try {
       const Tesseract = await import("tesseract.js");
       const { data: { text } } = await Tesseract.recognize(file, language, {
@@ -44,11 +45,14 @@ export default function OcrClient() {
       setExtractedText(text.trim());
       setProgress(100);
       setStatus("done");
+      toast.success("Text Extracted!", {
+        description: `${text.trim().length.toLocaleString()} characters extracted from the image.`,
+      });
     } catch (e) {
       console.error(e);
-      setError(
-        "OCR failed. Install tesseract.js to enable OCR: npm install tesseract.js"
-      );
+      const msg = "OCR failed. The image may be too small or unreadable. Try a higher-resolution image.";
+      setError(msg);
+      toast.error("OCR Failed", { description: msg });
       setStatus("error");
     }
   };
@@ -57,6 +61,7 @@ export default function OcrClient() {
     navigator.clipboard.writeText(extractedText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    toast.success("Copied!", { description: "Text copied to clipboard." });
   };
 
   const downloadTxt = () => {
@@ -67,6 +72,7 @@ export default function OcrClient() {
     a.download = (file?.name.replace(/\.[^/.]+$/, "") || "extracted") + ".txt";
     a.click();
     URL.revokeObjectURL(url);
+    toast.success("Downloaded!", { description: "Text file saved to your device." });
   };
 
   const reset = () => {
@@ -95,26 +101,12 @@ export default function OcrClient() {
       {status === "idle" && (
         <>
           <div className="rounded-xl border border-slate-200 bg-white p-5">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Document Language
-            </label>
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none"
-            >
-              {LANGUAGES.map((l) => (
-                <option key={l.code} value={l.code}>{l.label}</option>
-              ))}
+            <label className="block text-sm font-medium text-slate-700 mb-2">Document Language</label>
+            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none">
+              {LANGUAGES.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
             </select>
           </div>
-          <FileUploader
-            accept=".jpg,.jpeg,.png,.bmp,.tiff,.webp"
-            maxSizeMB={20}
-            onFiles={handleFiles}
-            label="Upload Image for OCR"
-            hint="Supports JPG, PNG, BMP, TIFF — up to 20MB"
-          />
+          <FileUploader accept=".jpg,.jpeg,.png,.bmp,.tiff,.webp" maxSizeMB={20} onFiles={handleFiles} label="Upload Image for OCR" hint="Supports JPG, PNG, BMP, TIFF — up to 20MB" />
         </>
       )}
 
@@ -128,35 +120,21 @@ export default function OcrClient() {
             </div>
           </div>
           <div className="flex gap-3">
-            <button
-              onClick={extract}
-              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-            >
-              Extract Text with OCR
-            </button>
-            <button
-              onClick={reset}
-              className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              Change Image
-            </button>
+            <button onClick={extract} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700">Extract Text with OCR</button>
+            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">Change Image</button>
           </div>
         </div>
       )}
 
       {status === "processing" && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">
-            Recognizing text… this may take a moment.
-          </p>
+          <p className="mb-4 text-center font-medium text-slate-700">Recognizing text… this may take a moment.</p>
           <ProgressBar progress={progress} label="OCR Processing" />
         </div>
       )}
 
       {status === "error" && error && (
-        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          {error}
-        </div>
+        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>
       )}
 
       {status === "done" && (
@@ -166,29 +144,14 @@ export default function OcrClient() {
             <div className="flex gap-2">
               <button
                 onClick={copyText}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                  copied
-                    ? "bg-green-100 text-green-700"
-                    : "border border-slate-200 text-slate-600 hover:bg-slate-50"
-                }`}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${copied ? "bg-green-100 text-green-700" : "border border-slate-200 text-slate-600 hover:bg-slate-50"}`}
               >
                 {copied ? "Copied!" : "Copy Text"}
               </button>
-              <button
-                onClick={downloadTxt}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-              >
-                Download .txt
-              </button>
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-              >
-                New Image
-              </button>
+              <button onClick={downloadTxt} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Download .txt</button>
+              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">New Image</button>
             </div>
           </div>
-
           <div className="grid gap-4 sm:grid-cols-2">
             {preview && (
               <div>

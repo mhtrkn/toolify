@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
+import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
 
 interface PdfFile {
@@ -174,8 +175,10 @@ export default function MergePdfClient() {
 
       {processing && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">Merging PDFs…</p>
-          <ProgressBar progress={progress} label="Processing" />
+          <LottieLoader message="Merging PDFs…" />
+          <div className="mt-4">
+            <ProgressBar progress={progress} label="Processing" />
+          </div>
         </div>
       )}
 

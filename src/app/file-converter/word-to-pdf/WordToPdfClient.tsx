@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
@@ -20,6 +21,9 @@ export default function WordToPdfClient() {
     setStatus("ready");
     setError(null);
     setPdfUrl(null);
+    toast.success("File Selected", {
+      description: `${files[0].name} is ready to convert.`,
+    });
   };
 
   const convert = async () => {
@@ -31,7 +35,8 @@ export default function WordToPdfClient() {
     try {
       // Step 1: Convert DOCX → HTML with mammoth
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mammoth = (await import("mammoth")) as any;
+      const mod = (await import("mammoth")) as any;
+      const mammoth = mod.default ?? mod;
       setProgress(20);
 
       const arrayBuffer = await file.arrayBuffer();
@@ -117,15 +122,19 @@ export default function WordToPdfClient() {
       setPdfUrl(URL.createObjectURL(pdfBlob));
       setProgress(100);
       setStatus("done");
+      toast.success("Converted to PDF!", {
+        description: `${file.name.replace(/\.(docx?|doc)$/i, ".pdf")} is ready to download.`,
+      });
     } catch (e) {
       console.error(e);
-      setError(
-        "Could not convert this Word document. Please make sure it is a valid .docx file."
-      );
+      const msg = "Could not convert this Word document. Please make sure it is a valid .docx file.";
+      setError(msg);
       setStatus("error");
-      // Clean up wrapper if it exists
-      const existing = document.body.querySelector("[data-mammoth-wrapper]");
-      if (existing) document.body.removeChild(existing);
+      toast.error("Conversion Failed", { description: msg });
+      // Clean up wrapper if it was appended
+      document.querySelectorAll("body > div[style*='-9999px']").forEach((el) =>
+        document.body.removeChild(el)
+      );
     }
   };
 
@@ -135,6 +144,9 @@ export default function WordToPdfClient() {
     a.href = pdfUrl;
     a.download = file.name.replace(/\.(docx?|doc)$/i, ".pdf");
     a.click();
+    toast.success("Download Started", {
+      description: "Your PDF file is being downloaded.",
+    });
   };
 
   const reset = () => {

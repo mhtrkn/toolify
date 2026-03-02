@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes, downloadBlob } from "@/lib/utils";
@@ -33,9 +34,7 @@ export default function ImageCompressorClient() {
         if (!ctx) return reject(new Error("Canvas not supported"));
         ctx.drawImage(img, 0, 0);
         URL.revokeObjectURL(url);
-
-        const mimeType =
-          file.type === "image/png" ? "image/png" : "image/jpeg";
+        const mimeType = file.type === "image/png" ? "image/png" : "image/jpeg";
         canvas.toBlob(
           (blob) => {
             if (!blob) return reject(new Error("Compression failed"));
@@ -46,10 +45,7 @@ export default function ImageCompressorClient() {
               compressedSize: blob.size,
               blob,
               previewUrl,
-              savings: Math.max(
-                0,
-                Math.round(((file.size - blob.size) / file.size) * 100)
-              ),
+              savings: Math.max(0, Math.round(((file.size - blob.size) / file.size) * 100)),
             });
           },
           mimeType,
@@ -79,6 +75,12 @@ export default function ImageCompressorClient() {
       }
       setResults(processed);
       setProcessing(false);
+      if (processed.length > 0) {
+        const avgSavings = Math.round(processed.reduce((sum, r) => sum + r.savings, 0) / processed.length);
+        toast.success("Images Compressed!", {
+          description: `${processed.length} image${processed.length !== 1 ? "s" : ""} compressed${avgSavings > 0 ? ` — avg ${avgSavings}% saved` : ""}.`,
+        });
+      }
     },
     [quality]
   );
@@ -89,6 +91,7 @@ export default function ImageCompressorClient() {
       const baseName = r.name.replace(/\.[^/.]+$/, "");
       downloadBlob(r.blob, `${baseName}-compressed.${ext}`);
     });
+    toast.success("Downloading All", { description: `${results.length} compressed images are being downloaded.` });
   };
 
   const reset = () => {
@@ -102,18 +105,12 @@ export default function ImageCompressorClient() {
     <div className="space-y-6">
       {results.length === 0 && !processing && (
         <>
-          {/* Quality slider */}
           <div className="rounded-xl border border-slate-200 bg-white p-5">
             <label className="block text-sm font-semibold text-slate-700">
-              Compression Quality:{" "}
-              <span className="text-red-600">{quality}%</span>
+              Compression Quality: <span className="text-red-600">{quality}%</span>
             </label>
             <input
-              type="range"
-              min={10}
-              max={100}
-              step={5}
-              value={quality}
+              type="range" min={10} max={100} step={5} value={quality}
               onChange={(e) => setQuality(Number(e.target.value))}
               className="mt-3 w-full accent-red-600"
               aria-label="Compression quality"
@@ -123,80 +120,39 @@ export default function ImageCompressorClient() {
               <span>Higher quality</span>
             </div>
           </div>
-
-          <FileUploader
-            accept=".jpg,.jpeg,.png,.webp"
-            multiple
-            maxSizeMB={50}
-            onFiles={handleFiles}
-            label="Upload Images to Compress"
-            hint="Supports JPG, PNG, WebP — up to 50MB each"
-          />
+          <FileUploader accept=".jpg,.jpeg,.png,.webp" multiple maxSizeMB={50} onFiles={handleFiles} label="Upload Images to Compress" hint="Supports JPG, PNG, WebP — up to 50MB each" />
         </>
       )}
 
       {processing && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">
-            Compressing images…
-          </p>
+          <p className="mb-4 text-center font-medium text-slate-700">Compressing images…</p>
           <ProgressBar progress={progress} label="Processing" />
         </div>
       )}
 
-      {error && (
-        <div
-          role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
-        >
-          {error}
-        </div>
-      )}
+      {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>}
 
       {results.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-slate-900">
-              {results.length} image{results.length > 1 ? "s" : ""} compressed
-            </h2>
+            <h2 className="font-semibold text-slate-900">{results.length} image{results.length > 1 ? "s" : ""} compressed</h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button
-                  onClick={downloadAll}
-                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-                >
-                  Download All
-                </button>
+                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Download All</button>
               )}
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
-              >
-                Compress More
-              </button>
+              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">Compress More</button>
             </div>
           </div>
-
           {results.map((r, i) => (
-            <div
-              key={i}
-              className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center"
-            >
-              <img
-                src={r.previewUrl}
-                alt={`Compressed ${r.name}`}
-                className="h-20 w-20 rounded-lg object-cover shrink-0"
-              />
+            <div key={i} className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center">
+              <img src={r.previewUrl} alt={`Compressed ${r.name}`} className="h-20 w-20 rounded-lg object-cover shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="truncate font-medium text-slate-900">{r.name}</p>
                 <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-500">
                   <span>Original: {formatBytes(r.originalSize)}</span>
                   <span>Compressed: {formatBytes(r.compressedSize)}</span>
-                  {r.savings > 0 && (
-                    <span className="font-medium text-green-600">
-                      Saved {r.savings}%
-                    </span>
-                  )}
+                  {r.savings > 0 && <span className="font-medium text-green-600">Saved {r.savings}%</span>}
                 </div>
               </div>
               <button
@@ -204,6 +160,7 @@ export default function ImageCompressorClient() {
                   const ext = r.blob.type === "image/png" ? "png" : "jpg";
                   const base = r.name.replace(/\.[^/.]+$/, "");
                   downloadBlob(r.blob, `${base}-compressed.${ext}`);
+                  toast.success("Downloading", { description: `${base}-compressed.${ext}` });
                 }}
                 className="shrink-0 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
               >

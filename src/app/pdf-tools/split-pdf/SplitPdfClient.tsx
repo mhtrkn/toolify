@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
+import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
 
 type Mode = "all" | "range";
@@ -31,22 +33,21 @@ export default function SplitPdfClient() {
     setResults([]);
     setStatus("ready");
 
-    // Get page count
     try {
       const pdfjsLib = await import("pdfjs-dist");
       pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
       const ab = await f.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
       setPageCount(pdf.numPages);
+      toast.success("File Ready", {
+        description: `${f.name} loaded — ${pdf.numPages} pages detected.`,
+      });
     } catch {
       setPageCount(0);
+      toast.success("File Ready", { description: `${f.name} is ready to split.` });
     }
   };
 
-  /**
-   * Parse a range string like "1-3, 5, 7-9" into arrays of 0-based page indices.
-   * Each comma-separated segment becomes one output PDF.
-   */
   const parseSegments = (input: string, total: number): number[][] | null => {
     const segments: number[][] = [];
     const parts = input.split(",").map((s) => s.trim()).filter(Boolean);
@@ -83,7 +84,6 @@ export default function SplitPdfClient() {
 
       let segments: number[][];
       if (mode === "all") {
-        // Each page as its own PDF
         segments = Array.from({ length: total }, (_, i) => [i]);
       } else {
         const parsed = parseSegments(rangeInput, total);
@@ -104,9 +104,7 @@ export default function SplitPdfClient() {
         const copied = await newPdf.copyPages(srcPdf, pages);
         copied.forEach((p) => newPdf.addPage(p));
         const bytes = await newPdf.save({ useObjectStreams: true });
-        const blob = new Blob([bytes as unknown as BlobPart], {
-          type: "application/pdf",
-        });
+        const blob = new Blob([bytes as unknown as BlobPart], { type: "application/pdf" });
 
         let name: string;
         if (mode === "all") {
@@ -124,9 +122,14 @@ export default function SplitPdfClient() {
       setResults(out);
       setProgress(100);
       setStatus("done");
+      toast.success("PDF Split!", {
+        description: `${out.length} file${out.length !== 1 ? "s" : ""} created successfully.`,
+      });
     } catch (e) {
       console.error(e);
-      setError("Could not split this PDF. The file may be encrypted or corrupted.");
+      const msg = "Could not split this PDF. The file may be encrypted or corrupted.";
+      setError(msg);
+      toast.error("Split Failed", { description: msg });
       setStatus("error");
     }
   };
@@ -139,6 +142,9 @@ export default function SplitPdfClient() {
         a.download = r.name;
         a.click();
       }, i * 200);
+    });
+    toast.success("Downloading All Files", {
+      description: `${results.length} PDF files are being downloaded.`,
     });
   };
 
@@ -179,56 +185,29 @@ export default function SplitPdfClient() {
             </div>
           </div>
 
-          {/* Mode selector */}
           <div className="space-y-3">
             <p className="text-sm font-medium text-slate-700">Split mode</p>
             <div className="grid grid-cols-2 gap-3">
               <label
                 className={`flex items-center gap-3 rounded-lg border p-4 cursor-pointer ${
-                  mode === "all"
-                    ? "border-red-500 bg-red-50"
-                    : "border-slate-200 hover:border-slate-300"
+                  mode === "all" ? "border-red-500 bg-red-50" : "border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <input
-                  type="radio"
-                  name="mode"
-                  value="all"
-                  checked={mode === "all"}
-                  onChange={() => setMode("all")}
-                  className="accent-red-600"
-                />
+                <input type="radio" name="mode" value="all" checked={mode === "all"} onChange={() => setMode("all")} className="accent-red-600" />
                 <div>
-                  <p className="font-medium text-slate-800 text-sm">
-                    All Pages
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    Extract each page as a separate PDF
-                  </p>
+                  <p className="font-medium text-slate-800 text-sm">All Pages</p>
+                  <p className="text-xs text-slate-500">Extract each page as a separate PDF</p>
                 </div>
               </label>
               <label
                 className={`flex items-center gap-3 rounded-lg border p-4 cursor-pointer ${
-                  mode === "range"
-                    ? "border-red-500 bg-red-50"
-                    : "border-slate-200 hover:border-slate-300"
+                  mode === "range" ? "border-red-500 bg-red-50" : "border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <input
-                  type="radio"
-                  name="mode"
-                  value="range"
-                  checked={mode === "range"}
-                  onChange={() => setMode("range")}
-                  className="accent-red-600"
-                />
+                <input type="radio" name="mode" value="range" checked={mode === "range"} onChange={() => setMode("range")} className="accent-red-600" />
                 <div>
-                  <p className="font-medium text-slate-800 text-sm">
-                    Custom Range
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    Specify pages or ranges to extract
-                  </p>
+                  <p className="font-medium text-slate-800 text-sm">Custom Range</p>
+                  <p className="text-xs text-slate-500">Specify pages or ranges to extract</p>
                 </div>
               </label>
             </div>
@@ -236,10 +215,7 @@ export default function SplitPdfClient() {
             {mode === "range" && (
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Page ranges{" "}
-                  <span className="font-normal text-slate-400">
-                    (e.g. 1-3, 5, 7-9)
-                  </span>
+                  Page ranges <span className="font-normal text-slate-400">(e.g. 1-3, 5, 7-9)</span>
                 </label>
                 <input
                   type="text"
@@ -248,9 +224,7 @@ export default function SplitPdfClient() {
                   placeholder={`1-${Math.ceil(pageCount / 2)}, ${Math.ceil(pageCount / 2) + 1}-${pageCount}`}
                   className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-400"
                 />
-                <p className="mt-1 text-xs text-slate-400">
-                  Comma-separated segments — each becomes its own PDF
-                </p>
+                <p className="mt-1 text-xs text-slate-400">Comma-separated segments — each becomes its own PDF</p>
               </div>
             )}
           </div>
@@ -263,10 +237,7 @@ export default function SplitPdfClient() {
             >
               Split PDF
             </button>
-            <button
-              onClick={reset}
-              className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
+            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">
               Change File
             </button>
           </div>
@@ -275,18 +246,15 @@ export default function SplitPdfClient() {
 
       {status === "processing" && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">
-            Splitting PDF…
-          </p>
-          <ProgressBar progress={progress} label="Processing" />
+          <LottieLoader message="Splitting PDF…" />
+          <div className="mt-4">
+            <ProgressBar progress={progress} label="Processing" />
+          </div>
         </div>
       )}
 
       {status === "error" && error && (
-        <div
-          role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
-        >
+        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           {error}
         </div>
       )}
@@ -299,37 +267,25 @@ export default function SplitPdfClient() {
             </h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button
-                  onClick={downloadAll}
-                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-                >
+                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">
                   Download All
                 </button>
               )}
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-              >
+              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
                 Split Another
               </button>
             </div>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white overflow-hidden divide-y divide-slate-100">
             {results.map((r, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 px-4 py-3"
-              >
+              <div key={i} className="flex items-center gap-3 px-4 py-3">
                 <span className="text-lg shrink-0">📄</span>
-                <span className="flex-1 min-w-0 truncate text-sm text-slate-700">
-                  {r.name}
-                </span>
-                <span className="text-xs text-slate-400 shrink-0">
-                  {formatBytes(r.size)}
-                </span>
+                <span className="flex-1 min-w-0 truncate text-sm text-slate-700">{r.name}</span>
+                <span className="text-xs text-slate-400 shrink-0">{formatBytes(r.size)}</span>
                 <a
                   href={r.url}
                   download={r.name}
+                  onClick={() => toast.success("Downloading", { description: r.name })}
                   className="shrink-0 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
                 >
                   Download

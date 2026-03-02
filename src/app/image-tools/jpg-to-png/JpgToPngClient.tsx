@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import { formatBytes } from "@/lib/utils";
 
@@ -20,50 +21,39 @@ export default function JpgToPngClient() {
   const convertFiles = useCallback(async (files: File[]) => {
     setError(null);
     setProcessing(true);
-
     const converted: ConvertedFile[] = [];
-
     for (const file of files) {
       try {
         const url = URL.createObjectURL(file);
         const img = new Image();
-
         await new Promise<void>((resolve, reject) => {
           img.onload = () => resolve();
           img.onerror = () => reject(new Error(`Failed to load ${file.name}`));
           img.src = url;
         });
-
         const canvas = document.createElement("canvas");
         canvas.width = img.naturalWidth;
         canvas.height = img.naturalHeight;
         const ctx = canvas.getContext("2d")!;
         ctx.drawImage(img, 0, 0);
         URL.revokeObjectURL(url);
-
         const blob = await new Promise<Blob>((resolve, reject) => {
-          canvas.toBlob(
-            (b) => (b ? resolve(b) : reject(new Error("Conversion failed"))),
-            "image/png"
-          );
+          canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("Conversion failed"))), "image/png");
         });
-
         const pngUrl = URL.createObjectURL(blob);
-        converted.push({
-          id: crypto.randomUUID(),
-          originalName: file.name,
-          originalSize: file.size,
-          url: pngUrl,
-          size: blob.size,
-        });
+        converted.push({ id: crypto.randomUUID(), originalName: file.name, originalSize: file.size, url: pngUrl, size: blob.size });
       } catch (e) {
         console.error(e);
         setError(`Failed to convert ${file.name}. Please try another file.`);
       }
     }
-
     setResults((prev) => [...prev, ...converted]);
     setProcessing(false);
+    if (converted.length > 0) {
+      toast.success("Conversion Complete!", {
+        description: `${converted.length} file${converted.length !== 1 ? "s" : ""} converted to PNG.`,
+      });
+    }
   }, []);
 
   const downloadAll = () => {
@@ -75,6 +65,7 @@ export default function JpgToPngClient() {
         a.click();
       }, i * 150);
     });
+    toast.success("Downloading All", { description: `${results.length} PNG files are being downloaded.` });
   };
 
   const reset = () => {
@@ -97,64 +88,35 @@ export default function JpgToPngClient() {
       {processing && (
         <div className="rounded-xl border border-slate-200 bg-white p-6 text-center">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-red-200 border-t-red-600" />
-          <p className="mt-3 text-sm font-medium text-slate-600">
-            Converting to PNG…
-          </p>
+          <p className="mt-3 text-sm font-medium text-slate-600">Converting to PNG…</p>
         </div>
       )}
 
-      {error && (
-        <div
-          role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
-        >
-          {error}
-        </div>
-      )}
+      {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>}
 
       {results.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-slate-900">
-              {results.length} file{results.length > 1 ? "s" : ""} converted
-            </h2>
+            <h2 className="font-semibold text-slate-900">{results.length} file{results.length > 1 ? "s" : ""} converted</h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button
-                  onClick={downloadAll}
-                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-                >
-                  Download All
-                </button>
+                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Download All</button>
               )}
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-              >
-                Clear
-              </button>
+              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Clear</button>
             </div>
           </div>
-
           <div className="rounded-xl border border-slate-200 bg-white overflow-hidden divide-y divide-slate-100">
             {results.map((r) => (
               <div key={r.id} className="flex items-center gap-3 px-4 py-3">
-                <img
-                  src={r.url}
-                  alt={r.originalName}
-                  className="h-10 w-10 rounded object-cover shrink-0"
-                />
+                <img src={r.url} alt={r.originalName} className="h-10 w-10 rounded object-cover shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="truncate text-sm font-medium text-slate-700">
-                    {r.originalName.replace(/\.(jpg|jpeg)$/i, ".png")}
-                  </p>
-                  <p className="text-xs text-slate-400">
-                    {formatBytes(r.originalSize)} → {formatBytes(r.size)}
-                  </p>
+                  <p className="truncate text-sm font-medium text-slate-700">{r.originalName.replace(/\.(jpg|jpeg)$/i, ".png")}</p>
+                  <p className="text-xs text-slate-400">{formatBytes(r.originalSize)} → {formatBytes(r.size)}</p>
                 </div>
                 <a
                   href={r.url}
                   download={r.originalName.replace(/\.(jpg|jpeg)$/i, ".png")}
+                  onClick={() => toast.success("Downloading", { description: r.originalName.replace(/\.(jpg|jpeg)$/i, ".png") })}
                   className="shrink-0 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
                 >
                   Download PNG

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
@@ -21,6 +22,7 @@ export default function PdfToTextClient() {
     setError(null);
     setText("");
     setPageCount(0);
+    toast.success("File Selected", { description: `${files[0].name} is ready for text extraction.` });
   };
 
   const extract = async () => {
@@ -28,41 +30,35 @@ export default function PdfToTextClient() {
     setStatus("processing");
     setProgress(10);
     setError(null);
-
     try {
       const pdfjsLib = await import("pdfjs-dist");
       pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
       setProgress(20);
-
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
       const total = pdf.numPages;
       setPageCount(total);
       setProgress(30);
-
       const pages: string[] = [];
-
       for (let i = 1; i <= total; i++) {
         const page = await pdf.getPage(i);
         const content = await page.getTextContent();
-        const pageText = content.items
-          .map((item) => ("str" in item ? item.str : ""))
-          .join(" ")
-          .replace(/\s+/g, " ")
-          .trim();
-
+        const pageText = content.items.map((item) => ("str" in item ? item.str : "")).join(" ").replace(/\s+/g, " ").trim();
         pages.push(`--- Page ${i} ---\n${pageText}`);
         setProgress(30 + Math.round((i / total) * 65));
       }
-
       setText(pages.join("\n\n"));
       setProgress(100);
       setStatus("done");
+      const wordCount = pages.join(" ").split(/\s+/).filter((w) => w.length > 0).length;
+      toast.success("Text Extracted!", {
+        description: `${total} page${total !== 1 ? "s" : ""} · ${wordCount.toLocaleString()} words extracted.`,
+      });
     } catch (e) {
       console.error(e);
-      setError(
-        "Could not extract text from this PDF. The file may be image-based, encrypted, or corrupted."
-      );
+      const msg = "Could not extract text from this PDF. The file may be image-based, encrypted, or corrupted.";
+      setError(msg);
+      toast.error("Extraction Failed", { description: msg });
       setStatus("error");
     }
   };
@@ -76,11 +72,13 @@ export default function PdfToTextClient() {
     a.download = file.name.replace(".pdf", ".txt");
     a.click();
     URL.revokeObjectURL(url);
+    toast.success("Downloaded!", { description: "Text file saved to your device." });
   };
 
   const copyToClipboard = async () => {
     if (!text) return;
     await navigator.clipboard.writeText(text);
+    toast.success("Copied!", { description: "Text copied to clipboard." });
   };
 
   const reset = () => {
@@ -92,23 +90,14 @@ export default function PdfToTextClient() {
     setPageCount(0);
   };
 
-  const wordCount = text
-    ? text.split(/\s+/).filter((w) => w.length > 0).length
-    : 0;
+  const wordCount = text ? text.split(/\s+/).filter((w) => w.length > 0).length : 0;
   const charCount = text.length;
 
   return (
     <div className="space-y-6">
       {status === "idle" && (
-        <FileUploader
-          accept=".pdf"
-          maxSizeMB={100}
-          onFiles={handleFiles}
-          label="Upload PDF File"
-          hint="Supports PDF up to 100MB"
-        />
+        <FileUploader accept=".pdf" maxSizeMB={100} onFiles={handleFiles} label="Upload PDF File" hint="Supports PDF up to 100MB" />
       )}
-
       {status === "ready" && file && (
         <div className="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
           <div className="flex items-center gap-3">
@@ -120,46 +109,24 @@ export default function PdfToTextClient() {
           </div>
           <div className="rounded-lg bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-600">
             Text is extracted from native PDF text layers. For scanned/image PDFs, use the{" "}
-            <a href="/ocr-tools/ocr-image-to-text" className="text-red-600 underline">
-              OCR Image to Text
-            </a>{" "}
+            <a href="/ocr-tools/ocr-image-to-text" className="text-red-600 underline">OCR Image to Text</a>{" "}
             tool instead.
           </div>
           <div className="flex gap-3">
-            <button
-              onClick={extract}
-              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-            >
-              Extract Text
-            </button>
-            <button
-              onClick={reset}
-              className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              Change File
-            </button>
+            <button onClick={extract} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700">Extract Text</button>
+            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">Change File</button>
           </div>
         </div>
       )}
-
       {status === "processing" && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">
-            Extracting text from PDF…
-          </p>
+          <p className="mb-4 text-center font-medium text-slate-700">Extracting text from PDF…</p>
           <ProgressBar progress={progress} label="Processing" />
         </div>
       )}
-
       {status === "error" && error && (
-        <div
-          role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
-        >
-          {error}
-        </div>
+        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>
       )}
-
       {status === "done" && text && (
         <div className="space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
@@ -170,34 +137,12 @@ export default function PdfToTextClient() {
               </p>
             </div>
             <div className="flex gap-2">
-              <button
-                onClick={copyToClipboard}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-              >
-                Copy Text
-              </button>
-              <button
-                onClick={downloadTxt}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-              >
-                Download .txt
-              </button>
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-              >
-                Extract Another
-              </button>
+              <button onClick={copyToClipboard} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Copy Text</button>
+              <button onClick={downloadTxt} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Download .txt</button>
+              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Extract Another</button>
             </div>
           </div>
-
-          <textarea
-            readOnly
-            value={text}
-            rows={20}
-            className="w-full rounded-xl border border-slate-200 bg-white p-4 text-sm font-mono text-slate-700 focus:outline-none resize-y"
-            aria-label="Extracted text"
-          />
+          <textarea readOnly value={text} rows={20} className="w-full rounded-xl border border-slate-200 bg-white p-4 text-sm font-mono text-slate-700 focus:outline-none resize-y" aria-label="Extracted text" />
         </div>
       )}
     </div>
