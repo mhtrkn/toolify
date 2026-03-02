@@ -1,24 +1,24 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import ToolCard from "@/components/tools/ToolCard";
-import JsonLd from "@/components/seo/JsonLd";
-import { CATEGORIES, getPopularTools } from "@/lib/tools";
-import { buildWebSiteSchema } from "@/lib/structured-data";
-import { SITE_DESCRIPTION } from "@/lib/metadata";
 import SearchBar from "@/components/home/SearchBar";
-import Image from "next/image";
+import JsonLd from "@/components/seo/JsonLd";
+import ToolCard from "@/components/tools/ToolCard";
 import { whyChooseData } from "@/lib/mockdata";
+import { buildWebSiteSchema } from "@/lib/structured-data";
+import { CATEGORIES, getPopularTools } from "@/lib/tools";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Online Tools – PDF, Image, Video & File Converter",
-  description: "Free online tools for PDF, image, video, and file conversion. Merge PDFs, compress images, convert Word to PDF — fast, secure, no registration required.",
+  title: "Free Online Tools – PDF, Image, Video & File Converter | toolify",
+  description:
+    "Free online tools for PDF, image, video, and file conversion. Merge PDFs, compress images, convert Word to PDF — fast, secure, no registration required.",
   alternates: { canonical: "/" },
-  keywords: "free online tools, pdf tools, image compressor, video to mp3, word to pdf, qr code generator, url shortener, ocr image to text, file converter online",
+  keywords:
+    "free online tools, pdf tools, image compressor, video to mp3, word to pdf, qr code generator, url shortener, ocr image to text, file converter online",
 };
 
 export default function HomePage() {
   const popularTools = getPopularTools();
-
 
   return (
     <main>
@@ -57,7 +57,12 @@ export default function HomePage() {
                 href={`/${cat.slug}`}
                 className={`group flex flex-col items-center gap-3 rounded-xl border p-6 text-center transition-all hover:shadow-md ${cat.bgColor} ${cat.borderColor}`}
               >
-                <Image src={`/icons/${cat.icon}.png`} alt={`${cat.name} tools icon`} width={36} height={36} />
+                <Image
+                  src={`/icons/${cat.icon}.png`}
+                  alt={`${cat.name} tools icon`}
+                  width={36}
+                  height={36}
+                />
                 <div>
                   <p className={`font-semibold ${cat.color}`}>{cat.name}</p>
                 </div>
@@ -95,10 +100,19 @@ export default function HomePage() {
                 className="rounded-xl border border-slate-200 bg-white p-6 text-center"
               >
                 <div className="flex items-center justify-center mb-2">
-                  <Image src={`/icons/${feature.icon}.png`} alt={`${feature.title} icon`} width={32} height={32} />
+                  <Image
+                    src={`/icons/${feature.icon}.png`}
+                    alt={`${feature.title} icon`}
+                    width={32}
+                    height={32}
+                  />
                 </div>
-                <h3 className="font-semibold text-slate-900">{feature.title}</h3>
-                <p className="mt-2 text-sm text-slate-500">{feature.description}</p>
+                <h3 className="font-semibold text-slate-900">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-sm text-slate-500">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -115,34 +129,95 @@ export default function HomePage() {
             toolify offers a comprehensive suite of free online tools to handle
             your everyday file conversion, editing, and optimization needs.
             Whether you need to{" "}
-            <Link href="/pdf-tools/merge-pdf" className="text-red-600 hover:underline">merge PDF files</Link>,{" "}
-            <Link href="/pdf-tools/compress-pdf" className="text-red-600 hover:underline">compress a PDF</Link>,{" "}
-            <Link href="/pdf-tools/pdf-to-jpg" className="text-red-600 hover:underline">convert PDF to JPG</Link>,
-            or{" "}
-            <Link href="/pdf-tools/word-to-pdf" className="text-red-600 hover:underline">convert Word to PDF</Link>{" "}
+            <Link
+              href="/pdf-tools/merge-pdf"
+              className="text-red-600 hover:underline"
+            >
+              merge PDF files
+            </Link>
+            ,{" "}
+            <Link
+              href="/pdf-tools/compress-pdf"
+              className="text-red-600 hover:underline"
+            >
+              compress a PDF
+            </Link>
+            ,{" "}
+            <Link
+              href="/pdf-tools/pdf-to-jpg"
+              className="text-red-600 hover:underline"
+            >
+              convert PDF to JPG
+            </Link>
+            , or{" "}
+            <Link
+              href="/pdf-tools/word-to-pdf"
+              className="text-red-600 hover:underline"
+            >
+              convert Word to PDF
+            </Link>{" "}
             — we have you covered with 9 dedicated PDF tools.
           </p>
-          <h3 className="mt-5 text-lg font-semibold text-slate-900">Image, Video &amp; File Tools</h3>
+          <h3 className="mt-5 text-lg font-semibold text-slate-900">
+            Image, Video &amp; File Tools
+          </h3>
           <p className="mt-2 text-slate-600">
             Need to{" "}
-            <Link href="/image-tools/image-compressor" className="text-blue-600 hover:underline">compress an image</Link>{" "}
+            <Link
+              href="/image-tools/image-compressor"
+              className="text-blue-600 hover:underline"
+            >
+              compress an image
+            </Link>{" "}
             before uploading? Or{" "}
-            <Link href="/image-tools/image-resize" className="text-blue-600 hover:underline">resize a photo</Link>{" "}
-            to exact pixel dimensions? Our image tools handle JPG, PNG, and WebP in seconds.
-            For video, extract audio with our{" "}
-            <Link href="/video-tools/video-to-mp3" className="text-purple-600 hover:underline">Video to MP3 converter</Link>{" "}
+            <Link
+              href="/image-tools/image-resize"
+              className="text-blue-600 hover:underline"
+            >
+              resize a photo
+            </Link>{" "}
+            to exact pixel dimensions? Our image tools handle JPG, PNG, and WebP
+            in seconds. For video, extract audio with our{" "}
+            <Link
+              href="/video-tools/video-to-mp3"
+              className="text-purple-600 hover:underline"
+            >
+              Video to MP3 converter
+            </Link>{" "}
             or{" "}
-            <Link href="/video-tools/compress-video" className="text-purple-600 hover:underline">compress a video</Link>{" "}
+            <Link
+              href="/video-tools/compress-video"
+              className="text-purple-600 hover:underline"
+            >
+              compress a video
+            </Link>{" "}
             directly in your browser.
           </p>
-          <h3 className="mt-5 text-lg font-semibold text-slate-900">Web &amp; Developer Tools</h3>
+          <h3 className="mt-5 text-lg font-semibold text-slate-900">
+            Web &amp; Developer Tools
+          </h3>
           <p className="mt-2 text-slate-600">
             Generate a{" "}
-            <Link href="/web-tools/qr-code-generator" className="text-indigo-600 hover:underline">QR code for any URL or WiFi network</Link>,
-            shorten links with our{" "}
-            <Link href="/web-tools/url-shortener" className="text-indigo-600 hover:underline">free URL shortener</Link>,
-            or extract text from images using our{" "}
-            <Link href="/ocr-tools/ocr-image-to-text" className="text-orange-600 hover:underline">OCR image to text</Link>{" "}
+            <Link
+              href="/web-tools/qr-code-generator"
+              className="text-indigo-600 hover:underline"
+            >
+              QR code for any URL or WiFi network
+            </Link>
+            , shorten links with our{" "}
+            <Link
+              href="/web-tools/url-shortener"
+              className="text-indigo-600 hover:underline"
+            >
+              free URL shortener
+            </Link>
+            , or extract text from images using our{" "}
+            <Link
+              href="/ocr-tools/ocr-image-to-text"
+              className="text-orange-600 hover:underline"
+            >
+              OCR image to text
+            </Link>{" "}
             tool. All tools are designed to be beginner-friendly with a clean,
             distraction-free interface — no software, no signup, just results.
           </p>

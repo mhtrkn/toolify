@@ -22,7 +22,7 @@ export function buildMetadata({
   const image = ogImage || `${SITE_URL}/og-default.png`;
 
   return {
-    title: `${title} | ${SITE_NAME}`,
+    title,
     description,
     keywords: keywords?.join(", "),
     alternates: {
