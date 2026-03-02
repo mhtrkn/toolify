@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Toolify",
+  title: "Privacy Policy | toolify",
   description:
     "Read our Privacy Policy to learn how we collect, use, and protect your data.",
   robots: "index, follow",
