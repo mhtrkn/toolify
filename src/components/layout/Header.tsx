@@ -26,7 +26,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
@@ -41,7 +41,7 @@ export default function Header() {
         {/* Mobile menu button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 lg:hidden"
           aria-label="Toggle menu"
         >
           <svg

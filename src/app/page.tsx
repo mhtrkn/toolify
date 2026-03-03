@@ -79,9 +79,9 @@ export default function HomePage() {
           <p className="mt-2 text-slate-500">
             Most-used tools trusted by millions of users every day.
           </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
             {popularTools.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
+              <ToolCard isHomepage key={tool.slug} tool={tool} />
             ))}
           </div>
         </div>

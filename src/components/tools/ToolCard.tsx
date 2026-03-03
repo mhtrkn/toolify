@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Tool, ToolCategoryType } from "@/types/tool";
 
 interface ToolCardProps {
+  isHomepage?: boolean;
   tool: Tool;
 }
 
@@ -87,7 +88,7 @@ const styles: Record<
   },
 };
 
-export default function ToolCard({ tool }: ToolCardProps) {
+export default function ToolCard({ isHomepage = false, tool }: ToolCardProps) {
   const s = styles[tool.category];
 
   return (
@@ -168,7 +169,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
         <div className="flex-1" />
 
         {/* Format tags */}
-        {tool.acceptedFormats && (
+        {tool.acceptedFormats && !isHomepage && (
           <div className="flex flex-wrap items-center gap-1">
             {tool.acceptedFormats.slice(0, 3).map((fmt) => (
               <span

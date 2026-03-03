@@ -101,14 +101,16 @@ export default function Footer() {
                   <li key={tool.slug}>
                     <Link
                       href={`/${cat.slug}/${tool.slug}`}
-                      className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-900"
+                      className="inline-flex items-center gap-1.5 text-xs text-slate-500 transition-colors hover:text-slate-900"
                     >
                       {tool.name}
                       {tool.popular && (
                         <span
-                          className="inline-block h-1.5 w-1.5 rounded-full bg-red-500"
+                          className="inline-block text-xs rounded-full text-amber-500"
                           title="Popular"
-                        />
+                        >
+                          ★
+                        </span>
                       )}
                     </Link>
                   </li>
@@ -140,14 +142,16 @@ export default function Footer() {
                     <li key={tool.slug}>
                       <Link
                         href={`/${cat.slug}/${tool.slug}`}
-                        className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-900"
+                        className="inline-flex items-center gap-1.5 text-xs text-slate-500 transition-colors hover:text-slate-900"
                       >
                         {tool.name}
                         {tool.popular && (
                           <span
-                            className="inline-block h-1.5 w-1.5 rounded-full bg-red-500"
+                            className="inline-block text-xs rounded-full text-amber-500"
                             title="Popular"
-                          />
+                          >
+                            ★
+                          </span>
                         )}
                       </Link>
                     </li>
