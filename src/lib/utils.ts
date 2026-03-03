@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 export function formatBytes(bytes: number, decimals = 2): string {
   if (bytes === 0) return "0 Bytes";
   const k = 1024;
@@ -24,6 +26,10 @@ export function downloadBlob(blob: Blob, filename: string): void {
 
 export function clsx(...classes: (string | boolean | undefined | null)[]): string {
   return classes.filter(Boolean).join(" ");
+}
+
+export function cn(...classes: (string | boolean | undefined | null)[]): string {
+  return twMerge(classes.filter(Boolean).join(" "));
 }
 
 export function slugify(text: string): string {

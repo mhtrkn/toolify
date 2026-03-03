@@ -55,7 +55,7 @@ export default function HomePage() {
               <Link
                 key={cat.slug}
                 href={`/${cat.slug}`}
-                className={`group flex flex-col items-center gap-3 rounded-xl border p-6 text-center transition-all hover:shadow-md ${cat.bgColor} ${cat.borderColor}`}
+                className={`group flex flex-col items-center gap-3 bg-linear-to-br from-25% rounded-xl border p-6 text-center shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-xl ${cat.bgColor} ${cat.borderColor}`}
               >
                 <Image
                   src={`/icons/${cat.icon}.png`}
@@ -125,7 +125,7 @@ export default function HomePage() {
           <h2 className="text-xl font-bold text-slate-900">
             The Best Free Online Tools for Everyday Tasks
           </h2>
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-slate-600 mb-8">
             toolify offers a comprehensive suite of free online tools to handle
             your everyday file conversion, editing, and optimization needs.
             Whether you need to{" "}
@@ -161,7 +161,7 @@ export default function HomePage() {
           <h3 className="mt-5 text-lg font-semibold text-slate-900">
             Image, Video &amp; File Tools
           </h3>
-          <p className="mt-2 text-slate-600">
+          <p className="mt-2 text-slate-600 mb-8">
             Need to{" "}
             <Link
               href="/image-tools/image-compressor"

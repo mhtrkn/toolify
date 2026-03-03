@@ -6,6 +6,13 @@ import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes, downloadBlob } from "@/lib/utils";
 import { generateDocxBlob } from "@/lib/docx-generator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type Status = "idle" | "ready" | "processing" | "done" | "error";
@@ -183,17 +190,18 @@ export default function OcrClient() {
           <label className="block text-sm font-semibold text-slate-700 mb-2">
             Recognition Language
           </label>
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
-          >
-            {LANGUAGES.map((l) => (
-              <option key={l.code} value={l.code}>
-                {l.label}
-              </option>
-            ))}
-          </select>
+          <Select value={language} onValueChange={setLanguage}>
+            <SelectTrigger className="py-2.5">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {LANGUAGES.map((l) => (
+                <SelectItem key={l.code} value={l.code}>
+                  {l.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {language === "auto" && (
             <p className="mt-2 text-xs text-slate-500">
               Runs OCR with English, Turkish, German, French, Spanish, Arabic

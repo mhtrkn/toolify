@@ -4,6 +4,13 @@ import { useState, useRef } from "react";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type PageSize = "a4" | "letter";
 
@@ -122,15 +129,19 @@ export default function HtmlToPdfClient() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <label className="text-sm font-medium text-slate-700">Page size:</label>
-          <select
+          <Select
             value={pageSize}
-            onChange={(e) => setPageSize(e.target.value as PageSize)}
-            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
+            onValueChange={(v) => setPageSize(v as PageSize)}
           >
-            {(Object.entries(PAGE_DIMS) as [PageSize, { label: string }][]).map(([k, v]) => (
-              <option key={k} value={k}>{v.label}</option>
-            ))}
-          </select>
+            <SelectTrigger className="w-auto py-1.5">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.entries(PAGE_DIMS) as [PageSize, { label: string }][]).map(([k, v]) => (
+                <SelectItem key={k} value={k}>{v.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <button
           onClick={convert}

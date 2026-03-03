@@ -18,7 +18,7 @@ export default function Footer() {
     <footer className="border-t border-slate-200 bg-slate-50 text-slate-700">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         {/* CTA Banner */}
-        <div className="mb-14 overflow-hidden rounded-2xl bg-linear-to-br from-red-600 to-red-500 px-8 py-7 shadow-sm">
+        <div className="mb-14 overflow-hidden rounded-2xl bg-linear-to-br from-red-500 to-red-900 px-8 py-7 shadow-sm">
           <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-red-200">
@@ -171,13 +171,16 @@ export default function Footer() {
           <p className="text-xs text-slate-400">
             © {new Date().getFullYear()} toolify. All rights reserved.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
             <Link
               href="/privacy-and-policy"
               className="text-xs text-slate-400 transition-colors hover:text-slate-700"
             >
               Privacy Policy
             </Link>
+            <span className="text-slate-400 transition-colors hover:text-slate-700">
+              ∙
+            </span>
             <Link
               href="/terms"
               className="text-xs text-slate-400 transition-colors hover:text-slate-700"

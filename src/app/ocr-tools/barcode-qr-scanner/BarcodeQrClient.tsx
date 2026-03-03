@@ -3,6 +3,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { downloadBlob } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type MainTab = "scan-image" | "scan-webcam" | "generate";
@@ -279,17 +286,18 @@ function ScanFromWebcam() {
   return (
     <div className="space-y-4">
       {cameras.length > 1 && (
-        <select
-          value={selectedCamera}
-          onChange={(e) => setSelectedCamera(e.target.value)}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-red-500 focus:outline-none"
-        >
-          {cameras.map((c) => (
-            <option key={c.deviceId} value={c.deviceId}>
-              {c.label}
-            </option>
-          ))}
-        </select>
+        <Select value={selectedCamera} onValueChange={setSelectedCamera}>
+          <SelectTrigger className="py-2.5">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {cameras.map((c) => (
+              <SelectItem key={c.deviceId} value={c.deviceId}>
+                {c.label || c.deviceId}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       )}
 
       {/* Video element always mounted but hidden when not scanning */}
@@ -470,15 +478,16 @@ function QrGenerator() {
               <Field label="Password" placeholder="••••••••" value={fields.password} onChange={(v) => set("password", v)} type="password" />
               <div>
                 <label className="block text-xs font-semibold text-slate-600 mb-1">Security</label>
-                <select
-                  value={fields.security}
-                  onChange={(e) => set("security", e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-500 focus:outline-none"
-                >
-                  {(["WPA", "WEP", "nopass"] as WifiSecurity[]).map((s) => (
-                    <option key={s} value={s}>{s === "nopass" ? "None (open)" : s}</option>
-                  ))}
-                </select>
+                <Select value={fields.security} onValueChange={(v) => set("security", v)}>
+                  <SelectTrigger className="py-2">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {(["WPA", "WEP", "nopass"] as WifiSecurity[]).map((s) => (
+                      <SelectItem key={s} value={s}>{s === "nopass" ? "None (open)" : s}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </>
           )}
@@ -526,16 +535,17 @@ function QrGenerator() {
             </div>
             <div>
               <label className="block text-xs text-slate-600 mb-1">Error Correction</label>
-              <select
-                value={ecLevel}
-                onChange={(e) => setEcLevel(e.target.value as "L" | "M" | "Q" | "H")}
-                className="w-full rounded border border-slate-300 bg-white px-2 py-1.5 text-xs focus:border-red-500 focus:outline-none"
-              >
-                <option value="L">L — Low (7%)</option>
-                <option value="M">M — Medium (15%)</option>
-                <option value="Q">Q — Quartile (25%)</option>
-                <option value="H">H — High (30%)</option>
-              </select>
+              <Select value={ecLevel} onValueChange={(v) => setEcLevel(v as "L" | "M" | "Q" | "H")}>
+                <SelectTrigger className="py-1.5 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="L">L — Low (7%)</SelectItem>
+                  <SelectItem value="M">M — Medium (15%)</SelectItem>
+                  <SelectItem value="Q">Q — Quartile (25%)</SelectItem>
+                  <SelectItem value="H">H — High (30%)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>

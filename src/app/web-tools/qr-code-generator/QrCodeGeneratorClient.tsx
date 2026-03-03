@@ -2,6 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type QrType = "url" | "wifi" | "vcard";
 type WifiSecurity = "WPA" | "WEP" | "nopass";
@@ -177,15 +184,19 @@ export default function QrCodeGeneratorClient() {
               </div>
               <div>
                 <label className="block text-xs font-medium text-slate-500 mb-1">Security</label>
-                <select
+                <Select
                   value={wifi.security}
-                  onChange={(e) => setWifi((p) => ({ ...p, security: e.target.value as WifiSecurity }))}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
+                  onValueChange={(v) => setWifi((p) => ({ ...p, security: v as WifiSecurity }))}
                 >
-                  <option value="WPA">WPA/WPA2</option>
-                  <option value="WEP">WEP</option>
-                  <option value="nopass">No password</option>
-                </select>
+                  <SelectTrigger className="py-2">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="WPA">WPA/WPA2</SelectItem>
+                    <SelectItem value="WEP">WEP</SelectItem>
+                    <SelectItem value="nopass">No password</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <label className="flex items-center gap-2 text-sm text-slate-600">
                 <input
