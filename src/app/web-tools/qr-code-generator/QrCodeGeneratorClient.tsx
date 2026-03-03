@@ -237,7 +237,7 @@ export default function QrCodeGeneratorClient() {
               step={32}
               value={size}
               onChange={(e) => setSize(Number(e.target.value))}
-              className="w-full"
+              className="w-full accent-red-600"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
