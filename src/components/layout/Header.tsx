@@ -72,7 +72,7 @@ export default function Header() {
       {/* Mobile Nav */}
       <div
         className={clsx(
-          "border-t border-slate-200 bg-white px-4 md:hidden transition duration-300",
+          "border-t border-slate-200 bg-white px-4 lg:hidden transition duration-300",
           mobileOpen ? "h-auto opacity-100 py-3" : "h-0 opacity-0",
         )}
       >
