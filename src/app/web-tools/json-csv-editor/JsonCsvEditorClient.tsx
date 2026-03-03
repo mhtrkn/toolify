@@ -50,7 +50,7 @@ function JsonTree({
       <div className="ml-4 border-l border-slate-200 pl-3">
         {Object.entries(data).map(([key, val]) => (
           <div key={key} className="py-0.5 flex items-start gap-1 flex-wrap">
-            <span className="text-xs font-mono font-semibold text-indigo-700">{key}:</span>{" "}
+            <span className="text-xs font-mono font-semibold text-red-700">{key}:</span>{" "}
             <JsonTree data={val} onChange={onChange} path={[...path, key]} />
           </div>
         ))}
@@ -88,7 +88,7 @@ function EditableLeaf({ value, onChange }: { value: string; onChange: (v: string
         onChange={(e) => setDraft(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => { if (e.key === "Enter") commit(); if (e.key === "Escape") setEditing(false); }}
-        className="rounded border border-indigo-300 px-1 py-0 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-indigo-400 w-40"
+        className="rounded border border-red-300 px-1 py-0 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-red-400 w-40"
       />
     );
   }
@@ -213,7 +213,7 @@ export default function JsonCsvEditorClient() {
               onClick={() => setMode(m)}
               className={`rounded-lg border px-4 py-1.5 text-sm font-medium transition-colors ${
                 mode === m
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                  ? "border-red-500 bg-red-50 text-red-700"
                   : "border-slate-200 text-slate-600 hover:border-slate-300"
               }`}
             >
@@ -231,7 +231,7 @@ export default function JsonCsvEditorClient() {
           {hasData && (
             <button
               onClick={exportFile}
-              className="rounded-lg bg-indigo-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700"
+              className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-red-700"
             >
               Export {mode.toUpperCase()}
             </button>
@@ -252,7 +252,7 @@ export default function JsonCsvEditorClient() {
         onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
         onDragLeave={() => setIsDragging(false)}
         className={`rounded-xl border-2 border-dashed transition-colors ${
-          isDragging ? "border-indigo-400 bg-indigo-50" : "border-slate-300 bg-white"
+          isDragging ? "border-red-400 bg-red-50" : "border-slate-300 bg-white"
         }`}
       >
         <textarea

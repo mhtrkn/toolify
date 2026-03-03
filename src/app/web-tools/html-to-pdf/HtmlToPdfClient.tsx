@@ -17,7 +17,7 @@ const SAMPLE_HTML = `<!DOCTYPE html>
 <head>
   <style>
     body { font-family: Arial, sans-serif; margin: 40px; color: #1e293b; }
-    h1 { color: #4f46e5; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px; }
+    h1 { color: #e7000b; border-bottom: 2px solid #e0e7ff; padding-bottom: 8px; }
     p  { line-height: 1.7; color: #475569; }
     .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-top: 16px; }
   </style>
@@ -125,7 +125,7 @@ export default function HtmlToPdfClient() {
           <select
             value={pageSize}
             onChange={(e) => setPageSize(e.target.value as PageSize)}
-            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
           >
             {(Object.entries(PAGE_DIMS) as [PageSize, { label: string }][]).map(([k, v]) => (
               <option key={k} value={k}>{v.label}</option>
@@ -135,7 +135,7 @@ export default function HtmlToPdfClient() {
         <button
           onClick={convert}
           disabled={processing || !html.trim()}
-          className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50"
         >
           Convert to PDF
         </button>

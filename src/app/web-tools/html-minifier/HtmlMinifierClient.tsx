@@ -166,7 +166,7 @@ export default function HtmlMinifierClient() {
         <div className="flex gap-3">
           <button
             onClick={copy}
-            className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700"
+            className="rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
           >
             Copy Minified HTML
           </button>

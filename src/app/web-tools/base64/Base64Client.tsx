@@ -121,7 +121,7 @@ export default function Base64Client() {
               onClick={() => handleDirectionChange(d)}
               className={`rounded-lg border px-4 py-1.5 text-sm font-medium transition-colors ${
                 direction === d
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                  ? "border-red-500 bg-red-50 text-red-700"
                   : "border-slate-200 text-slate-600 hover:border-slate-300"
               }`}
             >
@@ -137,7 +137,7 @@ export default function Base64Client() {
               onClick={() => { setInputMode(m); setText(""); setResult(""); setError(null); setFileName(null); setFileBase64(null); }}
               className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors ${
                 inputMode === m
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                  ? "border-red-500 bg-red-50 text-red-700"
                   : "border-slate-200 text-slate-600 hover:border-slate-300"
               }`}
             >
@@ -172,7 +172,7 @@ export default function Base64Client() {
             />
             <button
               onClick={() => fileRef.current?.click()}
-              className="flex w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-300 py-8 text-sm text-slate-500 hover:border-indigo-300 hover:bg-indigo-50/30 transition-colors"
+              className="flex w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-300 py-8 text-sm text-slate-500 hover:border-red-300 hover:bg-red-50/30 transition-colors"
             >
               <span className="text-2xl">📁</span>
               {fileName ? (
@@ -209,7 +209,7 @@ export default function Base64Client() {
           <div className="flex gap-2 border-t border-slate-100 px-4 py-3">
             <button
               onClick={() => copy(result)}
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
+              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
             >
               Copy Result
             </button>

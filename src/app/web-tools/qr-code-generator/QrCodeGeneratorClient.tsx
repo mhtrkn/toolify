@@ -126,7 +126,7 @@ export default function QrCodeGeneratorClient() {
                 onClick={() => setQrType(t)}
                 className={`flex-1 rounded-lg border py-2 text-sm font-medium transition-colors ${
                   qrType === t
-                    ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                    ? "border-red-500 bg-red-50 text-red-700"
                     : "border-slate-200 text-slate-600 hover:border-slate-300"
                 }`}
               >
@@ -148,7 +148,7 @@ export default function QrCodeGeneratorClient() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://example.com"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
               />
             </div>
           )}
@@ -162,7 +162,7 @@ export default function QrCodeGeneratorClient() {
                   value={wifi.ssid}
                   onChange={(e) => setWifi((p) => ({ ...p, ssid: e.target.value }))}
                   placeholder="MyNetwork"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
                 />
               </div>
               <div>
@@ -172,7 +172,7 @@ export default function QrCodeGeneratorClient() {
                   value={wifi.password}
                   onChange={(e) => setWifi((p) => ({ ...p, password: e.target.value }))}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
                 />
               </div>
               <div>
@@ -180,7 +180,7 @@ export default function QrCodeGeneratorClient() {
                 <select
                   value={wifi.security}
                   onChange={(e) => setWifi((p) => ({ ...p, security: e.target.value as WifiSecurity }))}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
                 >
                   <option value="WPA">WPA/WPA2</option>
                   <option value="WEP">WEP</option>
@@ -215,7 +215,7 @@ export default function QrCodeGeneratorClient() {
                     value={vcard[key as keyof VCardData]}
                     onChange={(e) => setVCard((p) => ({ ...p, [key]: e.target.value }))}
                     placeholder={placeholder}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
                   />
                 </div>
               ))}
@@ -296,7 +296,7 @@ export default function QrCodeGeneratorClient() {
           <div className="flex gap-3">
             <button
               onClick={download}
-              className="flex-1 rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white hover:bg-indigo-700"
+              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
             >
               Download PNG
             </button>

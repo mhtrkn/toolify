@@ -72,13 +72,13 @@ export default function UrlShortenerClient() {
             onChange={(e) => { setUrl(e.target.value); setError(null); }}
             onKeyDown={(e) => e.key === "Enter" && shorten()}
             placeholder="https://example.com/very/long/url/that/needs/shortening"
-            className="flex-1 rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+            className="flex-1 rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
             disabled={loading}
           />
           <button
             onClick={shorten}
             disabled={loading || !url.trim()}
-            className="rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50 sm:shrink-0"
+            className="rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50 sm:shrink-0"
           >
             {loading ? "Shortening…" : "Shorten URL"}
           </button>
@@ -113,7 +113,7 @@ export default function UrlShortenerClient() {
                     href={item.short}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-indigo-600 font-semibold text-sm hover:underline"
+                    className="text-red-600 font-semibold text-sm hover:underline"
                   >
                     {item.short}
                   </a>
