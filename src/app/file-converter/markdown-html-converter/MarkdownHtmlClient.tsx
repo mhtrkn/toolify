@@ -2,77 +2,94 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
+import DOMPurify from "isomorphic-dompurify"; // Güvenlik için eklendi
 
 type Mode = "md-to-html" | "html-to-md";
 
 export default function MarkdownHtmlClient() {
   const [mode, setMode] = useState<Mode>("md-to-html");
   const [input, setInput] = useState(
-    "# Hello World\n\nThis is **bold** and *italic* text.\n\n## Features\n\n- Live preview\n- Bidirectional conversion\n- Download result\n\n> Blockquote example\n\n```\ncode block\n```"
+    "# Hello World\n\nThis is **bold** and *italic* text.\n\n## Features\n\n- Live preview\n- Bidirectional conversion\n- Download result\n\n> Blockquote example\n\n```\ncode block\n```",
   );
   const [output, setOutput] = useState("");
   const [converting, setConverting] = useState(false);
 
-  const convert = useCallback(
-    async (text: string) => {
-      if (!text.trim()) { setOutput(""); return; }
-      setConverting(true);
-      try {
-        if (mode === "md-to-html") {
-          const { marked } = await import("marked");
-          const html = await marked(text, { breaks: true, gfm: true });
-          setOutput(String(html));
-        } else {
-          const TurndownService = (await import("turndown")).default;
-          const td = new TurndownService({ headingStyle: "atx", codeBlockStyle: "fenced" });
-          setOutput(td.turndown(text));
-        }
-      } catch {
-        setOutput("// Conversion error — check your input");
-      } finally {
-        setConverting(false);
+  const convert = useCallback(async (text: string, currentMode: Mode) => {
+    if (!text.trim()) {
+      setOutput("");
+      return;
+    }
+    setConverting(true);
+    try {
+      if (currentMode === "md-to-html") {
+        const { marked } = await import("marked");
+        // Markdown'ı HTML'e çevir ve XSS saldırılarına karşı temizle
+        const html = await marked.parse(text, { breaks: true, gfm: true });
+        setOutput(DOMPurify.sanitize(html));
+      } else {
+        const TurndownService = (await import("turndown")).default;
+        const td = new TurndownService({
+          headingStyle: "atx",
+          codeBlockStyle: "fenced",
+        });
+        setOutput(td.turndown(text));
       }
-    },
-    [mode]
-  );
+    } catch (error) {
+      console.error("Conversion Error:", error);
+      setOutput("// Conversion error — check your input");
+    } finally {
+      setConverting(false);
+    }
+  }, []);
 
-  // Debounced live conversion
+  // Debounced live conversion - mode değişimini de takip eder
   useEffect(() => {
-    const id = setTimeout(() => convert(input), 300);
+    const id = setTimeout(() => convert(input, mode), 300);
     return () => clearTimeout(id);
-  }, [input, convert]);
+  }, [input, mode, convert]);
 
   const download = () => {
     const ext = mode === "md-to-html" ? "html" : "md";
     const mime = mode === "md-to-html" ? "text/html" : "text/markdown";
     const blob = new Blob([output], { type: mime });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
+    a.href = url;
     a.download = `converted.${ext}`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+    // Tarayıcının download'ı başlatması için kısa süre bekle
+    setTimeout(() => URL.revokeObjectURL(url), 100);
     toast.success("Download Started", { description: `converted.${ext}` });
   };
 
   const copyOutput = () => {
-    navigator.clipboard.writeText(output).then(() =>
-      toast.success("Copied to clipboard")
-    );
+    if (!output) return;
+    navigator.clipboard
+      .writeText(output)
+      .then(() => toast.success("Copied to clipboard"))
+      .catch(() => toast.error("Failed to copy to clipboard"));
   };
 
   const switchMode = () => {
-    setMode((m) => {
-      const next: Mode = m === "md-to-html" ? "html-to-md" : "md-to-html";
-      setInput(output);
-      return next;
-    });
+    // Output boşsa swap yapma, sadece mode değiştir
+    if (!output) {
+      setMode(mode === "md-to-html" ? "html-to-md" : "md-to-html");
+      return;
+    }
+    const nextMode = mode === "md-to-html" ? "html-to-md" : "md-to-html";
+    setInput(output);
+    setMode(nextMode);
   };
 
   const isMdMode = mode === "md-to-html";
 
   return (
     <div className="space-y-4">
-      <p className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-500">
-        Files are automatically deleted after processing. All conversion happens in your browser.
+      <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700">
+        Files are automatically deleted after processing. All conversion happens
+        in your browser.
       </p>
 
       {/* Toolbar */}
@@ -135,18 +152,25 @@ export default function MarkdownHtmlClient() {
             className="h-80 w-full resize-none rounded-xl border border-slate-200 bg-white p-4 font-mono text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={isMdMode ? "# Start typing Markdown here…" : "<h1>Start typing HTML here…</h1>"}
+            placeholder={
+              isMdMode
+                ? "# Start typing Markdown here…"
+                : "<h1>Start typing HTML here…</h1>"
+            }
             spellCheck={false}
           />
         </div>
 
-        {/* Output */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
               {isMdMode ? "HTML Output" : "Markdown Output"}
             </p>
-            {converting && <span className="text-xs text-slate-400 animate-pulse">Converting…</span>}
+            {converting && (
+              <span className="text-xs text-slate-400 animate-pulse">
+                Converting…
+              </span>
+            )}
           </div>
           {isMdMode ? (
             <div className="h-80 overflow-auto rounded-xl border border-slate-200 bg-white p-4">
@@ -165,7 +189,6 @@ export default function MarkdownHtmlClient() {
         </div>
       </div>
 
-      {/* Raw HTML view toggle for MD→HTML mode */}
       {isMdMode && output && (
         <details className="rounded-xl border border-slate-200 bg-white">
           <summary className="cursor-pointer px-4 py-3 text-xs font-medium text-slate-500 hover:text-slate-700">

@@ -83,7 +83,7 @@ export default function CsvJsonClient() {
   return (
     <div className="space-y-6">
       {/* Privacy notice */}
-      <p className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-500">
+      <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700">
         Files are automatically deleted after processing. All conversion happens in your browser.
       </p>
 

@@ -45,17 +45,24 @@ export default function ImageToolsPage() {
 
   return (
     <main className="min-h-screen bg-slate-50">
-      <JsonLd data={buildBreadcrumbSchema([
-        { name: "Home", url: SITE_URL },
-        { name: "Image Tools", url: `${SITE_URL}/image-tools` },
-      ])} />
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: "Home", url: SITE_URL },
+          { name: "Image Tools", url: `${SITE_URL}/image-tools` },
+        ])}
+      />
       <JsonLd data={buildFaqSchema(FAQS)} />
 
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl">
-              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="Image tools icon" />
+              <Image
+                src={`/icons/${category.icon}.png`}
+                width={36}
+                height={36}
+                alt="Image tools icon"
+              />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -70,28 +77,35 @@ export default function ImageToolsPage() {
       <section className="px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {tools.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
-            ))}
+            {tools
+              .slice()
+              .sort((a, b) => Number(b.popular ?? 0) - Number(a.popular ?? 0))
+              .map((tool) => (
+                <ToolCard key={tool.slug} tool={tool} />
+              ))}
           </div>
         </div>
       </section>
 
       <section className="border-t border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-xl font-bold text-slate-900">Free Image Editing Tools</h2>
+          <h2 className="text-xl font-bold text-slate-900">
+            Free Image Editing Tools
+          </h2>
           <p className="mt-3 text-slate-600">
-            toolify provides powerful, free image tools that run directly in your
-            browser. Compress large photos before uploading, resize images to
-            exact pixel dimensions, or convert between image formats — all without
-            installing any software.
+            toolify provides powerful, free image tools that run directly in
+            your browser. Compress large photos before uploading, resize images
+            to exact pixel dimensions, or convert between image formats — all
+            without installing any software.
           </p>
         </div>
       </section>
 
       <section className="px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-xl font-bold text-slate-900">Frequently Asked Questions</h2>
+          <h2 className="text-xl font-bold text-slate-900">
+            Frequently Asked Questions
+          </h2>
           <div className="mt-6 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
             {FAQS.map((faq, i) => (
               <div key={i} className="px-6 py-5">

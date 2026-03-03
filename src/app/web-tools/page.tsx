@@ -82,9 +82,12 @@ export default function WebToolsPage() {
       <section className="px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {tools.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
-            ))}
+            {tools
+              .slice()
+              .sort((a, b) => Number(b.popular ?? 0) - Number(a.popular ?? 0))
+              .map((tool) => (
+                <ToolCard key={tool.slug} tool={tool} />
+              ))}
           </div>
         </div>
       </section>

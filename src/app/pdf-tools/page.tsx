@@ -62,7 +62,12 @@ export default function PdfToolsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-start md:items-center gap-3">
             <div className="flex min-w-12 min-h-12 h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-xl md:text-2xl">
-              <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="PDF tools icon" />
+              <Image
+                src={`/icons/${category.icon}.png`}
+                width={36}
+                height={36}
+                alt="PDF tools icon"
+              />
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -78,9 +83,12 @@ export default function PdfToolsPage() {
       <section className="px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {tools.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
-            ))}
+            {tools
+              .slice()
+              .sort((a, b) => Number(b.popular ?? 0) - Number(a.popular ?? 0))
+              .map((tool) => (
+                <ToolCard key={tool.slug} tool={tool} />
+              ))}
           </div>
         </div>
       </section>

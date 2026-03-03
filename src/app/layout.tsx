@@ -34,7 +34,11 @@ export const metadata: Metadata = {
     "video to mp3",
     "file converter",
     "ocr",
+    "privacy-first online tools",
+    "no limits file converter",
+    "secure pdf editor",
   ],
+
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
   openGraph: {
@@ -42,14 +46,32 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: `${SITE_NAME} – Free Online Tools`,
     description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/icons/logo.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} Preview`,
+      },
+    ],
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
+    title: `${SITE_NAME} | Free Online Tools`,
+    description: SITE_DESCRIPTION,
+    images: ["/icons/logo.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   other: {
     "google-adsense-account": "ca-pub-8788445317754676",
