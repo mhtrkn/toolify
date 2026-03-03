@@ -592,7 +592,7 @@ export default function JsonViewerClient() {
 
           {/* Raw JSON */}
           {viewMode === "raw" && (
-            <div className="overflow-auto rounded-xl border border-slate-800 bg-slate-900 p-4 max-h-[600px]">
+            <div className="overflow-auto rounded-xl border border-slate-800 bg-slate-900 p-4 max-h-150">
               <pre
                 className="text-xs font-mono leading-relaxed"
                 dangerouslySetInnerHTML={{
