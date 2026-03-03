@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type QrType = "url" | "wifi" | "vcard";
 type WifiSecurity = "WPA" | "WEP" | "nopass";
@@ -150,12 +152,11 @@ export default function QrCodeGeneratorClient() {
           {qrType === "url" && (
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">URL / Link</label>
-              <input
+              <Input
                 type="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://example.com"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
               />
             </div>
           )}
@@ -164,22 +165,20 @@ export default function QrCodeGeneratorClient() {
             <>
               <div>
                 <label className="block text-xs font-medium text-slate-500 mb-1">Network Name (SSID)</label>
-                <input
+                <Input
                   type="text"
                   value={wifi.ssid}
                   onChange={(e) => setWifi((p) => ({ ...p, ssid: e.target.value }))}
                   placeholder="MyNetwork"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
                 />
               </div>
               <div>
                 <label className="block text-xs font-medium text-slate-500 mb-1">Password</label>
-                <input
+                <Input
                   type="text"
                   value={wifi.password}
                   onChange={(e) => setWifi((p) => ({ ...p, password: e.target.value }))}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
                 />
               </div>
               <div>
@@ -199,11 +198,9 @@ export default function QrCodeGeneratorClient() {
                 </Select>
               </div>
               <label className="flex items-center gap-2 text-sm text-slate-600">
-                <input
-                  type="checkbox"
+                <Checkbox
                   checked={wifi.hidden}
-                  onChange={(e) => setWifi((p) => ({ ...p, hidden: e.target.checked }))}
-                  className="rounded"
+                  onCheckedChange={(c) => setWifi((p) => ({ ...p, hidden: c as boolean }))}
                 />
                 Hidden network
               </label>
@@ -221,12 +218,11 @@ export default function QrCodeGeneratorClient() {
               ].map(({ key, label, placeholder }) => (
                 <div key={key}>
                   <label className="block text-xs font-medium text-slate-500 mb-1">{label}</label>
-                  <input
+                  <Input
                     type="text"
                     value={vcard[key as keyof VCardData]}
                     onChange={(e) => setVCard((p) => ({ ...p, [key]: e.target.value }))}
                     placeholder={placeholder}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
                   />
                 </div>
               ))}

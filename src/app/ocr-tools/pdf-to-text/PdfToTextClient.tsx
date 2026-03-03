@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type Status = "idle" | "ready" | "processing" | "done" | "error";
@@ -254,11 +255,9 @@ export default function PdfToTextClient() {
           </div>
 
           <label className="flex cursor-pointer items-center gap-3 select-none">
-            <input
-              type="checkbox"
+            <Checkbox
               checked={ocrFallback}
-              onChange={(e) => setOcrFallback(e.target.checked)}
-              className="h-4 w-4 accent-red-600 cursor-pointer"
+              onCheckedChange={(c) => setOcrFallback(c as boolean)}
             />
             <span className="text-sm text-slate-700">
               Auto-OCR scanned pages{" "}

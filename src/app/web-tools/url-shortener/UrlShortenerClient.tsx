@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
+import { Input } from "@/components/ui/input";
 
 interface ShortenedLink {
   original: string;
@@ -66,13 +67,13 @@ export default function UrlShortenerClient() {
           Enter a long URL to shorten
         </label>
         <div className="flex gap-3 flex-col sm:flex-row">
-          <input
+          <Input
             type="url"
             value={url}
             onChange={(e) => { setUrl(e.target.value); setError(null); }}
             onKeyDown={(e) => e.key === "Enter" && shorten()}
             placeholder="https://example.com/very/long/url/that/needs/shortening"
-            className="flex-1 rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
+            className="flex-1 rounded-xl px-4 py-3"
             disabled={loading}
           />
           <button

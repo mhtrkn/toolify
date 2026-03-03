@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import { formatBytes, downloadBlob } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 type Tab = "resize" | "crop" | "rotate" | "flip";
 type OutputFormat = "jpg" | "png" | "webp";
@@ -447,26 +448,26 @@ export default function ImageEditorClient() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block mb-1 text-xs font-semibold text-slate-600">Width (px)</label>
-                  <input
+                  <Input
                     type="number" min={1} value={resizeW}
                     onChange={(e) => {
                       const v = Math.max(1, parseInt(e.target.value) || 1);
                       setResizeW(v);
                       if (aspectLock) setResizeH(Math.round(v / origRatioRef.current));
                     }}
-                    className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
+                    className="border-slate-200"
                   />
                 </div>
                 <div>
                   <label className="block mb-1 text-xs font-semibold text-slate-600">Height (px)</label>
-                  <input
+                  <Input
                     type="number" min={1} value={resizeH}
                     onChange={(e) => {
                       const v = Math.max(1, parseInt(e.target.value) || 1);
                       setResizeH(v);
                       if (aspectLock) setResizeW(Math.round(v * origRatioRef.current));
                     }}
-                    className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-300"
+                    className="border-slate-200"
                   />
                 </div>
               </div>

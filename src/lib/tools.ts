@@ -9,7 +9,7 @@ export const CATEGORIES: Category[] = [
       "Convert, merge, split, and edit PDF files online for free. No installation required.",
     icon: "pdfv2",
     color: "text-red-600",
-    bgColor: "from-red-50/50 to-red-200",
+    bgColor: "from-red-50/25 to-red-100",
     borderColor: "border-red-200",
   },
   {
@@ -20,7 +20,7 @@ export const CATEGORIES: Category[] = [
       "Compress, resize, convert, and edit images online. Supports JPG, PNG, WebP and more.",
     icon: "image",
     color: "text-blue-600",
-    bgColor: "from-blue-50/50 to-blue-200",
+    bgColor: "from-blue-50/25 to-blue-100",
     borderColor: "border-blue-200",
   },
   {
@@ -31,7 +31,7 @@ export const CATEGORIES: Category[] = [
       "Convert video formats, extract audio, compress videos online without software.",
     icon: "record",
     color: "text-purple-600",
-    bgColor: "from-purple-50/50 to-purple-200",
+    bgColor: "from-purple-50/25 to-purple-100",
     borderColor: "border-purple-200",
   },
   {
@@ -42,7 +42,7 @@ export const CATEGORIES: Category[] = [
       "Convert files between formats instantly. Supports documents, spreadsheets, and more.",
     icon: "file",
     color: "text-green-600",
-    bgColor: "from-green-50/50 to-green-200",
+    bgColor: "from-green-50/25 to-green-100",
     borderColor: "border-green-200",
   },
   {
@@ -53,7 +53,7 @@ export const CATEGORIES: Category[] = [
       "Extract text from images and PDFs using AI-powered optical character recognition.",
     icon: "qcr",
     color: "text-orange-600",
-    bgColor: "from-orange-50/50 to-orange-200",
+    bgColor: "from-orange-50/25 to-orange-100",
     borderColor: "border-orange-200",
   },
   {
@@ -64,7 +64,7 @@ export const CATEGORIES: Category[] = [
       "Free online utilities for developers and designers — QR codes, color palettes, Base64, JSON/CSV editor, HTML tools, and more.",
     icon: "web",
     color: "text-indigo-600",
-    bgColor: "from-indigo-50/50 to-indigo-200",
+    bgColor: "from-indigo-50/25 to-indigo-100",
     borderColor: "border-indigo-200",
   },
 ];

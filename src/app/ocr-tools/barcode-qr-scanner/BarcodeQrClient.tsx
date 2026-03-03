@@ -598,8 +598,6 @@ function Field({
   type?: string;
   multiline?: boolean;
 }) {
-  const base =
-    "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500";
   return (
     <div>
       <label className="block text-xs font-semibold text-slate-600 mb-1">{label}</label>
@@ -609,15 +607,15 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={`${base} resize-none`}
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 resize-none"
         />
       ) : (
-        <input
+        <Input
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={base}
+          className="focus:border-red-500 focus:ring-red-500"
         />
       )}
     </div>

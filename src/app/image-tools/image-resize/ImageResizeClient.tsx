@@ -6,6 +6,8 @@ import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes, downloadBlob } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ResizeResult {
   name: string;
@@ -117,16 +119,16 @@ export default function ImageResizeClient() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Width (px)</label>
-                <input type="number" value={width} min={1} max={10000} onChange={(e) => onWidthChange(Number(e.target.value))} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500" />
+                <Input type="number" value={width} min={1} max={10000} onChange={(e) => onWidthChange(Number(e.target.value))} className="focus:border-red-500 focus:ring-red-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Height (px)</label>
-                <input type="number" value={height} min={1} max={10000} onChange={(e) => onHeightChange(Number(e.target.value))} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500" />
+                <Input type="number" value={height} min={1} max={10000} onChange={(e) => onHeightChange(Number(e.target.value))} className="focus:border-red-500 focus:ring-red-500" />
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
               <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
-                <input type="checkbox" checked={keepAspect} onChange={(e) => setKeepAspect(e.target.checked)} className="rounded border-slate-300 accent-red-600" />
+                <Checkbox checked={keepAspect} onCheckedChange={(c) => setKeepAspect(c as boolean)} />
                 Keep aspect ratio
               </label>
               <div className="flex items-center gap-2">

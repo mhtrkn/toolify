@@ -5,7 +5,8 @@ import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
-import { formatBytes } from "@/lib/utils";
+import { formatBytes, cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 type Status = "idle" | "ready" | "processing" | "done" | "error";
 
@@ -132,12 +133,12 @@ export default function ProtectPdfClient() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
               <div className="relative">
-                <input
+                <Input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setError(null); }}
                   placeholder="Enter password"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 pr-16 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-400"
+                  className="pr-16 focus:ring-red-400"
                   autoComplete="new-password"
                 />
                 <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600">
@@ -148,12 +149,19 @@ export default function ProtectPdfClient() {
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Confirm Password</label>
-              <input
+              <Input
                 type={showPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => { setConfirmPassword(e.target.value); setError(null); }}
                 placeholder="Re-enter password"
-                className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-1 ${passwordMismatch ? "border-red-400 focus:border-red-400 focus:ring-red-400" : passwordsMatch ? "border-green-400 focus:border-green-400 focus:ring-green-400" : "border-slate-300 focus:border-red-400 focus:ring-red-400"}`}
+                className={cn(
+                  "focus:ring-1",
+                  passwordMismatch
+                    ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                    : passwordsMatch
+                    ? "border-green-400 focus:border-green-400 focus:ring-green-400"
+                    : "focus:border-red-400 focus:ring-red-400"
+                )}
                 autoComplete="new-password"
               />
               {passwordMismatch && <p className="mt-1 text-xs text-red-600">Passwords do not match</p>}

@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes, downloadBlob } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { generateDocxBlob } from "@/lib/docx-generator";
 import {
   Select,
@@ -89,12 +91,12 @@ function SearchReplacePanel({
       </p>
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="relative">
-          <input
+          <Input
             type="text"
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search…"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-500 focus:outline-none pr-14"
+            className="pr-14 focus:border-red-500 focus:ring-0"
           />
           {matchCount !== null && (
             <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400">
@@ -102,24 +104,22 @@ function SearchReplacePanel({
             </span>
           )}
         </div>
-        <input
+        <Input
           type="text"
           value={replace}
           onChange={(e) => setReplace(e.target.value)}
           placeholder="Replace with…"
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-red-500 focus:outline-none"
+          className="focus:border-red-500 focus:ring-0"
         />
       </div>
       <div className="flex items-center justify-between">
         <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
-          <input
-            type="checkbox"
+          <Checkbox
             checked={caseSensitive}
-            onChange={(e) => {
-              setCaseSensitive(e.target.checked);
+            onCheckedChange={(c) => {
+              setCaseSensitive(c as boolean);
               countMatches(search);
             }}
-            className="accent-red-600"
           />
           Case sensitive
         </label>

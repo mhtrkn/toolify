@@ -60,10 +60,10 @@ export default function PdfToolsPage() {
       {/* Header */}
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-2xl">
+          <div className="flex items-start md:items-center gap-3">
+            <div className="flex min-w-12 min-h-12 h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-xl md:text-2xl">
               <Image src={`/icons/${category.icon}.png`} width={36} height={36} alt="PDF tools icon" />
-            </span>
+            </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
                 PDF Tools – Free Online PDF Converter

@@ -6,6 +6,7 @@ import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 type Mode = "all" | "range";
 type Status = "idle" | "ready" | "processing" | "done" | "error";
@@ -217,12 +218,12 @@ export default function SplitPdfClient() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">
                   Page ranges <span className="font-normal text-slate-400">(e.g. 1-3, 5, 7-9)</span>
                 </label>
-                <input
+                <Input
                   type="text"
                   value={rangeInput}
                   onChange={(e) => setRangeInput(e.target.value)}
                   placeholder={`1-${Math.ceil(pageCount / 2)}, ${Math.ceil(pageCount / 2) + 1}-${pageCount}`}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-red-400 focus:outline-none focus:ring-1 focus:ring-red-400"
+                  className="focus:ring-red-400"
                 />
                 <p className="mt-1 text-xs text-slate-400">Comma-separated segments — each becomes its own PDF</p>
               </div>

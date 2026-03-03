@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
 
 /* ---------- Color math helpers ---------- */
 
@@ -204,7 +205,7 @@ export default function ColorPaletteClient() {
             className="h-12 w-12 cursor-pointer rounded-lg border border-slate-300 p-0.5"
             aria-label="Color picker"
           />
-          <input
+          <Input
             type="text"
             value={inputVal}
             onChange={(e) => {
@@ -212,7 +213,7 @@ export default function ColorPaletteClient() {
               applyHex(e.target.value);
             }}
             placeholder="#6366f1"
-            className="w-36 rounded-lg border border-slate-300 px-3 py-2 font-mono text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-300"
+            className="w-36 font-mono focus:border-indigo-400 focus:ring-indigo-300"
           />
           {rgb && (
             <span className="text-sm text-slate-500">
