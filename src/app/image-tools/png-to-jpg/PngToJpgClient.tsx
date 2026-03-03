@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
+import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
 
 interface ConvertedFile {
@@ -103,9 +104,8 @@ export default function PngToJpgClient() {
       />
 
       {processing && (
-        <div className="rounded-xl border border-slate-200 bg-white p-6 text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-red-200 border-t-red-600" />
-          <p className="mt-3 text-sm font-medium text-slate-600">Converting to JPG…</p>
+        <div className="rounded-xl border border-slate-200 bg-white p-8">
+          <LottieLoader message="Converting to JPG…" />
         </div>
       )}
 

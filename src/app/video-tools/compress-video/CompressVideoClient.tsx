@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
+import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
 
@@ -134,8 +135,9 @@ export default function CompressVideoClient() {
       )}
       {status === "processing" && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">Compressing video… this may take a few minutes for large files.</p>
-          <ProgressBar progress={progress} label="Compressing" />
+          <LottieLoader message="Compressing video…" />
+          <p className="mt-2 text-center text-sm text-slate-500">This may take a few minutes for large files.</p>
+          <div className="mt-4"><ProgressBar progress={progress} label="Compressing" /></div>
         </div>
       )}
       {status === "error" && error && (

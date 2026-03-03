@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
+import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes, downloadBlob } from "@/lib/utils";
 
@@ -227,12 +228,9 @@ export default function ImageFormatConverterClient() {
       )}
 
       {processing && (
-        <div className="rounded-xl border border-slate-200 bg-white p-8 text-center">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <span className="animate-spin text-2xl">⚙️</span>
-            <p className="font-medium text-slate-700">Converting images…</p>
-          </div>
-          <ProgressBar progress={progress} label="Converting" />
+        <div className="rounded-xl border border-slate-200 bg-white p-8">
+          <LottieLoader message="Converting images…" />
+          <div className="mt-4"><ProgressBar progress={progress} label="Converting" /></div>
         </div>
       )}
 

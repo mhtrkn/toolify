@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
+import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
 import { escapeXml } from "@/lib/converters/data-format";
@@ -224,8 +225,8 @@ export default function TxtDocxClient() {
 
       {status === "processing" && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">Converting…</p>
-          <ProgressBar progress={progress} label="Processing" />
+          <LottieLoader message="Converting…" />
+          <div className="mt-4"><ProgressBar progress={progress} label="Processing" /></div>
         </div>
       )}
 

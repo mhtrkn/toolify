@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
+import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
 
@@ -104,8 +105,9 @@ export default function VideoToMp3Client() {
       )}
       {status === "processing" && (
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="mb-4 text-center font-medium text-slate-700">Extracting audio… this may take a moment for large files.</p>
-          <ProgressBar progress={progress} label="Converting" />
+          <LottieLoader message="Extracting audio…" />
+          <p className="mt-2 text-center text-sm text-slate-500">This may take a moment for large files.</p>
+          <div className="mt-4"><ProgressBar progress={progress} label="Converting" /></div>
         </div>
       )}
       {status === "error" && error && (
