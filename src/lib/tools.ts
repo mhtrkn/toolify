@@ -80,7 +80,7 @@ export const TOOLS: Tool[] = [
     category: "pdf",
     categorySlug: "pdf-tools",
     categoryName: "PDF Tools",
-    icon: "📄→🖼️",
+    icon: "📄",
     keywords: ["pdf to jpg converter", "convert pdf to image online free", "pdf to jpg high quality", "extract images from pdf", "pdf page to jpeg", "pdf to image converter", "convert pdf to jpg without adobe", "pdf to jpg bulk download", "export pdf pages as images", "pdf to jpeg free online"],
     popular: true,
     acceptedFormats: [".pdf"],

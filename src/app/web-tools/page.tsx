@@ -5,6 +5,7 @@ import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/metadata";
+import Image from "next/image";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Web Tools",
@@ -60,7 +61,12 @@ export default function WebToolsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3">
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-2xl">
-              🛠️
+              <Image
+                src={`/icons/web.png`}
+                alt="Web tools - Free Online Web Developer Utilites"
+                width={36}
+                height={36}
+              />
             </span>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -91,9 +97,9 @@ export default function WebToolsPage() {
           </h2>
           <p className="mt-3 text-slate-600">
             Our free web tools are built for developers and designers who need
-            quick, reliable utilities without installing software. From generating
-            QR codes and color palettes to encoding Base64 strings and minifying
-            HTML — everything runs directly in your browser.
+            quick, reliable utilities without installing software. From
+            generating QR codes and color palettes to encoding Base64 strings
+            and minifying HTML — everything runs directly in your browser.
           </p>
           <p className="mt-3 text-slate-600">
             All tools are privacy-first: most processing happens client-side,
