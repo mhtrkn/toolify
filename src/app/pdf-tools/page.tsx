@@ -79,13 +79,31 @@ export default function PdfToolsPage() {
         </div>
       </section>
 
-      {/* Tool Grid */}
-      <section className="px-4 py-10 sm:px-6 lg:px-8">
+      {/* PDF Management */}
+      <section className="px-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">📁 PDF Management</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
-              .slice()
-              .sort((a, b) => Number(b.popular ?? 0) - Number(a.popular ?? 0))
+              .filter((t) =>
+                ["merge-pdf", "split-pdf", "delete-pdf-pages", "compress-pdf", "protect-pdf"].includes(t.slug)
+              )
+              .map((tool) => (
+                <ToolCard key={tool.slug} tool={tool} />
+              ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PDF Conversion */}
+      <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">🔄 PDF Conversion</h2>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {tools
+              .filter((t) =>
+                ["pdf-to-jpg", "jpg-to-pdf", "pdf-to-word", "word-to-pdf", "text-to-pdf", "rich-text-to-pdf"].includes(t.slug)
+              )
               .map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}

@@ -31,7 +31,6 @@ export const metadata: Metadata = {
     "free online tools",
     "pdf converter",
     "image compressor",
-    "video to mp3",
     "file converter",
     "ocr",
     "privacy-first online tools",

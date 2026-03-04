@@ -9,12 +9,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Online Tools – PDF, Image, Video & File Converter | toolify",
+  title: "Free Online Tools – PDF, Image, SEO, Developer & File Converter | toolify",
   description:
-    "Free online tools for PDF, image, video, and file conversion. Merge PDFs, compress images, convert Word to PDF — fast, secure, no registration required.",
+    "Free online tools for PDF, image, SEO, and developer utilities. Merge PDFs, generate keywords, format code, decode JWTs — fast, secure, no registration.",
   alternates: { canonical: "/" },
   keywords:
-    "free online tools, pdf tools, image compressor, video to mp3, word to pdf, qr code generator, url shortener, ocr image to text, file converter online",
+    "free online tools, pdf tools, image compressor, word to pdf, qr code generator, keyword generator, code formatter, regex tester, seo meta tag builder, file converter online",
 };
 
 export default function HomePage() {
@@ -30,7 +30,7 @@ export default function HomePage() {
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
             Free Online Tools –{" "}
             <span className="text-red-600">
-              PDF, Image, Video & File Converter
+              PDF, Image & File Converter
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg text-slate-600">
@@ -50,7 +50,7 @@ export default function HomePage() {
           <p className="mt-2 text-slate-500">
             Choose a category to find the right tool for your task.
           </p>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="mt-6 grid gap-4 grid-cols-[repeat(auto-fit,minmax(155px,1fr))]">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
@@ -159,7 +159,7 @@ export default function HomePage() {
             — we have you covered with 9 dedicated PDF tools.
           </p>
           <h3 className="mt-5 text-lg font-semibold text-slate-900">
-            Image, Video &amp; File Tools
+            Image &amp; File Tools
           </h3>
           <p className="mt-2 text-slate-600 mb-8">
             Need to{" "}
@@ -177,21 +177,7 @@ export default function HomePage() {
               resize a photo
             </Link>{" "}
             to exact pixel dimensions? Our image tools handle JPG, PNG, and WebP
-            in seconds. For video, extract audio with our{" "}
-            <Link
-              href="/video-tools/video-to-mp3"
-              className="text-purple-600 hover:underline"
-            >
-              Video to MP3 converter
-            </Link>{" "}
-            or{" "}
-            <Link
-              href="/video-tools/compress-video"
-              className="text-purple-600 hover:underline"
-            >
-              compress a video
-            </Link>{" "}
-            directly in your browser.
+            in seconds.
           </p>
           <h3 className="mt-5 text-lg font-semibold text-slate-900">
             Web &amp; Developer Tools
@@ -218,7 +204,48 @@ export default function HomePage() {
             >
               OCR image to text
             </Link>{" "}
-            tool. All tools are designed to be beginner-friendly with a clean,
+            tool. For code work, our{" "}
+            <Link
+              href="/developer-tools/code-formatter"
+              className="text-violet-600 hover:underline"
+            >
+              Code Formatter
+            </Link>{" "}
+            handles JSON, HTML, CSS, JS, and SQL, while our{" "}
+            <Link
+              href="/developer-tools/regex-tester"
+              className="text-violet-600 hover:underline"
+            >
+              Regex Tester
+            </Link>{" "}
+            provides live match highlighting.
+          </p>
+          <h3 className="mt-5 text-lg font-semibold text-slate-900">
+            SEO &amp; Content Tools
+          </h3>
+          <p className="mt-2 text-slate-600">
+            Plan your content strategy with our{" "}
+            <Link
+              href="/seo-tools/keyword-generator"
+              className="text-teal-600 hover:underline"
+            >
+              Keyword Generator
+            </Link>
+            , build perfect title and description tags with the{" "}
+            <Link
+              href="/seo-tools/seo-meta-builder"
+              className="text-teal-600 hover:underline"
+            >
+              SEO Meta Tag Builder
+            </Link>
+            , and discover semantic variations with the{" "}
+            <Link
+              href="/seo-tools/lsi-keyword-explorer"
+              className="text-teal-600 hover:underline"
+            >
+              LSI Keyword Explorer
+            </Link>
+            . All tools are designed to be beginner-friendly with a clean,
             distraction-free interface — no software, no signup, just results.
           </p>
         </div>
