@@ -6,6 +6,7 @@ import { buildCategoryMetadata } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/metadata";
 import Image from "next/image";
+import ToolHeader from "@/components/tools/ToolHeader";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "PDF Tools",
@@ -60,33 +61,32 @@ export default function PdfToolsPage() {
       {/* Header */}
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-start md:items-center gap-3">
-            <div className="flex min-w-12 min-h-12 h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-xl md:text-2xl">
-              <Image
-                src={`/icons/${category.icon}.png`}
-                width={36}
-                height={36}
-                alt="PDF tools icon"
-              />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-                PDF Tools – Free Online PDF Converter
-              </h1>
-              <p className="mt-1 text-slate-600">{category.description}</p>
-            </div>
-          </div>
+          <ToolHeader
+            title="PDF Tools – Free Online PDF Converter"
+            icon={category.icon}
+            description={category.description}
+            bgColor={category.bgColor}
+            borderColor={category.borderColor}
+          />
         </div>
       </section>
 
       {/* PDF Management */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">📁 PDF Management</h2>
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            📁 PDF Management
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
               .filter((t) =>
-                ["merge-pdf", "split-pdf", "delete-pdf-pages", "compress-pdf", "protect-pdf"].includes(t.slug)
+                [
+                  "merge-pdf",
+                  "split-pdf",
+                  "delete-pdf-pages",
+                  "compress-pdf",
+                  "protect-pdf",
+                ].includes(t.slug),
               )
               .map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -98,11 +98,20 @@ export default function PdfToolsPage() {
       {/* PDF Conversion */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">🔄 PDF Conversion</h2>
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            🔄 PDF Conversion
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
               .filter((t) =>
-                ["pdf-to-jpg", "jpg-to-pdf", "pdf-to-word", "word-to-pdf", "text-to-pdf", "rich-text-to-pdf"].includes(t.slug)
+                [
+                  "pdf-to-jpg",
+                  "jpg-to-pdf",
+                  "pdf-to-word",
+                  "word-to-pdf",
+                  "text-to-pdf",
+                  "rich-text-to-pdf",
+                ].includes(t.slug),
               )
               .map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />

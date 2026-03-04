@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import ToolCard from "@/components/tools/ToolCard";
 import JsonLd from "@/components/seo/JsonLd";
@@ -5,6 +6,7 @@ import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata, SITE_URL } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import Link from "next/link";
+import ToolHeader from "@/components/tools/ToolHeader";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Social Media Tools",
@@ -32,7 +34,8 @@ const FAQS = [
       "Yes. All tools are 100% free with no account, subscription, or registration required.",
   },
   {
-    question: "Do these tools work for Instagram, YouTube, TikTok, and LinkedIn?",
+    question:
+      "Do these tools work for Instagram, YouTube, TikTok, and LinkedIn?",
     answer:
       "Yes. We have platform-specific tools for YouTube and Instagram, plus general tools like Hashtag Generator and Post Formatter that support all major platforms.",
   },
@@ -47,7 +50,8 @@ const FAQS = [
       "It converts your text into Unicode lookalike characters — bold, italic, cursive, gothic, bubble, and more — that work in social media bios, captions, and posts.",
   },
   {
-    question: "Does the YouTube Thumbnail Downloader download copyrighted content?",
+    question:
+      "Does the YouTube Thumbnail Downloader download copyrighted content?",
     answer:
       "No. It only fetches the publicly accessible thumbnail images hosted on YouTube's own servers (img.youtube.com). It does not download videos or any copyrighted media.",
   },
@@ -70,24 +74,22 @@ export default function SocialMediaToolsPage() {
       {/* Header */}
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-start gap-4 md:items-center">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-3xl">
-              📱
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-                Social Media & Creator Tools – Free Online Generator Suite
-              </h1>
-              <p className="mt-1 text-slate-600">{category.description}</p>
-            </div>
-          </div>
+          <ToolHeader
+            title="Social Media & Creator Tools – Free Online Generator Suite"
+            icon={category.icon}
+            description={category.description}
+            bgColor={category.bgColor}
+            borderColor={category.borderColor}
+          />
         </div>
       </section>
 
       {/* YouTube Tools Sub-section */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">🎬 YouTube Tools</h2>
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            🎬 YouTube Tools
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {tools
               .filter((t) => t.slug.startsWith("youtube"))
@@ -101,7 +103,9 @@ export default function SocialMediaToolsPage() {
       {/* Instagram Tools Sub-section */}
       <section className="px-4 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">📸 Instagram Tools</h2>
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            📸 Instagram Tools
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {tools
               .filter((t) => t.slug.startsWith("instagram"))
@@ -115,12 +119,15 @@ export default function SocialMediaToolsPage() {
       {/* General Social Tools Sub-section */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">🌐 General Social Tools</h2>
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            🌐 General Social Tools
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {tools
               .filter(
                 (t) =>
-                  !t.slug.startsWith("youtube") && !t.slug.startsWith("instagram"),
+                  !t.slug.startsWith("youtube") &&
+                  !t.slug.startsWith("instagram"),
               )
               .map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -136,8 +143,9 @@ export default function SocialMediaToolsPage() {
             All-in-One Social Media Creator Toolkit
           </h2>
           <p className="mt-3 text-slate-600">
-            Whether you're a solo creator, brand manager, or digital marketer, our free social
-            media tools help you produce better content faster. Use the{" "}
+            Whether you're a solo creator, brand manager, or digital marketer,
+            our free social media tools help you produce better content faster.
+            Use the{" "}
             <Link
               href="/social-media-tools/youtube-tag-generator"
               className="text-rose-600 hover:underline"
@@ -161,8 +169,9 @@ export default function SocialMediaToolsPage() {
             to make your bio stand out — all without leaving your browser.
           </p>
           <p className="mt-3 text-slate-600">
-            Every tool is 100% client-side: your content never leaves your device. No logins,
-            no rate limits, no ads in the way. Just clean, fast, professional-grade creator tools.
+            Every tool is 100% client-side: your content never leaves your
+            device. No logins, no rate limits, no ads in the way. Just clean,
+            fast, professional-grade creator tools.
           </p>
         </div>
       </section>

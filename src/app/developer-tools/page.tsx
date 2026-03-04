@@ -5,6 +5,7 @@ import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata, SITE_URL } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import Link from "next/link";
+import ToolHeader from "@/components/tools/ToolHeader";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Developer Tools",
@@ -57,14 +58,14 @@ export default function DeveloperToolsPage() {
   const tools = getToolsByCategory("developer-tools");
   const category = getCategoryBySlug("developer-tools")!;
 
-  const codeTools = tools.filter((t) =>
-    t.slug === "code-formatter" || t.slug === "regex-tester"
+  const codeTools = tools.filter(
+    (t) => t.slug === "code-formatter" || t.slug === "regex-tester",
   );
-  const encodingTools = tools.filter((t) =>
-    t.slug === "url-encoder-decoder" || t.slug === "jwt-decoder"
+  const encodingTools = tools.filter(
+    (t) => t.slug === "url-encoder-decoder" || t.slug === "jwt-decoder",
   );
   const otherTools = tools.filter(
-    (t) => !codeTools.includes(t) && !encodingTools.includes(t)
+    (t) => !codeTools.includes(t) && !encodingTools.includes(t),
   );
 
   return (
@@ -80,17 +81,13 @@ export default function DeveloperToolsPage() {
       {/* Header */}
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-start gap-4 md:items-center">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-red-50 text-3xl">
-              🛠️
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-                Developer Tools – Free Online Code Formatter, Regex Tester & More
-              </h1>
-              <p className="mt-1 text-slate-600">{category.description}</p>
-            </div>
-          </div>
+          <ToolHeader
+            title="Developer Tools – Free Online Code Formatter, Regex Tester & More"
+            icon={category.icon}
+            description={category.description}
+            bgColor={category.bgColor}
+            borderColor={category.borderColor}
+          />
         </div>
       </section>
 
@@ -98,7 +95,9 @@ export default function DeveloperToolsPage() {
       {codeTools.length > 0 && (
         <section className="px-4 pt-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">🧹 Code Formatter & Regex</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-800">
+              🧹 Code Formatter & Regex
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {codeTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -112,7 +111,9 @@ export default function DeveloperToolsPage() {
       {encodingTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">🔐 Encoding & Token Tools</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-800">
+              🔐 Encoding & Token Tools
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {encodingTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -126,7 +127,9 @@ export default function DeveloperToolsPage() {
       {otherTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">⚙️ More Developer Tools</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-800">
+              ⚙️ More Developer Tools
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {otherTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -143,28 +146,40 @@ export default function DeveloperToolsPage() {
             Essential Developer Utilities — No Install Required
           </h2>
           <p className="mt-3 text-slate-600">
-            Stop switching between tabs to format JSON or test a regex. Our free developer tools
-            let you{" "}
-            <Link href="/developer-tools/code-formatter" className="text-red-600 hover:underline">
+            Stop switching between tabs to format JSON or test a regex. Our free
+            developer tools let you{" "}
+            <Link
+              href="/developer-tools/code-formatter"
+              className="text-red-600 hover:underline"
+            >
               format and minify code
             </Link>{" "}
             for JSON, HTML, CSS, JavaScript, and SQL in seconds, or{" "}
-            <Link href="/developer-tools/regex-tester" className="text-red-600 hover:underline">
+            <Link
+              href="/developer-tools/regex-tester"
+              className="text-red-600 hover:underline"
+            >
               test your regex patterns
             </Link>{" "}
             with live match highlighting and capture group display.
           </p>
           <p className="mt-3 text-slate-600">
             Need to{" "}
-            <Link href="/developer-tools/url-encoder-decoder" className="text-red-600 hover:underline">
+            <Link
+              href="/developer-tools/url-encoder-decoder"
+              className="text-red-600 hover:underline"
+            >
               encode a URL
             </Link>{" "}
             or{" "}
-            <Link href="/developer-tools/jwt-decoder" className="text-red-600 hover:underline">
+            <Link
+              href="/developer-tools/jwt-decoder"
+              className="text-red-600 hover:underline"
+            >
               decode a JWT token
             </Link>
-            ? All tools run client-side — nothing is uploaded to any server. Fast, private, and
-            always free.
+            ? All tools run client-side — nothing is uploaded to any server.
+            Fast, private, and always free.
           </p>
         </div>
       </section>
@@ -172,7 +187,9 @@ export default function DeveloperToolsPage() {
       {/* FAQ */}
       <section className="px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-xl font-bold text-slate-900">Frequently Asked Questions</h2>
+          <h2 className="text-xl font-bold text-slate-900">
+            Frequently Asked Questions
+          </h2>
           <div className="mt-6 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
             {FAQS.map((faq, i) => (
               <div key={i} className="px-6 py-5">

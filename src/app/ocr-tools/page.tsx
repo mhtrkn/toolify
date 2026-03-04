@@ -5,6 +5,7 @@ import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata, SITE_URL } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import Image from "next/image";
+import ToolHeader from "@/components/tools/ToolHeader";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "OCR Tools",
@@ -55,31 +56,45 @@ export default function OcrToolsPage() {
 
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-2xl">
-              <Image
-                src={`/icons/${category.icon}.png`}
-                width={36}
-                height={36}
-                alt="OCR tools icon"
-              />
-            </span>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-                OCR Tools – Free Image to Text Converter
-              </h1>
-              <p className="mt-1 text-slate-600">{category.description}</p>
-            </div>
+          <ToolHeader
+            title="OCR Tools – Free Image to Text Converter"
+            icon={category.icon}
+            description={category.description}
+            bgColor={category.bgColor}
+            borderColor={category.borderColor}
+          />
+        </div>
+      </section>
+
+      {/* Text Extraction */}
+      <section className="px-4 pt-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            📝 Text Extraction
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {tools
+              .filter((t) =>
+                ["ocr-image-to-text", "pdf-to-text"].includes(t.slug),
+              )
+              .map((tool) => (
+                <ToolCard key={tool.slug} tool={tool} />
+              ))}
           </div>
         </div>
       </section>
 
-      <section className="px-4 py-10 sm:px-6 lg:px-8">
+      {/* Scanning & Editing */}
+      <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            🔍 Scanning & Editing
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
-              .slice()
-              .sort((a, b) => Number(b.popular ?? 0) - Number(a.popular ?? 0))
+              .filter((t) =>
+                ["barcode-qr-scanner", "ocr-text-editor"].includes(t.slug),
+              )
               .map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}

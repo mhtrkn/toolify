@@ -29,40 +29,146 @@ const PLACEHOLDERS: Record<Language, string> = {
   sql: "SELECT id,name,email FROM users WHERE active=1 ORDER BY name LIMIT 10;",
 };
 
+// ── Format via Prettier (browser standalone) ──────────────────────────────────
+
+async function formatWithPrettier(code: string, parser: string): Promise<string> {
+  // Prettier v3 standalone – format is a named export, plugins are module namespaces
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const prettierStandalone = await import("prettier/standalone") as any;
+  const format: (code: string, opts: Record<string, unknown>) => Promise<string> =
+    prettierStandalone.format ?? prettierStandalone.default?.format;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const plugins: any[] = [];
+
+  if (parser === "babel") {
+    const [babel, estree] = await Promise.all([
+      import("prettier/plugins/babel"),
+      import("prettier/plugins/estree"),
+    ]);
+    plugins.push(babel, estree);
+  } else if (parser === "html") {
+    plugins.push(await import("prettier/plugins/html"));
+  } else if (parser === "css") {
+    plugins.push(await import("prettier/plugins/postcss"));
+  }
+
+  return format(code, {
+    parser,
+    plugins,
+    tabWidth: 2,
+    printWidth: 100,
+    semi: true,
+    singleQuote: false,
+    trailingComma: "es5",
+  });
+}
+
+async function formatSqlPretty(code: string): Promise<string> {
+  const { format } = await import("sql-formatter");
+  return format(code, {
+    language: "sql",
+    tabWidth: 2,
+    keywordCase: "upper",
+    dataTypeCase: "upper",
+    functionCase: "upper",
+  });
+}
+
+// ── Minifiers (regex-based, lightweight) ─────────────────────────────────────
+
+function minifyJson(code: string): string {
+  return JSON.stringify(JSON.parse(code));
+}
+
+function minifyHtml(html: string): string {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/>\s+</g, "><")
+    .trim();
+}
+
+function minifyCss(css: string): string {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s*([{};:,>+~])\s*/g, "$1")
+    .replace(/;}/g, "}")
+    .trim();
+}
+
+function minifyJs(js: string): string {
+  return js
+    .replace(/\/\/[^\n]*/g, "")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s*([=+\-*/<>!&|,:;{}()[\]])\s*/g, "$1")
+    .trim();
+}
+
+function minifySql(sql: string): string {
+  return sql
+    .replace(/--[^\n]*/g, "")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+// ── Component ─────────────────────────────────────────────────────────────────
+
 export default function CodeFormatterClient() {
   const [lang, setLang] = useState<Language>("json");
   const [mode, setMode] = useState<Mode>("format");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const process = useCallback(async () => {
     const code = input.trim();
     if (!code) { setError("Please enter some code first."); return; }
     setError(null);
+    setLoading(true);
 
     try {
-      const {
-        formatJson, minifyJson,
-        formatHtml, minifyHtml,
-        formatCss, minifyCss,
-        formatJs, minifyJs,
-        formatSql, minifySql,
-      } = await import("@/lib/dev-utils");
+      let result = "";
 
-      const map: Record<Language, [() => string, () => string]> = {
-        json: [() => formatJson(code), () => minifyJson(code)],
-        html: [() => formatHtml(code), () => minifyHtml(code)],
-        css: [() => formatCss(code), () => minifyCss(code)],
-        js: [() => formatJs(code), () => minifyJs(code)],
-        sql: [() => formatSql(code), () => minifySql(code)],
-      };
+      if (mode === "format") {
+        switch (lang) {
+          case "json":
+            result = JSON.stringify(JSON.parse(code), null, 2);
+            break;
+          case "js":
+            result = (await formatWithPrettier(code, "babel")).trimEnd();
+            break;
+          case "html":
+            result = (await formatWithPrettier(code, "html")).trimEnd();
+            break;
+          case "css":
+            result = (await formatWithPrettier(code, "css")).trimEnd();
+            break;
+          case "sql":
+            result = (await formatSqlPretty(code)).trimEnd();
+            break;
+        }
+      } else {
+        // minify
+        switch (lang) {
+          case "json": result = minifyJson(code); break;
+          case "js":   result = minifyJs(code);   break;
+          case "html": result = minifyHtml(code);  break;
+          case "css":  result = minifyCss(code);   break;
+          case "sql":  result = minifySql(code);   break;
+        }
+      }
 
-      const result = mode === "format" ? map[lang][0]() : map[lang][1]();
       setOutput(result);
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Processing failed. Check your input.";
       setError(msg);
+    } finally {
+      setLoading(false);
     }
   }, [input, lang, mode]);
 
@@ -176,7 +282,7 @@ export default function CodeFormatterClient() {
             readOnly
             className="w-full resize-none p-4 font-mono text-xs text-slate-700 focus:outline-none bg-slate-50"
             rows={20}
-            placeholder="Output will appear here…"
+            placeholder={loading ? "Formatting…" : "Output will appear here…"}
             spellCheck={false}
           />
         </div>
@@ -194,10 +300,14 @@ export default function CodeFormatterClient() {
         <button
           type="button"
           onClick={process}
-          disabled={!input.trim()}
+          disabled={!input.trim() || loading}
           className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
         >
-          {mode === "format" ? "✨ Beautify Code" : "⚡ Minify Code"}
+          {loading
+            ? "Processing…"
+            : mode === "format"
+            ? "✨ Beautify Code"
+            : "⚡ Minify Code"}
         </button>
 
         {output && (

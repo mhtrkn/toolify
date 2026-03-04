@@ -54,7 +54,7 @@ export default function JwtDecoderClient() {
   return (
     <div className="space-y-5">
       {/* Security notice */}
-      <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+      <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
         <span className="mt-px shrink-0">⚠️</span>
         <span>
           This tool <strong>decodes only</strong> — it does not verify signatures. Never paste

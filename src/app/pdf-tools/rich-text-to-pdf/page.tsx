@@ -8,16 +8,18 @@ import RichTextToPdfClient from "./RichTextToPdfClient";
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Rich Text to PDF",
   toolDescription:
-    "Convert rich-formatted text to PDF online — bold, italic, headings, lists, and more. Choose page size, font, margins, header, footer. 100% free, runs in your browser.",
+    "Convert rich-formatted text or Markdown to PDF online — bold, italic, headings, lists, code blocks and more. Choose page size, font, margins, header, footer. 100% free, runs in your browser.",
   categorySlug: "pdf-tools",
   toolSlug: "rich-text-to-pdf",
   keywords: [
     "rich text to pdf converter online free",
+    "markdown to pdf online free",
     "formatted text to pdf",
     "online rich text editor pdf export",
     "bold italic headings to pdf",
     "wysiwyg pdf creator browser",
     "text editor with formatting pdf download",
+    "markdown pdf download browser",
     "html to pdf formatted online",
     "create pdf with bold text",
     "word processor pdf export free",
@@ -29,12 +31,22 @@ const FAQS = [
   {
     question: "What formatting is supported?",
     answer:
-      "Bold, italic, underline, Heading 1/2/3, bulleted lists, and numbered lists. All formatting is preserved in the generated PDF.",
+      "Bold, italic, underline, Heading 1/2/3, code blocks, bullet lists, and numbered lists. In Markdown mode, blockquotes, inline code, and links are also supported. All formatting is preserved in the generated PDF.",
+  },
+  {
+    question: "Can I use Markdown to create the PDF?",
+    answer:
+      "Yes. Switch to Markdown mode, type or paste your Markdown content, and watch the live HTML preview. The PDF is generated from the rendered HTML, so what you see in the preview is what you get in the PDF.",
   },
   {
     question: "Is my text uploaded to a server?",
     answer:
-      "No. All processing runs entirely in your browser using jsPDF. Your content never leaves your device.",
+      "No. All processing runs entirely in your browser using jsPDF and html2canvas. Your content never leaves your device.",
+  },
+  {
+    question: "Can I copy my content as Markdown?",
+    answer:
+      "Yes. Both modes include a 'Copy as Markdown' button that converts the current HTML content to clean Markdown using Turndown — useful for pasting into editors, terminals, or GitHub.",
   },
   {
     question: "Can I set custom margins and a header/footer?",
@@ -44,11 +56,6 @@ const FAQS = [
   {
     question: "What page sizes are supported?",
     answer: "A4 (210×297 mm) and US Letter (216×279 mm). Portrait orientation.",
-  },
-  {
-    question: "How is Rich Text to PDF different from Text to PDF?",
-    answer:
-      "Text to PDF converts plain text files. Rich Text to PDF lets you format content directly in the browser — bold headings, bullet points, italic text — before exporting.",
   },
 ];
 
@@ -80,43 +87,43 @@ export default function RichTextToPdfPage() {
           { label: "Rich Text to PDF" },
         ]}
         title="Rich Text to PDF – Free Online Formatted PDF Creator"
-        description="Write bold headings, bullet lists, and formatted text — then download as a PDF in one click. No upload, no server, 100% private."
+        description="Write rich text or paste Markdown — then download as a formatted PDF in one click. Bold, headings, lists, code blocks, and more. No upload, no server, 100% private."
         howToSteps={[
           {
-            title: "Format your text",
+            title: "Choose your input mode",
             description:
-              "Use the toolbar to apply bold, italic, headings (H1–H3), and bullet or numbered lists.",
+              "Use Rich Text mode to type with the WYSIWYG toolbar (bold, italic, headings, lists, code). Or switch to Markdown mode and paste any Markdown — a live preview shows exactly what the PDF will look like.",
           },
           {
             title: "Configure PDF options",
             description:
-              "Choose page size (A4 or Letter), font size, margins, and optionally add a header or footer.",
+              "Choose page size (A4 or Letter), font size, margins, and optionally add a header, footer, or page numbers.",
           },
           {
             title: "Download your PDF",
             description:
-              "Click 'Download PDF' to generate and save the formatted document to your device instantly.",
+              "Click 'Download PDF' to generate and save the formatted document. You can also copy the content as Markdown or HTML using the toolbar buttons.",
           },
         ]}
         benefits={[
           {
-            title: "Formatting preserved",
+            title: "Rich Text & Markdown",
             description:
-              "Bold, italic, headings, and lists are rendered faithfully in the PDF output.",
+              "Two modes in one tool: WYSIWYG formatting or Markdown input with live HTML preview.",
+          },
+          {
+            title: "Consistent rendering",
+            description:
+              "Inline styles are applied to every element before PDF generation, ensuring the PDF matches the preview exactly.",
           },
           {
             title: "100% browser-based",
             description:
-              "Nothing is uploaded. jsPDF runs in your browser, keeping your content private.",
+              "Nothing is uploaded. All processing uses jsPDF and html2canvas running locally in your browser.",
           },
           {
-            title: "Page size & layout control",
-            description:
-              "Choose A4 or Letter, set margins, and add custom header/footer text.",
-          },
-          {
-            title: "Instant download",
-            description: "Click once to generate and download — no email, no account, no wait.",
+            title: "Copy as Markdown",
+            description: "One click to convert your rich text or rendered Markdown back to clean Markdown syntax using Turndown.",
           },
         ]}
         faqs={FAQS}

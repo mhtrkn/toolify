@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
 import ToolCard from "@/components/tools/ToolCard";
 import JsonLd from "@/components/seo/JsonLd";
@@ -5,6 +6,7 @@ import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata, SITE_URL } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import Link from "next/link";
+import ToolHeader from "@/components/tools/ToolHeader";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "SEO Tools",
@@ -42,7 +44,8 @@ const FAQS = [
       "No. All tools run entirely in your browser. Your keywords, meta tags, and content ideas never leave your device.",
   },
   {
-    question: "What is the difference between Keyword Generator and LSI Keyword Explorer?",
+    question:
+      "What is the difference between Keyword Generator and LSI Keyword Explorer?",
     answer:
       "The Keyword Generator produces long-tail, question, and commercial intent variations of your seed keyword. The LSI Keyword Explorer focuses on semantic variations and topical depth terms.",
   },
@@ -57,14 +60,14 @@ export default function SeoToolsPage() {
   const tools = getToolsByCategory("seo-tools");
   const category = getCategoryBySlug("seo-tools")!;
 
-  const keywordTools = tools.filter((t) =>
-    t.slug.includes("keyword") || t.slug.includes("lsi")
+  const keywordTools = tools.filter(
+    (t) => t.slug.includes("keyword") || t.slug.includes("lsi"),
   );
-  const contentTools = tools.filter((t) =>
-    t.slug.includes("content") || t.slug.includes("meta")
+  const contentTools = tools.filter(
+    (t) => t.slug.includes("content") || t.slug.includes("meta"),
   );
   const otherTools = tools.filter(
-    (t) => !keywordTools.includes(t) && !contentTools.includes(t)
+    (t) => !keywordTools.includes(t) && !contentTools.includes(t),
   );
 
   return (
@@ -80,17 +83,13 @@ export default function SeoToolsPage() {
       {/* Header */}
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-start gap-4 md:items-center">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-red-50 text-3xl">
-              🔍
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-                Free SEO & Content Tools – Keyword, Meta & Content Generator
-              </h1>
-              <p className="mt-1 text-slate-600">{category.description}</p>
-            </div>
-          </div>
+          <ToolHeader
+            title="Free SEO & Content Tools – Keyword, Meta & Content Generator"
+            icon={category.icon}
+            description={category.description}
+            bgColor={category.bgColor}
+            borderColor={category.borderColor}
+          />
         </div>
       </section>
 
@@ -98,7 +97,9 @@ export default function SeoToolsPage() {
       {keywordTools.length > 0 && (
         <section className="px-4 pt-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">🔑 Keyword Research Tools</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-800">
+              🔑 Keyword Research Tools
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {keywordTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -112,7 +113,9 @@ export default function SeoToolsPage() {
       {contentTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">📝 Content & Metadata Tools</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-800">
+              📝 Content & Metadata Tools
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {contentTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -126,7 +129,9 @@ export default function SeoToolsPage() {
       {otherTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">🛠️ More SEO Tools</h2>
+            <h2 className="mb-4 text-xl font-bold text-slate-800">
+              🛠️ More SEO Tools
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {otherTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
@@ -143,24 +148,36 @@ export default function SeoToolsPage() {
             Free SEO Tools for Content Creators & Marketers
           </h2>
           <p className="mt-3 text-slate-600">
-            Whether you're planning a blog post, optimizing a landing page, or building a content
-            calendar, our free SEO tools give you everything you need in one place. Use the{" "}
-            <Link href="/seo-tools/keyword-generator" className="text-red-600 hover:underline">
+            Whether you're planning a blog post, optimizing a landing page, or
+            building a content calendar, our free SEO tools give you everything
+            you need in one place. Use the{" "}
+            <Link
+              href="/seo-tools/keyword-generator"
+              className="text-red-600 hover:underline"
+            >
               Keyword Generator
             </Link>{" "}
             to find long-tail keywords, the{" "}
-            <Link href="/seo-tools/lsi-keyword-explorer" className="text-red-600 hover:underline">
+            <Link
+              href="/seo-tools/lsi-keyword-explorer"
+              className="text-red-600 hover:underline"
+            >
               LSI Keyword Explorer
             </Link>{" "}
             to improve topical authority, and the{" "}
-            <Link href="/seo-tools/seo-meta-builder" className="text-red-600 hover:underline">
+            <Link
+              href="/seo-tools/seo-meta-builder"
+              className="text-red-600 hover:underline"
+            >
               SEO Meta Tag Builder
             </Link>{" "}
-            to generate perfect title and description tags with a live Google preview.
+            to generate perfect title and description tags with a live Google
+            preview.
           </p>
           <p className="mt-3 text-slate-600">
-            All tools are 100% free and run entirely in your browser — no API keys, no accounts,
-            no rate limits. Export results as CSV for use in your content briefs or client reports.
+            All tools are 100% free and run entirely in your browser — no API
+            keys, no accounts, no rate limits. Export results as CSV for use in
+            your content briefs or client reports.
           </p>
         </div>
       </section>
@@ -168,7 +185,9 @@ export default function SeoToolsPage() {
       {/* FAQ */}
       <section className="px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-xl font-bold text-slate-900">Frequently Asked Questions</h2>
+          <h2 className="text-xl font-bold text-slate-900">
+            Frequently Asked Questions
+          </h2>
           <div className="mt-6 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
             {FAQS.map((faq, i) => (
               <div key={i} className="px-6 py-5">

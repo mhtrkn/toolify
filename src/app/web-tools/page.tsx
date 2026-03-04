@@ -6,6 +6,7 @@ import { buildCategoryMetadata } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/metadata";
 import Image from "next/image";
+import ToolHeader from "@/components/tools/ToolHeader";
 
 export const metadata: Metadata = buildCategoryMetadata({
   categoryName: "Web Tools",
@@ -59,32 +60,59 @@ export default function WebToolsPage() {
       {/* Header */}
       <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-2xl">
-              <Image
-                src={`/icons/web.png`}
-                alt="Web tools - Free Online Web Developer Utilites"
-                width={36}
-                height={36}
-              />
-            </span>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-                Web Tools – Free Online Developer Utilities
-              </h1>
-              <p className="mt-1 text-slate-600">{category.description}</p>
-            </div>
+          <ToolHeader
+            title="Web Tools – Free Online Developer Utilities"
+            icon={category.icon}
+            description={category.description}
+            bgColor={category.bgColor}
+            borderColor={category.borderColor}
+          />
+        </div>
+      </section>
+
+      {/* Generator Tools */}
+      <section className="px-4 pt-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            ⬛ Generator Tools
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {tools
+              .filter((t) =>
+                ["qr-code-generator", "color-palette"].includes(t.slug),
+              )
+              .map((tool) => (
+                <ToolCard key={tool.slug} tool={tool} />
+              ))}
           </div>
         </div>
       </section>
 
-      {/* Tool Grid */}
-      <section className="px-4 py-10 sm:px-6 lg:px-8">
+      {/* Data & Encoding Tools */}
+      <section className="px-4 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            🔢 Data & Encoding Tools
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
-              .slice()
-              .sort((a, b) => Number(b.popular ?? 0) - Number(a.popular ?? 0))
+              .filter((t) => ["base64", "url-shortener"].includes(t.slug))
+              .map((tool) => (
+                <ToolCard key={tool.slug} tool={tool} />
+              ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HTML Tools */}
+      <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-4 text-xl font-bold text-slate-800">
+            📄 HTML Tools
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {tools
+              .filter((t) => ["html-to-pdf", "html-minifier"].includes(t.slug))
               .map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}
