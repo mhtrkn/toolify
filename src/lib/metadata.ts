@@ -69,7 +69,7 @@ export function buildToolMetadata({
   return buildMetadata({
     title: customTitle ?? `${toolName} – Free Online Tool`,
     description: toolDescription,
-    path: `/${categorySlug}/${toolSlug}`,
+    path: `/tools/${categorySlug}/${toolSlug}`,
     keywords,
   });
 }
@@ -88,7 +88,7 @@ export function buildCategoryMetadata({
   return buildMetadata({
     title: `${categoryName} – Free Online Tools`,
     description: categoryDescription,
-    path: `/${categorySlug}`,
+    path: `/tools/${categorySlug}`,
     keywords,
   });
 }

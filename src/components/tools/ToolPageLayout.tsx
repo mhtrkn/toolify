@@ -1,4 +1,6 @@
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildHowToSchema } from "@/lib/structured-data";
 
 interface ToolPageLayoutProps {
   breadcrumbs: { label: string; href?: string }[];
@@ -21,6 +23,15 @@ export default function ToolPageLayout({
 }: ToolPageLayoutProps) {
   return (
     <main className="min-h-screen bg-slate-50">
+      {howToSteps && howToSteps.length > 0 && (
+        <JsonLd
+          data={buildHowToSchema({
+            name: `How to Use ${title.split("–")[0].trim()}`,
+            description,
+            steps: howToSteps.map((s) => ({ name: s.title, text: s.description })),
+          })}
+        />
+      )}
       {/* Hero */}
       <section className="border-b border-slate-100 bg-white px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">

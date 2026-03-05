@@ -1,0 +1,105 @@
+import type { Metadata } from "next";
+import ToolPageLayout from "@/components/tools/ToolPageLayout";
+import JsonLd from "@/components/seo/JsonLd";
+import JpgToPdfClient from "./JpgToPdfClient";
+import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
+import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
+
+export const metadata: Metadata = buildToolMetadata({
+  toolName: "JPG to PDF",
+  toolDescription:
+    "Convert JPG or PNG images to a PDF file online for free. Add multiple images, arrange them, and download as one PDF document. No registration needed, fully private.",
+  categorySlug: "pdf-tools",
+  toolSlug: "jpg-to-pdf",
+  keywords: [
+    "jpg to pdf converter",
+    "convert images to pdf online free",
+    "multiple photos to pdf",
+    "jpeg to pdf free",
+    "png to pdf converter",
+    "combine images into pdf",
+    "image to pdf converter online",
+    "photos to pdf no watermark",
+    "jpg to pdf without software",
+    "convert picture to pdf free",
+  ],
+});
+
+const FAQS = [
+  {
+    question: "Can I combine multiple images into one PDF?",
+    answer:
+      "Yes. Upload as many JPG or PNG images as you need, reorder them with the arrows, and convert — each image becomes one PDF page.",
+  },
+  {
+    question: "What image formats are supported?",
+    answer: "JPG (JPEG) and PNG images are supported. Upload one or many files at once.",
+  },
+  {
+    question: "Can I change the order of images before converting?",
+    answer:
+      "Yes. Use the up/down arrows to rearrange images into your preferred page order before converting.",
+  },
+  {
+    question: "Will the PDF be full quality?",
+    answer:
+      "Yes. Images are embedded at their original resolution. The PDF size depends on the original image sizes.",
+  },
+  {
+    question: "Is there a limit on image count?",
+    answer:
+      "No hard limit — limited only by available browser memory. Most devices handle dozens of images easily.",
+  },
+  {
+    question: "Is the PDF conversion done in my browser?",
+    answer:
+      "Yes. Images are converted entirely in your browser using pdf-lib. No files are sent to any server.",
+  },
+];
+
+export default function JpgToPdfPage() {
+  return (
+    <>
+      <JsonLd
+        data={buildWebAppSchema({
+          name: "JPG to PDF",
+          description: "Convert JPG and PNG images to a PDF file online.",
+          slug: "jpg-to-pdf",
+          categorySlug: "pdf-tools",
+        })}
+      />
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: "Home", url: SITE_URL },
+          { name: "Tools", url: `${SITE_URL}/tools` },
+          { name: "PDF Tools", url: `${SITE_URL}/tools/pdf-tools` },
+          { name: "JPG to PDF", url: `${SITE_URL}/tools/pdf-tools/jpg-to-pdf` },
+        ])}
+      />
+      <JsonLd data={buildFaqSchema(FAQS)} />
+      <ToolPageLayout
+        breadcrumbs={[
+          { label: "Tools", href: "/tools" },
+          { label: "PDF Tools", href: "/tools/pdf-tools" },
+          { label: "JPG to PDF" },
+        ]}
+        title="JPG to PDF Converter – Combine Images into a PDF"
+        description="Convert JPG and PNG images to a single PDF file. Upload multiple photos, arrange their order, and download a clean PDF — no watermarks, no uploads."
+        howToSteps={[
+          { title: "Upload Images", description: "Click or drag to add one or more JPG/PNG files." },
+          { title: "Reorder Pages", description: "Use the arrows to set the order of pages in the PDF." },
+          { title: "Download PDF", description: "Click 'Convert to PDF' and download your file instantly." },
+        ]}
+        benefits={[
+          { title: "Multiple Images", description: "Combine any number of images into a single PDF document." },
+          { title: "A4 Layout", description: "Each image is auto-fitted to an A4 page with clean margins." },
+          { title: "100% Private", description: "All processing happens in your browser — no server uploads." },
+          { title: "No Watermarks", description: "Download clean PDFs with no watermarks or branding." },
+        ]}
+        faqs={FAQS}
+      >
+        <JpgToPdfClient />
+      </ToolPageLayout>
+    </>
+  );
+}

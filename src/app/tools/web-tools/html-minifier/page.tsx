@@ -1,0 +1,96 @@
+import type { Metadata } from "next";
+import ToolPageLayout from "@/components/tools/ToolPageLayout";
+import JsonLd from "@/components/seo/JsonLd";
+import HtmlMinifierClient from "./HtmlMinifierClient";
+import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
+import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
+
+export const metadata: Metadata = buildToolMetadata({
+  toolName: "HTML Minifier",
+  toolDescription:
+    "Minify HTML code online for free. Remove whitespace, comments, and redundant tags. See exact file size savings in real time — no signup, instant results.",
+  categorySlug: "web-tools",
+  toolSlug: "html-minifier",
+  keywords: [
+    "html minifier online free",
+    "minify html code online",
+    "compress html file free",
+    "html code optimizer",
+    "remove whitespace from html online",
+    "html uglifier free",
+    "reduce html file size",
+    "minify html javascript free",
+    "html compressor tool",
+    "online html minifier no signup",
+  ],
+});
+
+const FAQS = [
+  {
+    question: "What does HTML minification do?",
+    answer:
+      "HTML minification removes unnecessary characters like comments, extra whitespace, and line breaks without affecting how the page renders. This reduces file size and can improve page load speed.",
+  },
+  {
+    question: "Will minification break my HTML?",
+    answer:
+      "For standard HTML, minification is safe. However, whitespace inside <pre> or <textarea> tags is preserved. Always test your page after minifying.",
+  },
+  {
+    question: "Does it minify inline CSS and JavaScript?",
+    answer:
+      "Basic inline styles are preserved. Inline <script> and <style> blocks have their internal whitespace reduced.",
+  },
+  {
+    question: "Is my HTML sent to a server?",
+    answer:
+      "No. Minification is done entirely in your browser using JavaScript regex operations. Your code never leaves your device.",
+  },
+];
+
+export default function HtmlMinifierPage() {
+  return (
+    <>
+      <JsonLd
+        data={buildWebAppSchema({
+          name: "HTML Minifier",
+          description: "Minify HTML code online to reduce file size.",
+          slug: "html-minifier",
+          categorySlug: "web-tools",
+        })}
+      />
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: "Home", url: SITE_URL },
+          { name: "Tools", url: `${SITE_URL}/tools` },
+          { name: "Web Tools", url: `${SITE_URL}/tools/web-tools` },
+          { name: "HTML Minifier", url: `${SITE_URL}/tools/web-tools/html-minifier` },
+        ])}
+      />
+      <JsonLd data={buildFaqSchema(FAQS)} />
+      <ToolPageLayout
+        breadcrumbs={[
+          { label: "Tools", href: "/tools" },
+          { label: "Web Tools", href: "/tools/web-tools" },
+          { label: "HTML Minifier" },
+        ]}
+        title="HTML Minifier – Compress and Minify HTML Online Free"
+        description="Paste your HTML and get a minified version with comments and whitespace removed. See exact size savings in real-time — no account, no uploads."
+        howToSteps={[
+          { title: "Paste HTML", description: "Paste your HTML code into the input area." },
+          { title: "See Minified Output", description: "The minified HTML appears instantly in the output area." },
+          { title: "Copy or Download", description: "Copy the minified code or download it as an HTML file." },
+        ]}
+        benefits={[
+          { title: "Instant Minification", description: "Results appear as you type — no button click required." },
+          { title: "Size Savings", description: "See exactly how many bytes and what percentage you saved." },
+          { title: "No Dependencies", description: "Pure browser-based — no external libraries or servers used." },
+          { title: "Safe to Use", description: "Whitespace in <pre> tags is preserved to avoid layout issues." },
+        ]}
+        faqs={FAQS}
+      >
+        <HtmlMinifierClient />
+      </ToolPageLayout>
+    </>
+  );
+}

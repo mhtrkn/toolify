@@ -88,7 +88,7 @@ export default function ToolCard({ isHomepage = false, tool }: ToolCardProps) {
 
   return (
     <Link
-      href={`/${tool.categorySlug}/${tool.slug}`}
+      href={`/tools/${tool.categorySlug}/${tool.slug}`}
       className={`group relative flex h-full flex-col rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-200 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 ${s.ring} focus-visible:ring-offset-2`}
     >
       {/* Top row: icon badge + status badges */}

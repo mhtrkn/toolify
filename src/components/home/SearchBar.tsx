@@ -70,7 +70,7 @@ export default function SearchBar() {
           {results.map((tool) => (
             <li key={tool.slug}>
               <Link
-                href={`/${tool.categorySlug}/${tool.slug}`}
+                href={`/tools/${tool.categorySlug}/${tool.slug}`}
                 onClick={() => { setQuery(""); setOpen(false); }}
                 className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50"
               >

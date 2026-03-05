@@ -942,7 +942,7 @@ export const TOOLS: Tool[] = [
       "youtube thumbnail url download",
       "download youtube cover image free",
     ],
-    popular: true,
+    popular: false,
     outputFormat: "JPG",
   },
   {
@@ -1232,7 +1232,7 @@ export const TOOLS: Tool[] = [
       "photo to text converter",
       "online ocr no signup",
     ],
-    popular: true,
+    popular: false,
     acceptedFormats: [
       ".jpg",
       ".jpeg",

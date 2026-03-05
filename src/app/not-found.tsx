@@ -27,7 +27,7 @@ export default function NotFound() {
         {CATEGORIES.map((cat) => (
           <Link
             key={cat.slug}
-            href={`/${cat.slug}`}
+            href={`/tools/${cat.slug}`}
             className="flex items-center gap-2 rounded-xl border border-slate-100 px-4 py-2.5 text-sm text-slate-600 transition-colors duration-150 hover:bg-slate-50"
           >
             <Image

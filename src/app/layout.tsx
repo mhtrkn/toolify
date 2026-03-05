@@ -11,6 +11,7 @@ import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
+import BackToTop from "@/components/ui/back-to-top";
 import "./globals.css";
 import Script from "next/script";
 
@@ -129,6 +130,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Toaster />
+        <BackToTop />
         <Footer />
       </body>
     </html>

@@ -11,62 +11,68 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between max-sm:px-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src={"/icons/logo.png"}
-            width={32}
-            height={32}
-            alt="toolify logo"
-          />
-          <span className="text-3xl font-bold text-slate-900">
-            tool<span className="text-red-600">ify</span>
-          </span>
-        </Link>
+      <div className="h-16 flex items-center px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-1 items-center justify-between mx-auto max-w-5xl">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src={"/icons/logo.png"}
+              width={32}
+              height={32}
+              alt="toolify logo"
+            />
+            <span className="text-3xl font-bold text-slate-900">
+              tool<span className="text-red-600">ify</span>
+            </span>
+          </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 lg:flex">
-          {CATEGORIES.map((cat) => (
+          {/* Desktop Nav */}
+          <header className="hidden items-center gap-1 md:flex">
             <Link
-              key={cat.slug}
-              href={`/${cat.slug}`}
+              href="/blog"
               className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
             >
-              {cat.name}
+              Blogs
             </Link>
-          ))}
-        </nav>
+            <div className="w-px h-5 bg-slate-200" />
+            <Link
+              href="/tools"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            >
+              All Tools
+            </Link>
+          </header>
 
-        {/* Mobile menu button */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 lg:hidden"
-          aria-label="Toggle menu"
-        >
-          <svg
-            className="h-5 w-5 text-slate-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 md:hidden"
+            aria-label="Toggle menu"
           >
-            {mobileOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
+            <svg
+              className="h-5 w-5 text-slate-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {mobileOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}
@@ -83,9 +89,9 @@ export default function Header() {
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
-              href={`/${cat.slug}`}
+              href={`/tools/${cat.slug}`}
               onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+              className="flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
             >
               <Image
                 src={`/icons/${cat.icon}.png`}
@@ -96,6 +102,33 @@ export default function Header() {
               {cat.name}
             </Link>
           ))}
+          <div className="my-1 border-t border-slate-100" />
+          <Link
+            href="/tools"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            <Image
+              src={"/icons/tool.png"}
+              width={36}
+              height={36}
+              alt="All Tool Icon"
+            />
+            All Tools
+          </Link>
+          <Link
+            href="/blog"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            <Image
+              src={"/icons/blogs.png"}
+              width={36}
+              height={36}
+              alt="Blogs Icon"
+            />
+            Blog
+          </Link>
         </nav>
       </div>
     </header>

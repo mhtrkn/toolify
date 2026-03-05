@@ -11,7 +11,7 @@ export function buildWebAppSchema(tool: {
     "@type": "WebApplication",
     name: tool.name,
     description: tool.description,
-    url: `${SITE_URL}/${tool.categorySlug}/${tool.slug}`,
+    url: `${SITE_URL}/tools/${tool.categorySlug}/${tool.slug}`,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web Browser",
     offers: {
@@ -89,6 +89,79 @@ export function buildOrganizationSchema() {
     description:
       "Free online tools for PDF, image, video, and file conversion.",
     sameAs: [],
+  };
+}
+
+export function buildBlogPostSchema(post: {
+  title: string;
+  description: string;
+  slug: string;
+  publishedAt: string;
+  updatedAt?: string;
+  author: string;
+  coverImage: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    url: `${SITE_URL}/blog/${post.slug}`,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt || post.publishedAt,
+    author: {
+      "@type": "Organization",
+      name: post.author,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    image: `${SITE_URL}${post.coverImage}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${post.slug}`,
+    },
+  };
+}
+
+export function buildItemListSchema(
+  items: { name: string; url: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  };
+}
+
+export function buildCollectionPageSchema({
+  name,
+  description,
+  url,
+}: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
   };
 }
 

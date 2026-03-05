@@ -13,7 +13,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-slate-200 bg-slate-50 text-slate-700">
-      <div className="mx-auto max-w-7xl max-sm:px-4 py-12">
+      <div className="mx-auto max-w-5xl max-sm:px-4 py-12">
         {/* CTA Banner */}
         <div className="mb-16 overflow-hidden rounded-2xl bg-linear-to-br from-red-500 to-red-900 px-8 py-8 shadow-md sm:px-10">
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
@@ -30,7 +30,7 @@ export default function Footer() {
               </p>
             </div>
             <Link
-              href="/pdf-tools"
+              href="/tools"
               className="shrink-0 rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-red-600 shadow-sm transition-all hover:bg-red-50 hover:shadow-md hover:-translate-y-0.5"
             >
               Browse all tools →
@@ -95,7 +95,7 @@ export default function Footer() {
             {CATEGORIES.map((cat) => (
               <div key={cat.slug} className="flex flex-col">
                 <Link
-                  href={`/${cat.slug}`}
+                  href={`/tools/${cat.slug}`}
                   className="text-sm font-bold uppercase tracking-wider text-slate-900 transition-colors hover:text-red-600"
                 >
                   {cat.name}
@@ -104,7 +104,7 @@ export default function Footer() {
                   {toolsByCategory[cat.slug]?.slice(0, 4).map((tool) => (
                     <li key={tool.slug}>
                       <Link
-                        href={`/${cat.slug}/${tool.slug}`}
+                        href={`/tools/${cat.slug}/${tool.slug}`}
                         className="group flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-slate-900"
                       >
                         <span className="truncate">{tool.name}</span>
@@ -123,7 +123,7 @@ export default function Footer() {
                   {(toolsByCategory[cat.slug]?.length ?? 0) > 4 && (
                     <li className="pt-1">
                       <Link
-                        href={`/${cat.slug}`}
+                        href={`/tools/${cat.slug}`}
                         className="inline-flex items-center text-sm font-semibold text-red-600 transition-colors hover:text-red-800"
                       >
                         View all{" "}
