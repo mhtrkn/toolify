@@ -349,8 +349,8 @@ export const TOOLS: Tool[] = [
   // Image Tools
 
   {
-    slug: "image-format-converter",
-    name: "Image Format Converter",
+    slug: "image-converter",
+    name: "Image Converter",
     description:
       "Convert images between any format online for free. Supports HEIC, JPG, PNG, WebP, BMP, TIFF. Batch conversion with drag & drop — all client-side.",
     shortDescription: "Convert HEIC, JPG, PNG, WebP, BMP, TIFF",
@@ -359,7 +359,7 @@ export const TOOLS: Tool[] = [
     categoryName: "Image Tools",
     icon: "🔄",
     keywords: [
-      "image format converter online free",
+      "image converter online free",
       "heic to jpg converter",
       "webp to jpg converter",
       "png to webp converter",

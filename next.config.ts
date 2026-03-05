@@ -20,6 +20,14 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   compress: true,
+  experimental: {
+    // Raise the body-size cap for Server Actions.
+    // Route Handlers (/api/*) are governed by the deployment platform limit
+    // (Vercel Hobby: 4.5 MB  |  Pro: up to 100 MB via streaming).
+    serverActions: {
+      bodySizeLimit: "50mb",
+    },
+  },
   async redirects() {
     return TOOL_CATEGORIES.flatMap((cat) => [
       {

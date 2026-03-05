@@ -27,7 +27,7 @@ export default function HomePage() {
       <JsonLd data={buildWebSiteSchema()} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
+      <section className="relative border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative mx-auto max-w-4xl">
           {/* Trust badge */}

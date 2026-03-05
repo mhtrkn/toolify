@@ -801,7 +801,7 @@ The [PNG to JPG](/tools/image-tools/png-to-jpg) converter helps when:
 
 ### Multi-Format Conversion
 
-The [Image Format Converter](/tools/image-tools/image-format-converter) supports all major formats in one tool — JPG, PNG, WebP, BMP, and more. Convert any format to any other with a single click.
+The [Image Converter](/tools/image-tools/image-converter) supports all major formats in one tool — JPG, PNG, WebP, BMP, and more. Convert any format to any other with a single click.
 
 ## Create GIFs from Images
 
@@ -839,7 +839,7 @@ After editing, run your image through the [Image Compressor](/tools/image-tools/
 At reasonable quality settings (60-80%), compression is virtually invisible to the human eye. The tool shows a preview so you can verify before downloading.
 
 **What's the best format for web images?**
-JPG for photographs, PNG for graphics with transparency, WebP for maximum compression with good quality. Use the [Image Format Converter](/tools/image-tools/image-format-converter) to switch between them.
+JPG for photographs, PNG for graphics with transparency, WebP for maximum compression with good quality. Use the [Image Converter](/tools/image-tools/image-converter) to switch between them.
 
 **Can I compress images in bulk?**
 The Image Compressor processes one image at a time for optimal results. Each compression takes only seconds.
@@ -866,7 +866,7 @@ The Image Compressor processes one image at a time for optimal results. Each com
     relatedTools: [
       { name: "Image Compressor", href: "/tools/image-tools/image-compressor" },
       { name: "Image Resize", href: "/tools/image-tools/image-resize" },
-      { name: "Image Format Converter", href: "/tools/image-tools/image-format-converter" },
+      { name: "Image Converter", href: "/tools/image-tools/image-converter" },
       { name: "JPG to PNG", href: "/tools/image-tools/jpg-to-png" },
       { name: "GIF Maker", href: "/tools/image-tools/gif-maker" },
     ],
