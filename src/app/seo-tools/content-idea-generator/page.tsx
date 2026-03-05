@@ -74,7 +74,6 @@ export default function ContentIdeaGeneratorPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "SEO Tools", href: "/seo-tools" },
           { label: "Content Idea Generator" },
         ]}

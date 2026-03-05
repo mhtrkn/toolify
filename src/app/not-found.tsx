@@ -18,7 +18,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="rounded-xl mt-2 mb-4 border border-red-600 px-4 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700"
+        className="mt-2 mb-4 inline-flex items-center justify-center rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-red-700"
       >
         back to home
       </Link>
@@ -28,7 +28,7 @@ export default function NotFound() {
           <Link
             key={cat.slug}
             href={`/${cat.slug}`}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50"
+            className="flex items-center gap-2 rounded-xl border border-slate-100 px-4 py-2.5 text-sm text-slate-600 transition-colors duration-150 hover:bg-slate-50"
           >
             <Image
               src={`/icons/${cat.icon}.png`}

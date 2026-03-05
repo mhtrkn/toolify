@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
@@ -154,9 +155,9 @@ export default function JpgToPdfClient() {
             </div>
           )}
           {images.length >= 1 && (
-            <button onClick={convert} className="w-full rounded-xl bg-red-600 py-3.5 text-base font-semibold text-white hover:bg-red-700">
+            <Button onClick={convert} variant="primary" size="lg" className="w-full">
               Convert {images.length} Image{images.length > 1 ? "s" : ""} to PDF
-            </button>
+            </Button>
           )}
         </>
       )}
@@ -182,8 +183,8 @@ export default function JpgToPdfClient() {
             <p className="text-sm text-green-700 mt-1">{images.length} image{images.length > 1 ? "s" : ""} merged into one PDF.</p>
           </div>
           <div className="flex gap-3 justify-center">
-            <button onClick={download} className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700">Download PDF</button>
-            <button onClick={reset} className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50">Convert More</button>
+            <Button onClick={download} variant="primary" size="lg">Download PDF</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Convert More</Button>
           </div>
         </div>
       )}

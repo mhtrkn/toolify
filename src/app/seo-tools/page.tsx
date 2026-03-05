@@ -81,7 +81,7 @@ export default function SeoToolsPage() {
       <JsonLd data={buildFaqSchema(FAQS)} />
 
       {/* Header */}
-      <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
+      <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <ToolHeader
             title="Free SEO & Content Tools – Keyword, Meta & Content Generator"
@@ -97,8 +97,8 @@ export default function SeoToolsPage() {
       {keywordTools.length > 0 && (
         <section className="px-4 pt-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">
-              🔑 Keyword Research Tools
+            <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+              Keyword Research Tools
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {keywordTools.map((tool) => (
@@ -113,8 +113,8 @@ export default function SeoToolsPage() {
       {contentTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">
-              📝 Content & Metadata Tools
+            <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+              Content & Metadata Tools
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {contentTools.map((tool) => (
@@ -129,8 +129,8 @@ export default function SeoToolsPage() {
       {otherTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-4 text-xl font-bold text-slate-800">
-              🛠️ More SEO Tools
+            <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+              More SEO Tools
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {otherTools.map((tool) => (
@@ -142,7 +142,7 @@ export default function SeoToolsPage() {
       )}
 
       {/* SEO Text */}
-      <section className="border-t border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
+      <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Free SEO Tools for Content Creators & Marketers
@@ -188,7 +188,7 @@ export default function SeoToolsPage() {
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>
-          <div className="mt-6 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
+          <div className="mt-6 divide-y divide-slate-100 rounded-xl border border-slate-100 bg-white">
             {FAQS.map((faq, i) => (
               <div key={i} className="px-6 py-5">
                 <h3 className="font-semibold text-slate-900">{faq.question}</h3>

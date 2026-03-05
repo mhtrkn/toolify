@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
@@ -203,12 +204,8 @@ export default function ExcelCsvClient() {
             </div>
           )}
           <div className="flex gap-3">
-            <button onClick={convert} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700">
-              Convert
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">
-              Change File
-            </button>
+            <Button onClick={convert} variant="primary" size="lg" className="flex-1">Convert</Button>
+            <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change File</Button>
           </div>
         </div>
       )}
@@ -234,12 +231,8 @@ export default function ExcelCsvClient() {
             <p className="text-sm text-red-700 mt-1">{resultName}</p>
           </div>
           <div className="flex gap-3 justify-center">
-            <button onClick={download} className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700">
-              Download
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50">
-              Convert Another
-            </button>
+            <Button onClick={download} variant="primary" size="lg">Download</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Convert Another</Button>
           </div>
         </div>
       )}

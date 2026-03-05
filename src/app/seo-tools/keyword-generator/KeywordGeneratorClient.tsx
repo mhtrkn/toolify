@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import type { GeneratedKeyword } from "@/lib/seo-utils";
+import Button from "@/components/ui/button";
 
 type FilterType = "all" | "long-tail" | "question" | "commercial" | "lsi";
 
@@ -82,14 +83,7 @@ export default function KeywordGeneratorClient() {
             />
           </div>
           <div className="flex items-end">
-            <button
-              type="button"
-              onClick={generate}
-              disabled={!seed.trim()}
-              className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
-            >
-              Generate
-            </button>
+            <Button type="button" onClick={generate} variant="primary" size="md" disabled={!seed.trim()}>Generate</Button>
           </div>
         </div>
 
@@ -122,20 +116,8 @@ export default function KeywordGeneratorClient() {
 
             <div className="flex-1" />
 
-            <button
-              type="button"
-              onClick={copyAll}
-              className="rounded-xl border border-slate-200 px-4 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-            >
-              Copy all
-            </button>
-            <button
-              type="button"
-              onClick={exportCsv}
-              className="rounded-xl border border-slate-200 px-4 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-            >
-              Export CSV
-            </button>
+            <Button type="button" onClick={copyAll} variant="secondary" size="sm">Copy all</Button>
+            <Button type="button" onClick={exportCsv} variant="secondary" size="sm">Export CSV</Button>
           </div>
 
           {/* Keyword grid */}

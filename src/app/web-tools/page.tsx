@@ -5,7 +5,6 @@ import { getToolsByCategory, getCategoryBySlug } from "@/lib/tools";
 import { buildCategoryMetadata } from "@/lib/metadata";
 import { buildFaqSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/metadata";
-import Image from "next/image";
 import ToolHeader from "@/components/tools/ToolHeader";
 
 export const metadata: Metadata = buildCategoryMetadata({
@@ -58,7 +57,7 @@ export default function WebToolsPage() {
       <JsonLd data={buildFaqSchema(FAQS)} />
 
       {/* Header */}
-      <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
+      <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <ToolHeader
             title="Web Tools – Free Online Developer Utilities"
@@ -73,8 +72,8 @@ export default function WebToolsPage() {
       {/* Generator Tools */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">
-            ⬛ Generator Tools
+          <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+            Generator Tools
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
@@ -91,8 +90,8 @@ export default function WebToolsPage() {
       {/* Data & Encoding Tools */}
       <section className="px-4 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">
-            🔢 Data & Encoding Tools
+          <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+            Data & Encoding Tools
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
@@ -107,8 +106,8 @@ export default function WebToolsPage() {
       {/* HTML Tools */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">
-            📄 HTML Tools
+          <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+            HTML Tools
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {tools
@@ -121,7 +120,7 @@ export default function WebToolsPage() {
       </section>
 
       {/* SEO Text */}
-      <section className="border-t border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
+      <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             All-in-One Online Developer & Designer Tools
@@ -145,7 +144,7 @@ export default function WebToolsPage() {
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>
-          <div className="mt-6 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
+          <div className="mt-6 divide-y divide-slate-100 rounded-xl border border-slate-100 bg-white">
             {FAQS.map((faq, i) => (
               <div key={i} className="px-6 py-5">
                 <h3 className="font-semibold text-slate-900">{faq.question}</h3>

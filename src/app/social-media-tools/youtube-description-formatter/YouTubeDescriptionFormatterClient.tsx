@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { generateYtDescription } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 export default function YouTubeDescriptionFormatterClient() {
   const [title, setTitle] = useState("");
@@ -107,13 +108,9 @@ export default function YouTubeDescriptionFormatterClient() {
           </div>
         </div>
 
-        <button
-          onClick={handleGenerate}
-          disabled={!title.trim()}
-          className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-        >
+        <Button onClick={handleGenerate} variant="primary" size="lg" disabled={!title.trim()} className="w-full">
           Generate Description
-        </button>
+        </Button>
       </div>
 
       {/* Result */}
@@ -123,12 +120,7 @@ export default function YouTubeDescriptionFormatterClient() {
             <p className="text-sm font-medium text-slate-700">
               {result.length} / 5000 characters
             </p>
-            <button
-              onClick={copyResult}
-              className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-red-700"
-            >
-              Copy Description
-            </button>
+            <Button onClick={copyResult} variant="primary" size="sm">Copy Description</Button>
           </div>
           <pre className="whitespace-pre-wrap p-5 text-sm text-slate-700 font-sans leading-relaxed max-h-96 overflow-y-auto">
             {result}

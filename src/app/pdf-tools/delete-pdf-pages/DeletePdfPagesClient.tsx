@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
@@ -162,10 +163,8 @@ export default function DeletePdfPagesClient() {
           </div>
           {error && <div role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
           <div className="flex gap-3">
-            <button onClick={process} disabled={!pageInput.trim()} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50">
-              Delete Pages
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">Change File</button>
+            <Button onClick={process} variant="primary" size="lg" className="flex-1" disabled={!pageInput.trim()}>Delete Pages</Button>
+            <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change File</Button>
           </div>
         </div>
       )}
@@ -190,8 +189,8 @@ export default function DeletePdfPagesClient() {
             </p>
           </div>
           <div className="flex gap-3 justify-center">
-            <button onClick={download} className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700">Download PDF</button>
-            <button onClick={reset} className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50">Edit Another</button>
+            <Button onClick={download} variant="primary" size="lg">Download PDF</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Edit Another</Button>
           </div>
         </div>
       )}

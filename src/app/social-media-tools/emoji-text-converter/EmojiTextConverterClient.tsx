@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { convertToEmojiText } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 type Mode = "decorate" | "replace";
 
@@ -66,12 +67,7 @@ export default function EmojiTextConverterClient() {
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
             <p className="text-sm font-medium text-slate-700">Emoji Text</p>
-            <button
-              onClick={copyResult}
-              className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-red-700"
-            >
-              Copy
-            </button>
+            <Button onClick={copyResult} variant="primary" size="sm">Copy</Button>
           </div>
           <div className="p-5">
             <p className="text-base text-slate-800 leading-relaxed whitespace-pre-wrap">{result}</p>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import DOMPurify from "isomorphic-dompurify"; // Güvenlik için eklendi
+import Button from "@/components/ui/button";
 
 type Mode = "md-to-html" | "html-to-md";
 
@@ -116,20 +117,8 @@ export default function MarkdownHtmlClient() {
           </button>
         </div>
         <div className="flex gap-2">
-          <button
-            onClick={copyOutput}
-            disabled={!output}
-            className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50 disabled:opacity-40"
-          >
-            Copy
-          </button>
-          <button
-            onClick={download}
-            disabled={!output}
-            className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-          >
-            Download
-          </button>
+          <Button onClick={copyOutput} variant="secondary" size="sm" disabled={!output}>Copy</Button>
+          <Button onClick={download} variant="primary" size="sm" disabled={!output}>Download</Button>
         </div>
       </div>
 

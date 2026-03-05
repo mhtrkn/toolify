@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { generateInstagramUsernames } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 export default function InstagramUsernameGeneratorClient() {
   const [name, setName] = useState("");
@@ -55,13 +56,9 @@ export default function InstagramUsernameGeneratorClient() {
             />
           </div>
         </div>
-        <button
-          onClick={handleGenerate}
-          disabled={!name.trim() && !niche.trim()}
-          className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-        >
+        <Button onClick={handleGenerate} variant="primary" size="lg" disabled={!name.trim() && !niche.trim()} className="w-full">
           Generate Usernames
-        </button>
+        </Button>
       </div>
 
       {/* Results */}
@@ -69,12 +66,7 @@ export default function InstagramUsernameGeneratorClient() {
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
             <p className="text-sm font-medium text-slate-700">{usernames.length} username ideas</p>
-            <button
-              onClick={handleGenerate}
-              className="rounded-lg border border-slate-300 px-4 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              Regenerate
-            </button>
+            <Button onClick={handleGenerate} variant="secondary" size="sm">Regenerate</Button>
           </div>
 
           <ul className="divide-y divide-slate-100">
@@ -87,12 +79,7 @@ export default function InstagramUsernameGeneratorClient() {
                   <span className={`text-xs font-medium ${lengthColor(u.length)}`}>
                     {u.length} chars
                   </span>
-                  <button
-                    onClick={() => copyUsername(u)}
-                    className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-                  >
-                    Copy
-                  </button>
+                  <Button onClick={() => copyUsername(u)} variant="secondary" size="sm">Copy</Button>
                 </div>
               </li>
             ))}

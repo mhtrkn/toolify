@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
@@ -170,12 +171,9 @@ export default function PdfToJpgClient() {
                     className="w-full accent-red-600"
                   />
                 </div>
-                <button
-                  onClick={convert}
-                  className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-                >
+                <Button onClick={convert} variant="primary" size="lg" className="w-full">
                   Convert {files.length > 1 ? `${files.length} PDFs` : "PDF"} to JPG
-                </button>
+                </Button>
               </div>
             </div>
           )}
@@ -200,12 +198,8 @@ export default function PdfToJpgClient() {
               {results.reduce((s, r) => s + r.pages.length, 0)} pages converted from {results.length} PDF{results.length > 1 ? "s" : ""}
             </h2>
             <div className="flex gap-2">
-              <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">
-                Download All
-              </button>
-              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
-                Convert Another
-              </button>
+              <Button onClick={downloadAll} variant="primary" size="md">Download All</Button>
+              <Button onClick={reset} variant="secondary" size="md">Convert Another</Button>
             </div>
           </div>
 

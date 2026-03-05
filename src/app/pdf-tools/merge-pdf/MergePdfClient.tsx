@@ -5,6 +5,7 @@ import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
+import Button from "@/components/ui/button";
 
 interface PdfFile {
   id: string;
@@ -163,12 +164,9 @@ export default function MergePdfClient() {
           />
 
           {files.length >= 2 && (
-            <button
-              onClick={merge}
-              className="w-full rounded-xl bg-red-600 py-3.5 text-base font-semibold text-white hover:bg-red-700"
-            >
+            <Button onClick={merge} variant="primary" size="lg" className="w-full">
               Merge {files.length} PDFs
-            </button>
+            </Button>
           )}
         </>
       )}
@@ -202,18 +200,8 @@ export default function MergePdfClient() {
             </p>
           </div>
           <div className="flex gap-3 justify-center">
-            <button
-              onClick={download}
-              className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700"
-            >
-              Download Merged PDF
-            </button>
-            <button
-              onClick={reset}
-              className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50"
-            >
-              Merge More
-            </button>
+            <Button onClick={download} variant="primary" size="lg">Download Merged PDF</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Merge More</Button>
           </div>
         </div>
       )}

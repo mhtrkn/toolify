@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { generateYtTags } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 export default function YouTubeTagGeneratorClient() {
   const [topic, setTopic] = useState("");
@@ -58,13 +59,9 @@ export default function YouTubeTagGeneratorClient() {
             placeholder="e.g. music, programming, cooking, fitness"
           />
         </div>
-        <button
-          onClick={handleGenerate}
-          disabled={!topic.trim()}
-          className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-        >
+        <Button onClick={handleGenerate} variant="primary" size="lg" disabled={!topic.trim()} className="w-full">
           Generate Tags
-        </button>
+        </Button>
       </div>
 
       {/* Results */}
@@ -75,18 +72,8 @@ export default function YouTubeTagGeneratorClient() {
               {visibleTags.length} tags generated
             </p>
             <div className="flex gap-2">
-              <button
-                onClick={copyAll}
-                className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-red-700"
-              >
-                Copy All
-              </button>
-              <button
-                onClick={handleGenerate}
-                className="rounded-lg border border-slate-300 px-4 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
-              >
-                Regenerate
-              </button>
+              <Button onClick={copyAll} variant="primary" size="sm">Copy All</Button>
+              <Button onClick={handleGenerate} variant="secondary" size="sm">Regenerate</Button>
             </div>
           </div>
 

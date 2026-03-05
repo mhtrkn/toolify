@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import Button from "@/components/ui/button";
 
 const TITLE_MAX = 60;
 const TITLE_MIN = 50;
@@ -165,27 +166,16 @@ export default function SeoMetaBuilderClient() {
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={generate}
-        disabled={!title.trim() || !description.trim() || !url.trim()}
-        className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
-      >
+      <Button type="button" onClick={generate} variant="primary" size="lg" disabled={!title.trim() || !description.trim() || !url.trim()} className="w-full">
         🏷️ Generate Meta Tags
-      </button>
+      </Button>
 
       {/* Output */}
       {output && (
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
           <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5">
             <span className="text-xs font-semibold text-slate-500">HTML Snippet — ready to paste in &lt;head&gt;</span>
-            <button
-              type="button"
-              onClick={copy}
-              className="rounded-lg bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700"
-            >
-              Copy
-            </button>
+            <Button type="button" onClick={copy} variant="primary" size="sm">Copy</Button>
           </div>
           <pre className="overflow-x-auto p-4 font-mono text-xs text-slate-700 bg-slate-50 leading-relaxed">
             {output}

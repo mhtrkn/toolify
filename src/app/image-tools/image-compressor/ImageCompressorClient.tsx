@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
@@ -140,9 +141,9 @@ export default function ImageCompressorClient() {
             <h2 className="font-semibold text-slate-900">{results.length} image{results.length > 1 ? "s" : ""} compressed</h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Download All</button>
+                <Button onClick={downloadAll} variant="primary" size="md">Download All</Button>
               )}
-              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">Compress More</button>
+              <Button onClick={reset} variant="secondary" size="md">Compress More</Button>
             </div>
           </div>
           {results.map((r, i) => (
@@ -156,17 +157,17 @@ export default function ImageCompressorClient() {
                   {r.savings > 0 && <span className="font-medium text-green-600">Saved {r.savings}%</span>}
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => {
                   const ext = r.blob.type === "image/png" ? "png" : "jpg";
                   const base = r.name.replace(/\.[^/.]+$/, "");
                   downloadBlob(r.blob, `${base}-compressed.${ext}`);
                   toast.success("Downloading", { description: `${base}-compressed.${ext}` });
                 }}
-                className="shrink-0 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
+                variant="primary" size="md" className="shrink-0"
               >
                 Download
-              </button>
+              </Button>
             </div>
           ))}
         </div>

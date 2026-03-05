@@ -74,7 +74,6 @@ export default function RegexTesterPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "Developer Tools", href: "/developer-tools" },
           { label: "Regex Tester" },
         ]}

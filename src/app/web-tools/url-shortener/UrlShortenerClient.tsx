@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
+import Button from "@/components/ui/button";
 
 interface ShortenedLink {
   original: string;
@@ -76,13 +77,9 @@ export default function UrlShortenerClient() {
             className="flex-1 rounded-xl px-4 py-3"
             disabled={loading}
           />
-          <button
-            onClick={shorten}
-            disabled={loading || !url.trim()}
-            className="rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50 sm:shrink-0"
-          >
+          <Button onClick={shorten} variant="primary" size="lg" disabled={loading || !url.trim()} className="sm:shrink-0">
             {loading ? "Shortening…" : "Shorten URL"}
-          </button>
+          </Button>
         </div>
         {error && (
           <p role="alert" className="mt-2 text-sm text-red-600">{error}</p>
@@ -118,12 +115,7 @@ export default function UrlShortenerClient() {
                   >
                     {item.short}
                   </a>
-                  <button
-                    onClick={() => copy(item.short)}
-                    className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:bg-slate-50"
-                  >
-                    Copy
-                  </button>
+                  <Button onClick={() => copy(item.short)} variant="secondary" size="sm">Copy</Button>
                   <Link
                     href={`/web-tools/qr-code-generator?url=${encodeURIComponent(item.short)}`}
                     className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:bg-slate-50"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Button from "@/components/ui/button";
 import { toast } from "sonner";
 import {
   Select,
@@ -301,18 +302,8 @@ export default function QrCodeGeneratorClient() {
 
         {qrDataUrl && (
           <div className="flex gap-3">
-            <button
-              onClick={download}
-              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-            >
-              Download PNG
-            </button>
-            <button
-              onClick={copy}
-              className="flex-1 rounded-xl border border-slate-300 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-            >
-              Copy Image
-            </button>
+            <Button onClick={download} variant="primary" size="lg" className="flex-1">Download PNG</Button>
+            <Button onClick={copy} variant="secondary" size="lg" className="flex-1">Copy Image</Button>
           </div>
         )}
       </div>

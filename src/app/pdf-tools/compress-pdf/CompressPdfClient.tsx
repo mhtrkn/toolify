@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
@@ -168,12 +169,8 @@ export default function CompressPdfClient() {
             )}
           </div>
           <div className="flex gap-3">
-            <button onClick={compress} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700">
-              Compress PDF
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">
-              Change File
-            </button>
+            <Button onClick={compress} variant="primary" size="lg" className="flex-1">Compress PDF</Button>
+            <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change File</Button>
           </div>
         </div>
       )}
@@ -214,12 +211,8 @@ export default function CompressPdfClient() {
             </div>
           </div>
           <div className="flex gap-3 justify-center">
-            <button onClick={download} className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700">
-              Download Compressed PDF
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50">
-              Compress Another
-            </button>
+            <Button onClick={download} variant="primary" size="lg">Download Compressed PDF</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Compress Another</Button>
           </div>
         </div>
       )}

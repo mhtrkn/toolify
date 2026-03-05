@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
@@ -254,19 +255,9 @@ export default function ImageFormatConverterClient() {
             </h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button
-                  onClick={downloadAll}
-                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
-                >
-                  Download All
-                </button>
+                <Button onClick={downloadAll} variant="primary" size="md">Download All</Button>
               )}
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
-              >
-                Convert More
-              </button>
+              <Button onClick={reset} variant="secondary" size="md">Convert More</Button>
             </div>
           </div>
 
@@ -292,15 +283,15 @@ export default function ImageFormatConverterClient() {
                     </span>
                   </div>
                 </div>
-                <button
+                <Button
                   onClick={() => {
                     downloadBlob(r.blob, r.outputName);
                     toast.success("Download started", { description: r.outputName });
                   }}
-                  className="shrink-0 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+                  variant="primary" size="md" className="shrink-0"
                 >
                   Download
-                </button>
+                </Button>
               </div>
             ))}
           </div>

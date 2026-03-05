@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import { formatBytes, downloadBlob } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -499,12 +500,7 @@ export default function ImageEditorClient() {
                 </div>
               </div>
 
-              <button
-                onClick={applyResize}
-                className="w-full rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
-              >
-                Apply Resize
-              </button>
+              <Button onClick={applyResize} variant="primary" size="md" className="w-full">Apply Resize</Button>
             </>
           )}
 
@@ -532,12 +528,7 @@ export default function ImageEditorClient() {
                 </div>
               </div>
 
-              <button
-                onClick={applyCrop}
-                className="w-full rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
-              >
-                Apply Crop
-              </button>
+              <Button onClick={applyCrop} variant="primary" size="md" className="w-full">Apply Crop</Button>
             </>
           )}
 
@@ -571,13 +562,13 @@ export default function ImageEditorClient() {
                   <span>0°</span>
                   <span>+180°</span>
                 </div>
-                <button
+                <Button
                   onClick={() => applyRotate(rotateAngle)}
                   disabled={rotateAngle === 0}
-                  className="mt-3 w-full rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-40 transition-colors"
+                  variant="primary" size="md" className="mt-3 w-full"
                 >
                   Apply {rotateAngle}° Rotation
-                </button>
+                </Button>
               </div>
             </>
           )}
@@ -627,13 +618,9 @@ export default function ImageEditorClient() {
           </div>
 
           <div className="ml-auto">
-            <button
-              onClick={handleDownload}
-              disabled={saving}
-              className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-60 transition-colors"
-            >
+            <Button onClick={handleDownload} disabled={saving} variant="primary" size="md" className="px-6">
               {saving ? "Saving…" : `⬇ Download ${outputFormat.toUpperCase()}`}
-            </button>
+            </Button>
           </div>
         </div>
 

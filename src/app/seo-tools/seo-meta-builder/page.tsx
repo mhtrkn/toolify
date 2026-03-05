@@ -75,7 +75,6 @@ export default function SeoMetaBuilderPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "SEO Tools", href: "/seo-tools" },
           { label: "SEO Meta Tag Builder" },
         ]}

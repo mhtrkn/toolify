@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 type Direction = "encode" | "decode";
 type InputMode = "text" | "file";
@@ -207,25 +208,11 @@ export default function Base64Client() {
             />
           </div>
           <div className="flex gap-2 border-t border-slate-100 px-4 py-3">
-            <button
-              onClick={() => copy(result)}
-              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
-            >
-              Copy Result
-            </button>
-            <button
-              onClick={downloadResult}
-              className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              Download
-            </button>
-            <button
-              onClick={() => { setText(result); handleTextChange(result); }}
-              className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-              title="Use output as next input"
-            >
+            <Button onClick={() => copy(result)} variant="primary" size="md">Copy Result</Button>
+            <Button onClick={downloadResult} variant="secondary" size="md">Download</Button>
+            <Button onClick={() => { setText(result); handleTextChange(result); }} variant="secondary" size="md" title="Use output as next input">
               ↩ Use as Input
-            </button>
+            </Button>
           </div>
         </div>
       )}

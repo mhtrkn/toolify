@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { generateInstagramCaptions } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 type Mood = "excited" | "motivational" | "funny" | "professional" | "aesthetic";
 
@@ -66,13 +67,9 @@ export default function InstagramCaptionGeneratorClient() {
           </Select>
         </div>
 
-        <button
-          onClick={handleGenerate}
-          disabled={!topic.trim()}
-          className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-        >
+        <Button onClick={handleGenerate} variant="primary" size="lg" disabled={!topic.trim()} className="w-full">
           Generate Captions
-        </button>
+        </Button>
       </div>
 
       {/* Results */}
@@ -84,12 +81,7 @@ export default function InstagramCaptionGeneratorClient() {
                 <p className="text-xs font-medium text-slate-500">Caption {i + 1}</p>
                 <div className="flex gap-2">
                   <span className="text-xs text-slate-400">{caption.length} chars</span>
-                  <button
-                    onClick={() => copyCaptionText(caption)}
-                    className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:bg-slate-50"
-                  >
-                    Copy
-                  </button>
+                  <Button onClick={() => copyCaptionText(caption)} variant="secondary" size="sm">Copy</Button>
                 </div>
               </div>
               <pre className="whitespace-pre-wrap p-5 text-sm text-slate-700 font-sans leading-relaxed">
@@ -98,12 +90,7 @@ export default function InstagramCaptionGeneratorClient() {
             </div>
           ))}
 
-          <button
-            onClick={handleGenerate}
-            className="w-full rounded-xl border border-slate-300 py-2.5 text-sm text-slate-600 hover:bg-slate-50"
-          >
-            Regenerate Captions
-          </button>
+          <Button onClick={handleGenerate} variant="secondary" size="lg" className="w-full">Regenerate Captions</Button>
         </div>
       )}
     </div>

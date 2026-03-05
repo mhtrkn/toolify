@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import Button from "@/components/ui/button";
 import type { LsiKeyword } from "@/lib/seo-utils";
 
 const CAT_COLORS: Record<string, string> = {
@@ -79,14 +80,7 @@ export default function LsiKeywordExplorerClient() {
             />
           </div>
           <div className="flex items-end">
-            <button
-              type="button"
-              onClick={explore}
-              disabled={!seed.trim()}
-              className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
-            >
-              Explore
-            </button>
+            <Button type="button" onClick={explore} variant="primary" size="md" disabled={!seed.trim()}>Explore</Button>
           </div>
         </div>
       </div>
@@ -120,20 +114,8 @@ export default function LsiKeywordExplorerClient() {
               </button>
             ))}
             <div className="flex-1" />
-            <button
-              type="button"
-              onClick={copyAll}
-              className="rounded-xl border border-slate-200 px-4 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-            >
-              Copy all
-            </button>
-            <button
-              type="button"
-              onClick={exportCsv}
-              className="rounded-xl border border-slate-200 px-4 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-            >
-              Export CSV
-            </button>
+            <Button type="button" onClick={copyAll} variant="secondary" size="sm">Copy all</Button>
+            <Button type="button" onClick={exportCsv} variant="secondary" size="sm">Export CSV</Button>
           </div>
 
           {/* Keywords */}

@@ -13,9 +13,9 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-slate-200 bg-slate-50 text-slate-700">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl max-sm:px-4 py-12">
         {/* CTA Banner */}
-        <div className="mb-16 overflow-hidden rounded-2xl bg-gradient-to-br from-red-500 to-red-900 px-8 py-8 shadow-md sm:px-10">
+        <div className="mb-16 overflow-hidden rounded-2xl bg-linear-to-br from-red-500 to-red-900 px-8 py-8 shadow-md sm:px-10">
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-red-200">

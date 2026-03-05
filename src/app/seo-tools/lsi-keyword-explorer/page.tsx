@@ -74,7 +74,6 @@ export default function LsiKeywordExplorerPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "SEO Tools", href: "/seo-tools" },
           { label: "LSI Keyword Explorer" },
         ]}

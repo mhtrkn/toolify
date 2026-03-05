@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Button from "@/components/ui/button";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
@@ -313,18 +314,8 @@ export default function PdfToTextClient() {
         )}
 
         <div className="flex gap-3">
-          <button
-            onClick={extract}
-            className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
-          >
-            Extract Text
-          </button>
-          <button
-            onClick={reset}
-            className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-          >
-            Change
-          </button>
+          <Button onClick={extract} variant="primary" size="lg" className="flex-1">Extract Text</Button>
+          <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change</Button>
         </div>
       </div>
     );
@@ -358,12 +349,7 @@ export default function PdfToTextClient() {
         >
           {error}
         </div>
-        <button
-          onClick={reset}
-          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-50"
-        >
-          Try Again
-        </button>
+        <Button onClick={reset} variant="secondary" size="md">Try Again</Button>
       </div>
     );
   }
@@ -415,44 +401,14 @@ export default function PdfToTextClient() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => copyText(active)}
-              className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
-            >
-              Copy
-            </button>
-            <button
-              onClick={() => handleExport(active, "txt")}
-              className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
-            >
-              .txt
-            </button>
-            <button
-              onClick={() => handleExport(active, "docx")}
-              className="rounded-lg bg-red-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-800"
-            >
-              .docx
-            </button>
-            <button
-              onClick={() => handleExport(active, "json")}
-              className="rounded-lg bg-slate-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-800"
-            >
-              .json
-            </button>
+            <Button onClick={() => copyText(active)} variant="secondary" size="sm">Copy</Button>
+            <Button onClick={() => handleExport(active, "txt")} variant="primary" size="sm">.txt</Button>
+            <Button onClick={() => handleExport(active, "docx")} variant="primary" size="sm">.docx</Button>
+            <Button onClick={() => handleExport(active, "json")} variant="primary" size="sm">.json</Button>
             {results.length > 1 && (
-              <button
-                onClick={downloadAllZip}
-                className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
-              >
-                All (.zip)
-              </button>
+              <Button onClick={downloadAllZip} variant="secondary" size="sm">All (.zip)</Button>
             )}
-            <button
-              onClick={reset}
-              className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
-            >
-              New
-            </button>
+            <Button onClick={reset} variant="secondary" size="sm">New</Button>
           </div>
         </div>
 

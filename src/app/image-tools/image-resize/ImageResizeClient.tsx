@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
@@ -164,7 +165,7 @@ export default function ImageResizeClient() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-slate-900">{results.length} image{results.length > 1 ? "s" : ""} resized</h2>
-            <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">Resize More</button>
+            <Button onClick={reset} variant="secondary" size="md">Resize More</Button>
           </div>
           {results.map((r, i) => (
             <div key={i} className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center">
@@ -176,16 +177,16 @@ export default function ImageResizeClient() {
                   <span>{formatBytes(r.newSize)}</span>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => {
                   const base = r.name.replace(/\.[^/.]+$/, "");
                   downloadBlob(r.blob, `${base}-${r.width}x${r.height}.${format}`);
                   toast.success("Downloading", { description: `${base}-${r.width}x${r.height}.${format}` });
                 }}
-                className="shrink-0 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
+                variant="primary" size="md" className="shrink-0"
               >
                 Download
-              </button>
+              </Button>
             </div>
           ))}
         </div>

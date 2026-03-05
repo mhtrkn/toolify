@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
+import Button from "@/components/ui/button";
 
 // ── Syntax Highlighting (Raw view) ────────────────────────────────────────────
 function syntaxHighlightJson(json: string): string {
@@ -526,18 +527,8 @@ export default function JsonViewerClient() {
 
             {/* Copy + Download */}
             <div className="flex items-center gap-1">
-              <button
-                onClick={copyJson}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-              >
-                Copy
-              </button>
-              <button
-                onClick={downloadJson}
-                className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700"
-              >
-                Download
-              </button>
+              <Button onClick={copyJson} variant="secondary" size="sm">Copy</Button>
+              <Button onClick={downloadJson} variant="primary" size="sm">Download</Button>
             </div>
           </div>
 

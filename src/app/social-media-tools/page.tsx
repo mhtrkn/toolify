@@ -72,7 +72,7 @@ export default function SocialMediaToolsPage() {
       <JsonLd data={buildFaqSchema(FAQS)} />
 
       {/* Header */}
-      <section className="border-b border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
+      <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <ToolHeader
             title="Social Media & Creator Tools – Free Online Generator Suite"
@@ -87,8 +87,8 @@ export default function SocialMediaToolsPage() {
       {/* YouTube Tools Sub-section */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">
-            🎬 YouTube Tools
+          <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+            YouTube Tools
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {tools
@@ -103,8 +103,8 @@ export default function SocialMediaToolsPage() {
       {/* Instagram Tools Sub-section */}
       <section className="px-4 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">
-            📸 Instagram Tools
+          <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+            Instagram Tools
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {tools
@@ -119,8 +119,8 @@ export default function SocialMediaToolsPage() {
       {/* General Social Tools Sub-section */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-4 text-xl font-bold text-slate-800">
-            🌐 General Social Tools
+          <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
+            General Social Tools
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {tools
@@ -137,7 +137,7 @@ export default function SocialMediaToolsPage() {
       </section>
 
       {/* SEO Text */}
-      <section className="border-t border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
+      <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             All-in-One Social Media Creator Toolkit
@@ -182,7 +182,7 @@ export default function SocialMediaToolsPage() {
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>
-          <div className="mt-6 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
+          <div className="mt-6 divide-y divide-slate-100 rounded-xl border border-slate-100 bg-white">
             {FAQS.map((faq, i) => (
               <div key={i} className="px-6 py-5">
                 <h3 className="font-semibold text-slate-900">{faq.question}</h3>

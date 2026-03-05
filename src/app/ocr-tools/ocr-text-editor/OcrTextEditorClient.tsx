@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import Button from "@/components/ui/button";
 import { toast } from "sonner";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
@@ -123,13 +124,7 @@ function SearchReplacePanel({
           />
           Case sensitive
         </label>
-        <button
-          onClick={replaceAll}
-          disabled={!search}
-          className="rounded-lg bg-red-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-        >
-          Replace All
-        </button>
+        <Button onClick={replaceAll} variant="primary" size="sm" disabled={!search}>Replace All</Button>
       </div>
     </div>
   );
@@ -280,12 +275,9 @@ export default function OcrTextEditorClient() {
 
         <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-3">
           <p className="text-sm font-semibold text-slate-700">Start with blank document</p>
-          <button
-            onClick={() => { setText(""); setMode("edit"); }}
-            className="w-full rounded-xl border border-slate-200 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
-          >
+          <Button onClick={() => { setText(""); setMode("edit"); }} variant="secondary" size="lg" className="w-full">
             Open Empty Editor
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -318,18 +310,8 @@ export default function OcrTextEditorClient() {
               </div>
             </div>
             <div className="flex gap-3">
-              <button
-                onClick={runOcr}
-                className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-              >
-                Extract Text with OCR
-              </button>
-              <button
-                onClick={reset}
-                className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-              >
-                Change
-              </button>
+              <Button onClick={runOcr} variant="primary" size="lg" className="flex-1">Extract Text with OCR</Button>
+              <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change</Button>
             </div>
           </div>
         ) : (
@@ -410,24 +392,9 @@ export default function OcrTextEditorClient() {
           >
             {copied ? "Copied!" : "Copy"}
           </button>
-          <button
-            onClick={downloadTxt}
-            className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
-          >
-            .txt
-          </button>
-          <button
-            onClick={downloadDocx}
-            className="rounded-lg bg-red-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-800"
-          >
-            .docx
-          </button>
-          <button
-            onClick={reset}
-            className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
-          >
-            New
-          </button>
+          <Button onClick={downloadTxt} variant="primary" size="sm">.txt</Button>
+          <Button onClick={downloadDocx} variant="primary" size="sm">.docx</Button>
+          <Button onClick={reset} variant="secondary" size="sm">New</Button>
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
+import Button from "@/components/ui/button";
 
 type Status = "idle" | "ready" | "processing" | "done" | "error";
 
@@ -186,12 +187,9 @@ export default function ExcelToPdfClient() {
                 ))}
               </div>
               <div className="px-4 py-4 border-t border-slate-100">
-                <button
-                  onClick={convert}
-                  className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-                >
+                <Button onClick={convert} variant="primary" size="lg" className="w-full">
                   Convert {files.length > 1 ? `${files.length} Files` : "File"} to PDF
-                </button>
+                </Button>
               </div>
             </div>
           )}
@@ -217,13 +215,9 @@ export default function ExcelToPdfClient() {
             </h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">
-                  Download All
-                </button>
+                <Button onClick={downloadAll} variant="primary" size="md">Download All</Button>
               )}
-              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
-                Convert More
-              </button>
+              <Button onClick={reset} variant="secondary" size="md">Convert More</Button>
             </div>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white overflow-hidden divide-y divide-slate-100">

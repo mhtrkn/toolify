@@ -74,7 +74,6 @@ export default function UrlEncoderDecoderPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "Developer Tools", href: "/developer-tools" },
           { label: "URL Encoder / Decoder" },
         ]}

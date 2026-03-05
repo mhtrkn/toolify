@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import type { JwtParts } from "@/lib/dev-utils";
 
 const SAMPLE_JWT =
@@ -90,14 +91,9 @@ export default function JwtDecoderClient() {
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={decode}
-        disabled={!token.trim()}
-        className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
-      >
+      <Button type="button" onClick={decode} variant="primary" size="lg" disabled={!token.trim()} className="w-full">
         🔑 Decode JWT
-      </button>
+      </Button>
 
       {result && (
         <div className="space-y-4">

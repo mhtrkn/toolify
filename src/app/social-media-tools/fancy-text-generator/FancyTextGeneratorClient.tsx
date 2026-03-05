@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { FANCY_TEXT_STYLES } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 export default function FancyTextGeneratorClient() {
   const [text, setText] = useState("Hello World");
@@ -64,12 +65,7 @@ export default function FancyTextGeneratorClient() {
                     </p>
                     <p className="text-lg leading-snug text-slate-800 break-all">{converted}</p>
                   </div>
-                  <button
-                    onClick={() => copyStyle(converted, style.name)}
-                    className="shrink-0 rounded-lg border border-slate-200 px-3 py-2 text-xs text-slate-600 hover:bg-white hover:border-red-300 hover:text-red-600 transition-colors"
-                  >
-                    Copy
-                  </button>
+                  <Button onClick={() => copyStyle(converted, style.name)} variant="secondary" size="sm" className="shrink-0">Copy</Button>
                 </li>
               );
             })}

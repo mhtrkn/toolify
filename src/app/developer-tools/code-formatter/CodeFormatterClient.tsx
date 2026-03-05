@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -31,11 +32,17 @@ const PLACEHOLDERS: Record<Language, string> = {
 
 // ── Format via Prettier (browser standalone) ──────────────────────────────────
 
-async function formatWithPrettier(code: string, parser: string): Promise<string> {
+async function formatWithPrettier(
+  code: string,
+  parser: string,
+): Promise<string> {
   // Prettier v3 standalone – format is a named export, plugins are module namespaces
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const prettierStandalone = await import("prettier/standalone") as any;
-  const format: (code: string, opts: Record<string, unknown>) => Promise<string> =
+  const prettierStandalone = (await import("prettier/standalone")) as any;
+  const format: (
+    code: string,
+    opts: Record<string, unknown>,
+  ) => Promise<string> =
     prettierStandalone.format ?? prettierStandalone.default?.format;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -127,7 +134,10 @@ export default function CodeFormatterClient() {
 
   const process = useCallback(async () => {
     const code = input.trim();
-    if (!code) { setError("Please enter some code first."); return; }
+    if (!code) {
+      setError("Please enter some code first.");
+      return;
+    }
     setError(null);
     setLoading(true);
 
@@ -155,17 +165,28 @@ export default function CodeFormatterClient() {
       } else {
         // minify
         switch (lang) {
-          case "json": result = minifyJson(code); break;
-          case "js":   result = minifyJs(code);   break;
-          case "html": result = minifyHtml(code);  break;
-          case "css":  result = minifyCss(code);   break;
-          case "sql":  result = minifySql(code);   break;
+          case "json":
+            result = minifyJson(code);
+            break;
+          case "js":
+            result = minifyJs(code);
+            break;
+          case "html":
+            result = minifyHtml(code);
+            break;
+          case "css":
+            result = minifyCss(code);
+            break;
+          case "sql":
+            result = minifySql(code);
+            break;
         }
       }
 
       setOutput(result);
     } catch (e) {
-      const msg = e instanceof Error ? e.message : "Processing failed. Check your input.";
+      const msg =
+        e instanceof Error ? e.message : "Processing failed. Check your input.";
       setError(msg);
     } finally {
       setLoading(false);
@@ -180,7 +201,13 @@ export default function CodeFormatterClient() {
 
   const download = useCallback(() => {
     if (!output) return;
-    const ext: Record<Language, string> = { json: "json", html: "html", css: "css", js: "js", sql: "sql" };
+    const ext: Record<Language, string> = {
+      json: "json",
+      html: "html",
+      css: "css",
+      js: "js",
+      sql: "sql",
+    };
     const blob = new Blob([output], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -192,34 +219,50 @@ export default function CodeFormatterClient() {
   }, [output, lang]);
 
   const swap = useCallback(() => {
-    if (output) { setInput(output); setOutput(""); }
+    if (output) {
+      setInput(output);
+      setOutput("");
+    }
   }, [output]);
 
   const inputBytes = new TextEncoder().encode(input).length;
   const outputBytes = new TextEncoder().encode(output).length;
-  const savings = inputBytes && outputBytes && mode === "minify"
-    ? Math.round((1 - outputBytes / inputBytes) * 100)
-    : null;
+  const savings =
+    inputBytes && outputBytes && mode === "minify"
+      ? Math.round((1 - outputBytes / inputBytes) * 100)
+      : null;
 
   return (
     <div className="space-y-5">
       {/* Privacy notice */}
       <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
         <span className="mt-px shrink-0">🔒</span>
-        <span>Processing is done entirely in your browser. No code is uploaded to any server.</span>
+        <span>
+          Processing is done entirely in your browser. No code is uploaded to
+          any server.
+        </span>
       </div>
 
       {/* Controls */}
       <div className="flex flex-wrap gap-3 rounded-xl border border-slate-200 bg-white p-4">
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-medium text-slate-600">Language</label>
-          <Select value={lang} onValueChange={(v) => { setLang(v as Language); setOutput(""); setError(null); }}>
+          <Select
+            value={lang}
+            onValueChange={(v) => {
+              setLang(v as Language);
+              setOutput("");
+              setError(null);
+            }}
+          >
             <SelectTrigger className="w-36">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {LANGS.map((l) => (
-                <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>
+                <SelectItem key={l.value} value={l.value}>
+                  {l.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -232,7 +275,11 @@ export default function CodeFormatterClient() {
               <button
                 key={m}
                 type="button"
-                onClick={() => { setMode(m); setOutput(""); setError(null); }}
+                onClick={() => {
+                  setMode(m);
+                  setOutput("");
+                  setError(null);
+                }}
                 className={`px-4 py-2 text-sm font-medium transition-colors ${
                   mode === m
                     ? "bg-red-600 text-white"
@@ -252,11 +299,16 @@ export default function CodeFormatterClient() {
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
           <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5">
             <span className="text-xs font-semibold text-slate-500">Input</span>
-            <span className="text-xs text-slate-400">{inputBytes > 0 ? `${inputBytes} B` : ""}</span>
+            <span className="text-xs text-slate-400">
+              {inputBytes > 0 ? `${inputBytes} B` : ""}
+            </span>
           </div>
           <textarea
             value={input}
-            onChange={(e) => { setInput(e.target.value); setError(null); }}
+            onChange={(e) => {
+              setInput(e.target.value);
+              setError(null);
+            }}
             className="w-full resize-none p-4 font-mono text-xs text-slate-700 focus:outline-none"
             rows={20}
             placeholder={PLACEHOLDERS[lang]}
@@ -274,7 +326,9 @@ export default function CodeFormatterClient() {
                   {savings}% smaller
                 </span>
               )}
-              {outputBytes > 0 && <span className="text-xs text-slate-400">{outputBytes} B</span>}
+              {outputBytes > 0 && (
+                <span className="text-xs text-slate-400">{outputBytes} B</span>
+              )}
             </div>
           </div>
           <textarea
@@ -290,50 +344,53 @@ export default function CodeFormatterClient() {
 
       {/* Error */}
       {error && (
-        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+        >
           {error}
         </div>
       )}
 
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
-        <button
+        <Button
           type="button"
           onClick={process}
+          variant="primary"
+          size="lg"
           disabled={!input.trim() || loading}
-          className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+          className="flex-1"
         >
           {loading
             ? "Processing…"
             : mode === "format"
-            ? "✨ Beautify Code"
-            : "⚡ Minify Code"}
-        </button>
+              ? "✨ Beautify Code"
+              : "⚡ Minify Code"}
+        </Button>
 
         {output && (
           <>
-            <button
-              type="button"
-              onClick={copy}
-              className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
-            >
+            <Button type="button" onClick={copy} variant="secondary" size="lg">
               Copy
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               onClick={download}
-              className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              variant="secondary"
+              size="lg"
             >
               Download
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               onClick={swap}
-              className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              variant="secondary"
+              size="lg"
               title="Use output as input"
             >
               ⇄ Swap
-            </button>
+            </Button>
           </>
         )}
       </div>

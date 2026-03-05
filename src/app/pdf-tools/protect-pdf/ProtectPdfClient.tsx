@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
@@ -174,10 +175,8 @@ export default function ProtectPdfClient() {
           </div>
           {error && <div role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
           <div className="flex gap-3">
-            <button onClick={protect} disabled={!password || !confirmPassword} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50">
-              Protect PDF
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">Change File</button>
+            <Button onClick={protect} variant="primary" size="lg" className="flex-1" disabled={!password || !confirmPassword}>Protect PDF</Button>
+            <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change File</Button>
           </div>
         </div>
       )}
@@ -201,8 +200,8 @@ export default function ProtectPdfClient() {
             <p className="text-sm text-green-700 mt-1">Your PDF is now password-protected. Keep your password safe.</p>
           </div>
           <div className="flex gap-3 justify-center">
-            <button onClick={download} className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700">Download Protected PDF</button>
-            <button onClick={reset} className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50">Protect Another</button>
+            <Button onClick={download} variant="primary" size="lg">Download Protected PDF</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Protect Another</Button>
           </div>
         </div>
       )}

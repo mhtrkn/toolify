@@ -25,47 +25,54 @@ export default function HomePage() {
       <JsonLd data={buildWebSiteSchema()} />
 
       {/* Hero */}
-      <section className="bg-grid-pattern border-b border-slate-200 bg-white px-4 py-16 text-center sm:px-6 sm:py-26 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+      <section className="relative overflow-hidden border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
+        <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
+        <div className="relative mx-auto max-w-3xl">
+          {/* Trust badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-500">
+            <span className="h-2 w-2 rounded-full bg-green-500" />
+            100% Free · No Account · Runs in Your Browser
+          </div>
+
+          <h1 className="mt-6 text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
             Free Online Tools –{" "}
-            <span className="text-red-600">
-              PDF, Image & File Converter
-            </span>
+            <span className="text-red-600">PDF, Image & File Converter</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-slate-600">
-            All the tools you need in one place. No software to install, no
-            account required. Fast, free, and secure.
+
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-500">
+            Merge PDFs, compress images, convert files, generate QR codes — everything processes instantly in your browser. Fast, private, and free.
           </p>
-          <div className="mt-8">
+
+          <div className="mx-auto mt-10 max-w-xl">
             <SearchBar />
           </div>
         </div>
       </section>
 
       {/* Categories */}
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-2xl font-bold text-slate-900">Tool Categories</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Browse</p>
+          <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">Tool Categories</h2>
           <p className="mt-2 text-slate-500">
             Choose a category to find the right tool for your task.
           </p>
-          <div className="mt-6 grid gap-4 grid-cols-[repeat(auto-fit,minmax(155px,1fr))]">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
                 href={`/${cat.slug}`}
-                className={`group flex flex-col items-center gap-3 bg-linear-to-br from-25% rounded-xl border p-6 text-center shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-xl ${cat.bgColor} ${cat.borderColor}`}
+                className={`group flex flex-col items-center gap-2.5 rounded-xl border bg-linear-to-br p-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${cat.bgColor} ${cat.borderColor}`}
               >
-                <Image
-                  src={`/icons/${cat.icon}.png`}
-                  alt={`${cat.name} tools icon`}
-                  width={36}
-                  height={36}
-                />
-                <div>
-                  <p className={`font-semibold ${cat.color}`}>{cat.name}</p>
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/70 shadow-sm">
+                  <Image
+                    src={`/icons/${cat.icon}.png`}
+                    alt={`${cat.name} tools icon`}
+                    width={24}
+                    height={24}
+                  />
                 </div>
+                <p className={`text-xs font-semibold leading-tight ${cat.color}`}>{cat.name}</p>
               </Link>
             ))}
           </div>
@@ -73,13 +80,14 @@ export default function HomePage() {
       </section>
 
       {/* Popular Tools */}
-      <section className="border-t border-slate-200 bg-white px-4 py-14 sm:px-6 lg:px-8">
+      <section className="border-t border-slate-100 bg-white px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-2xl font-bold text-slate-900">Popular Tools</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Most Used</p>
+          <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">Popular Tools</h2>
           <p className="mt-2 text-slate-500">
-            Most-used tools trusted by millions of users every day.
+            Trusted by millions of users every day.
           </p>
-          <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="mt-8 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {popularTools.map((tool) => (
               <ToolCard isHomepage key={tool.slug} tool={tool} />
             ))}
@@ -88,18 +96,21 @@ export default function HomePage() {
       </section>
 
       {/* Features / Trust Section */}
-      <section className="px-4 py-14 sm:px-6 lg:px-8">
+      <section className="bg-slate-50 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center text-2xl font-bold text-slate-900">
-            Why Choose Toolify?
-          </h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-12 text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Why Toolify</p>
+            <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+              Built for speed and privacy
+            </h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {whyChooseData.map((feature) => (
               <div
                 key={feature.title}
-                className="rounded-xl border border-slate-200 bg-white p-6 text-center"
+                className="rounded-xl border border-slate-200 bg-white p-6"
               >
-                <div className="flex items-center justify-center mb-2">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center">
                   <Image
                     src={`/icons/${feature.icon}.png`}
                     alt={`${feature.title} icon`}
@@ -110,7 +121,7 @@ export default function HomePage() {
                 <h3 className="font-semibold text-slate-900">
                   {feature.title}
                 </h3>
-                <p className="mt-2 text-sm text-slate-500">
+                <p className="mt-2 text-sm leading-relaxed text-slate-500">
                   {feature.description}
                 </p>
               </div>
@@ -120,8 +131,8 @@ export default function HomePage() {
       </section>
 
       {/* SEO Text */}
-      <section className="border-t border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl prose prose-slate">
+      <section className="border-t border-slate-100 bg-white px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl prose prose-slate">
           <h2 className="text-xl font-bold text-slate-900">
             The Best Free Online Tools for Everyday Tasks
           </h2>

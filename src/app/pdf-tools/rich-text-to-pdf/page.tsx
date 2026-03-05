@@ -82,7 +82,6 @@ export default function RichTextToPdfPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "PDF Tools", href: "/pdf-tools" },
           { label: "Rich Text to PDF" },
         ]}

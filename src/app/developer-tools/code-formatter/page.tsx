@@ -72,7 +72,6 @@ export default function CodeFormatterPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "Developer Tools", href: "/developer-tools" },
           { label: "Code Formatter & Minifier" },
         ]}

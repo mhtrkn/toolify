@@ -6,6 +6,7 @@ import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
+import Button from "@/components/ui/button";
 
 type Status = "idle" | "ready" | "processing" | "done" | "error";
 
@@ -222,12 +223,9 @@ export default function WordToPdfClient() {
                 <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800">
                   <strong>Note:</strong> Basic formatting (headings, paragraphs, bold, italic, tables) is preserved. Complex layouts may differ.
                 </div>
-                <button
-                  onClick={convert}
-                  className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-                >
+                <Button onClick={convert} variant="primary" size="lg" className="w-full">
                   Convert {files.length > 1 ? `${files.length} Documents` : "Document"} to PDF
-                </button>
+                </Button>
               </div>
             </div>
           )}
@@ -255,13 +253,9 @@ export default function WordToPdfClient() {
             </h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">
-                  Download All
-                </button>
+                <Button onClick={downloadAll} variant="primary" size="md">Download All</Button>
               )}
-              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
-                Convert More
-              </button>
+              <Button onClick={reset} variant="secondary" size="md">Convert More</Button>
             </div>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white overflow-hidden divide-y divide-slate-100">

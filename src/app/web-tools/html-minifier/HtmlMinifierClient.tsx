@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
 import { formatBytes } from "@/lib/utils";
+import Button from "@/components/ui/button";
 
 /* ---------- Minification logic ---------- */
 
@@ -164,18 +165,8 @@ export default function HtmlMinifierClient() {
       {/* Actions */}
       {minified && (
         <div className="flex gap-3">
-          <button
-            onClick={copy}
-            className="rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
-          >
-            Copy Minified HTML
-          </button>
-          <button
-            onClick={download}
-            className="rounded-xl border border-slate-300 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-50"
-          >
-            Download .html
-          </button>
+          <Button onClick={copy} variant="primary" size="md">Copy Minified HTML</Button>
+          <Button onClick={download} variant="secondary" size="md">Download .html</Button>
         </div>
       )}
     </div>

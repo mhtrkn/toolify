@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import Button from "@/components/ui/button";
 import { toast } from "sonner";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -138,12 +139,7 @@ function ScanFromImage() {
             {error}
           </div>
         </div>
-        <button
-          onClick={reset}
-          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-50"
-        >
-          Try Another Image
-        </button>
+        <Button onClick={reset} variant="secondary" size="md">Try Another Image</Button>
       </div>
     );
   }
@@ -193,12 +189,7 @@ function ScanFromImage() {
           ))}
         </div>
       </div>
-      <button
-        onClick={reset}
-        className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-50"
-      >
-        Scan Another
-      </button>
+      <Button onClick={reset} variant="secondary" size="md">Scan Another</Button>
     </div>
   );
 }
@@ -362,19 +353,11 @@ function ScanFromWebcam() {
 
       <div className="flex gap-3">
         {!scanning ? (
-          <button
-            onClick={startScan}
-            className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
-          >
+          <Button onClick={startScan} variant="primary" size="lg" className="flex-1">
             {result ? "Scan Again" : "Start Camera Scan"}
-          </button>
+          </Button>
         ) : (
-          <button
-            onClick={stopScan}
-            className="flex-1 rounded-xl border border-slate-200 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50"
-          >
-            Stop
-          </button>
+          <Button onClick={stopScan} variant="secondary" size="lg" className="flex-1">Stop</Button>
         )}
       </div>
     </div>

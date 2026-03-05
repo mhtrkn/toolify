@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import type { EncodeMode } from "@/lib/dev-utils";
 
 type Direction = "encode" | "decode";
@@ -194,31 +195,13 @@ export default function UrlEncoderDecoderClient() {
 
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={process}
-          disabled={!input.trim()}
-          className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
-        >
+        <Button type="button" onClick={process} variant="primary" size="lg" disabled={!input.trim()} className="flex-1">
           {direction === "encode" ? "🔒 Encode URL" : "🔓 Decode URL"}
-        </button>
+        </Button>
         {output && (
           <>
-            <button
-              type="button"
-              onClick={copy}
-              className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
-            >
-              Copy
-            </button>
-            <button
-              type="button"
-              onClick={swap}
-              className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
-              title="Swap output to input and flip direction"
-            >
-              ⇄ Swap & Flip
-            </button>
+            <Button type="button" onClick={copy} variant="secondary" size="lg">Copy</Button>
+            <Button type="button" onClick={swap} variant="secondary" size="lg" title="Swap output to input and flip direction">⇄ Swap & Flip</Button>
           </>
         )}
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
@@ -141,8 +142,8 @@ export default function PdfToWordClient() {
             <strong>Note:</strong> Text is extracted from the PDF and saved as an RTF file — opens in Word, LibreOffice, and Google Docs. Scanned PDFs (images) require OCR and cannot be converted this way.
           </div>
           <div className="flex gap-3">
-            <button onClick={convert} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700">Convert to Word</button>
-            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">Change File</button>
+            <Button onClick={convert} variant="primary" size="lg" className="flex-1">Convert to Word</Button>
+            <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change File</Button>
           </div>
         </div>
       )}
@@ -167,8 +168,8 @@ export default function PdfToWordClient() {
             </p>
           </div>
           <div className="flex gap-3 justify-center">
-            <button onClick={download} className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700">Download Word File</button>
-            <button onClick={reset} className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50">Convert Another</button>
+            <Button onClick={download} variant="primary" size="lg">Download Word File</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Convert Another</Button>
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { generateHashtags } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 type Platform = "instagram" | "twitter" | "tiktok" | "youtube" | "linkedin" | "general";
 
@@ -93,13 +94,9 @@ export default function HashtagGeneratorClient() {
           </p>
         )}
 
-        <button
-          onClick={handleGenerate}
-          disabled={!topic.trim()}
-          className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-        >
+        <Button onClick={handleGenerate} variant="primary" size="lg" disabled={!topic.trim()} className="w-full">
           Generate Hashtags
-        </button>
+        </Button>
       </div>
 
       {/* Results */}
@@ -111,18 +108,8 @@ export default function HashtagGeneratorClient() {
               {total} hashtags for {selectedPlatform.icon} {selectedPlatform.label}
             </p>
             <div className="flex gap-2">
-              <button
-                onClick={handleGenerate}
-                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
-              >
-                Regenerate
-              </button>
-              <button
-                onClick={copyAll}
-                className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-red-700"
-              >
-                Copy All
-              </button>
+              <Button onClick={handleGenerate} variant="secondary" size="sm">Regenerate</Button>
+              <Button onClick={copyAll} variant="primary" size="sm">Copy All</Button>
             </div>
           </div>
 
@@ -135,12 +122,7 @@ export default function HashtagGeneratorClient() {
                   </span>
                   <span className="text-xs text-slate-400">{subtitle}</span>
                 </div>
-                <button
-                  onClick={() => copyTier(hashtags[key], label)}
-                  className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:bg-slate-50"
-                >
-                  Copy {hashtags[key].length}
-                </button>
+                <Button onClick={() => copyTier(hashtags[key], label)} variant="secondary" size="sm">Copy {hashtags[key].length}</Button>
               </div>
               <div className="flex flex-wrap gap-2 p-4">
                 {hashtags[key].map((tag) => (

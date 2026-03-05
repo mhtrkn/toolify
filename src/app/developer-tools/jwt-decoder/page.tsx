@@ -76,7 +76,6 @@ export default function JwtDecoderPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "Developer Tools", href: "/developer-tools" },
           { label: "JWT Decoder" },
         ]}

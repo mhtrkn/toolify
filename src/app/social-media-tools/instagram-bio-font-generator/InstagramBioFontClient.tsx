@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { FANCY_TEXT_STYLES } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 export default function InstagramBioFontClient() {
   const [text, setText] = useState("Your Instagram Bio");
@@ -43,12 +44,7 @@ export default function InstagramBioFontClient() {
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
             <p className="text-sm font-medium text-slate-700">{FANCY_TEXT_STYLES.length} styles available</p>
-            <button
-              onClick={copyAll}
-              className="rounded-lg border border-slate-300 px-4 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-            >
-              Copy All
-            </button>
+            <Button onClick={copyAll} variant="secondary" size="sm">Copy All</Button>
           </div>
 
           <ul className="divide-y divide-slate-100">
@@ -60,12 +56,7 @@ export default function InstagramBioFontClient() {
                     <p className="text-xs font-medium text-slate-400 mb-0.5">{style.name}</p>
                     <p className="truncate text-base text-slate-800 leading-snug">{converted}</p>
                   </div>
-                  <button
-                    onClick={() => copyStyle(converted)}
-                    className="shrink-0 rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:border-red-300 transition-colors"
-                  >
-                    Copy
-                  </button>
+                  <Button onClick={() => copyStyle(converted)} variant="secondary" size="sm" className="shrink-0">Copy</Button>
                 </li>
               );
             })}

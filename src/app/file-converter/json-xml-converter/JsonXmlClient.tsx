@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import { jsonToXml, xmlToJson } from "@/lib/converters/data-format";
 
@@ -123,13 +124,9 @@ export default function JsonXmlClient() {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
             />
-            <button
-              onClick={() => convert(inputText)}
-              disabled={!inputText.trim()}
-              className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-            >
+            <Button onClick={() => convert(inputText)} disabled={!inputText.trim()} variant="primary" size="lg" className="w-full">
               Convert
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -145,18 +142,8 @@ export default function JsonXmlClient() {
           <div className="flex items-center justify-between rounded-xl border border-red-200 bg-red-50 px-4 py-3">
             <p className="text-sm font-medium text-red-800">✅ {fileName}</p>
             <div className="flex gap-2">
-              <button
-                onClick={download}
-                className="rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-700"
-              >
-                Download
-              </button>
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-xs text-slate-600 hover:bg-slate-50"
-              >
-                Reset
-              </button>
+              <Button onClick={download} variant="primary" size="sm">Download</Button>
+              <Button onClick={reset} variant="secondary" size="sm">Reset</Button>
             </div>
           </div>
           <pre className="max-h-96 overflow-auto rounded-xl border border-slate-200 bg-slate-900 p-4 text-xs text-slate-200">

@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
@@ -100,9 +101,9 @@ export default function JpgToPngClient() {
             <h2 className="font-semibold text-slate-900">{results.length} file{results.length > 1 ? "s" : ""} converted</h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Download All</button>
+                <Button onClick={downloadAll} variant="primary" size="md">Download All</Button>
               )}
-              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">Clear</button>
+              <Button onClick={reset} variant="secondary" size="md">Clear</Button>
             </div>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white overflow-hidden divide-y divide-slate-100">

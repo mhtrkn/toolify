@@ -72,7 +72,6 @@ export default function KeywordGeneratorPage() {
 
       <ToolPageLayout
         breadcrumbs={[
-          { label: "Home", href: "/" },
           { label: "SEO Tools", href: "/seo-tools" },
           { label: "Keyword Generator" },
         ]}

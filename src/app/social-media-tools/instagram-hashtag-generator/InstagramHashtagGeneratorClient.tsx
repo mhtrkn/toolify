@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { generateInstagramHashtags } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 const TIER_CONFIG = [
   { key: "trending" as const, label: "Trending", subtitle: "High volume (1M+ posts)", color: "bg-red-50 border-red-200 text-red-700" },
@@ -54,13 +55,7 @@ export default function InstagramHashtagGeneratorClient() {
             onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
             className="flex-1"
           />
-          <button
-            onClick={handleGenerate}
-            disabled={!topic.trim()}
-            className="shrink-0 rounded-xl bg-red-600 px-5 py-2.5 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-          >
-            Generate
-          </button>
+          <Button onClick={handleGenerate} variant="primary" size="md" disabled={!topic.trim()} className="shrink-0">Generate</Button>
         </div>
       </div>
 
@@ -70,12 +65,7 @@ export default function InstagramHashtagGeneratorClient() {
           {/* Copy All */}
           <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-3">
             <p className="text-sm font-medium text-slate-700">{total} hashtags ready</p>
-            <button
-              onClick={copyAll}
-              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
-            >
-              Copy All {total}
-            </button>
+            <Button onClick={copyAll} variant="primary" size="md">Copy All {total}</Button>
           </div>
 
           {/* Tiers */}
@@ -88,12 +78,7 @@ export default function InstagramHashtagGeneratorClient() {
                   </span>
                   <span className="ml-2 text-xs text-slate-400">{subtitle}</span>
                 </div>
-                <button
-                  onClick={() => copyTier(hashtags[key])}
-                  className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-                >
-                  Copy {hashtags[key].length}
-                </button>
+                <Button onClick={() => copyTier(hashtags[key])} variant="secondary" size="sm">Copy {hashtags[key].length}</Button>
               </div>
               <div className="flex flex-wrap gap-2 p-4">
                 {hashtags[key].map((tag) => (

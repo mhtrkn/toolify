@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { generateYtTitles } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 export default function YouTubeTitleOptimizerClient() {
   const [draft, setDraft] = useState("");
@@ -71,13 +72,9 @@ export default function YouTubeTitleOptimizerClient() {
           </div>
         </div>
 
-        <button
-          onClick={handleGenerate}
-          disabled={!draft.trim()}
-          className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-        >
+        <Button onClick={handleGenerate} variant="primary" size="lg" disabled={!draft.trim()} className="w-full">
           Generate Titles
-        </button>
+        </Button>
       </div>
 
       {/* Results */}
@@ -85,12 +82,7 @@ export default function YouTubeTitleOptimizerClient() {
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
             <p className="text-sm font-medium text-slate-700">{titles.length} title variants</p>
-            <button
-              onClick={handleGenerate}
-              className="rounded-lg border border-slate-300 px-4 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              Regenerate
-            </button>
+            <Button onClick={handleGenerate} variant="secondary" size="sm">Regenerate</Button>
           </div>
 
           <ul className="divide-y divide-slate-100">
@@ -102,12 +94,7 @@ export default function YouTubeTitleOptimizerClient() {
                     {title.length} chars
                   </span>
                 </div>
-                <button
-                  onClick={() => copyTitle(title)}
-                  className="shrink-0 rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-                >
-                  Copy
-                </button>
+                <Button onClick={() => copyTitle(title)} variant="secondary" size="sm" className="shrink-0">Copy</Button>
               </li>
             ))}
           </ul>

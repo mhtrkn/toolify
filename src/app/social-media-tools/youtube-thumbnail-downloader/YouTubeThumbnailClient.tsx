@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { extractYouTubeId } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 const QUALITIES = [
   { key: "maxresdefault", label: "Max Resolution", size: "1280×720" },
@@ -69,13 +70,9 @@ export default function YouTubeThumbnailClient() {
             onKeyDown={(e) => e.key === "Enter" && handleGet()}
             className="flex-1"
           />
-          <button
-            onClick={handleGet}
-            disabled={!url.trim()}
-            className="shrink-0 rounded-xl bg-red-600 px-5 py-2.5 font-semibold text-white hover:bg-red-700 disabled:opacity-40"
-          >
+          <Button onClick={handleGet} variant="primary" size="md" disabled={!url.trim()} className="shrink-0">
             Get Thumbnail
-          </button>
+          </Button>
         </div>
         <p className="mt-2 text-xs text-slate-400">
           Supports: youtube.com/watch?v=…, youtu.be/…, /shorts/…, and plain 11-char IDs
@@ -124,12 +121,7 @@ export default function YouTubeThumbnailClient() {
                     <p className="text-sm font-medium text-slate-800">{q.label}</p>
                     <p className="text-xs text-slate-400">{q.size}</p>
                   </div>
-                  <button
-                    onClick={() => handleDownload(q.key)}
-                    className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
-                  >
-                    ↓ Download
-                  </button>
+                  <Button onClick={() => handleDownload(q.key)} variant="primary" size="md">↓ Download</Button>
                 </div>
               </div>
             ))}

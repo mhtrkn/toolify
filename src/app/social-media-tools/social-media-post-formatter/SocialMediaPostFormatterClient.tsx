@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { formatForPlatform } from "@/lib/social-utils";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 
 const PLATFORMS = [
   {
@@ -217,17 +218,7 @@ export default function SocialMediaPostFormatterClient() {
             <p className="text-sm font-semibold text-slate-700 flex items-center gap-2">
               {selectedPlatform.icon} {selectedPlatform.label} Preview
             </p>
-            <button
-              onClick={copyFormatted}
-              className={`rounded-lg px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors ${
-                isOverLimit
-                  ? "bg-slate-300 cursor-not-allowed hover:bg-slate-300"
-                  : "bg-red-600 hover:bg-red-700"
-              }`}
-              disabled={isOverLimit}
-            >
-              Copy
-            </button>
+            <Button onClick={copyFormatted} variant="primary" size="sm" disabled={isOverLimit}>Copy</Button>
           </div>
           <div className="p-5 bg-white">
             <pre className="whitespace-pre-wrap text-sm text-slate-700 font-sans leading-relaxed max-h-80 overflow-y-auto">

@@ -6,6 +6,7 @@ import FileUploader from "@/components/tools/FileUploader";
 import LottieLoader from "@/components/tools/LottieLoader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import { formatBytes } from "@/lib/utils";
+import Button from "@/components/ui/button";
 
 type Mode = "create" | "extract";
 type Status = "idle" | "ready" | "processing" | "done" | "error";
@@ -186,12 +187,9 @@ export default function ZipToolsClient() {
                 </div>
               )}
               {files.length > 0 && (
-                <button
-                  onClick={createZip}
-                  className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700"
-                >
+                <Button onClick={createZip} variant="primary" size="lg" className="w-full">
                   Create ZIP ({files.length} file{files.length > 1 ? "s" : ""})
-                </button>
+                </Button>
               )}
             </div>
           )}
@@ -231,12 +229,8 @@ export default function ZipToolsClient() {
             <p className="text-sm text-red-700 mt-1">{zipName} · {files.length} file{files.length > 1 ? "s" : ""}</p>
           </div>
           <div className="flex gap-3 justify-center">
-            <button onClick={downloadZip} className="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white hover:bg-red-700">
-              Download ZIP
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-300 px-6 py-3 text-slate-600 hover:bg-slate-50">
-              Create Another
-            </button>
+            <Button onClick={downloadZip} variant="primary" size="lg">Download ZIP</Button>
+            <Button onClick={reset} variant="secondary" size="lg">Create Another</Button>
           </div>
         </div>
       )}
@@ -247,18 +241,8 @@ export default function ZipToolsClient() {
           <div className="flex items-center justify-between rounded-xl border border-red-200 bg-red-50 px-4 py-3">
             <p className="text-sm font-medium text-red-800">✅ {extracted.length} file{extracted.length !== 1 ? "s" : ""} extracted</p>
             <div className="flex gap-2">
-              <button
-                onClick={downloadAllExtracted}
-                className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700"
-              >
-                Download All
-              </button>
-              <button
-                onClick={reset}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-              >
-                Extract Another
-              </button>
+              <Button onClick={downloadAllExtracted} variant="primary" size="sm">Download All</Button>
+              <Button onClick={reset} variant="secondary" size="sm">Extract Another</Button>
             </div>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white divide-y divide-slate-100">
@@ -268,12 +252,9 @@ export default function ZipToolsClient() {
                   <p className="truncate text-sm font-medium text-slate-800">{ef.name}</p>
                   <p className="text-xs text-slate-400">{formatBytes(ef.size)}</p>
                 </div>
-                <button
-                  onClick={() => downloadExtracted(ef)}
-                  className="ml-3 shrink-0 rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-                >
+                <Button onClick={() => downloadExtracted(ef)} variant="secondary" size="sm" className="ml-3 shrink-0">
                   Download
-                </button>
+                </Button>
               </div>
             ))}
           </div>

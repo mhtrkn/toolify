@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Button from "@/components/ui/button";
 import FileUploader from "@/components/tools/FileUploader";
 import ProgressBar from "@/components/tools/ProgressBar";
 import LottieLoader from "@/components/tools/LottieLoader";
@@ -231,16 +232,10 @@ export default function SplitPdfClient() {
           </div>
 
           <div className="flex gap-3">
-            <button
-              onClick={split}
-              disabled={mode === "range" && !rangeInput.trim()}
-              className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50"
-            >
+            <Button onClick={split} variant="primary" size="lg" className="flex-1" disabled={mode === "range" && !rangeInput.trim()}>
               Split PDF
-            </button>
-            <button onClick={reset} className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">
-              Change File
-            </button>
+            </Button>
+            <Button onClick={reset} variant="secondary" size="lg" className="px-4">Change File</Button>
           </div>
         </div>
       )}
@@ -268,13 +263,9 @@ export default function SplitPdfClient() {
             </h2>
             <div className="flex gap-2">
               {results.length > 1 && (
-                <button onClick={downloadAll} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">
-                  Download All
-                </button>
+                <Button onClick={downloadAll} variant="primary" size="md">Download All</Button>
               )}
-              <button onClick={reset} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
-                Split Another
-              </button>
+              <Button onClick={reset} variant="secondary" size="md">Split Another</Button>
             </div>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white overflow-hidden divide-y divide-slate-100">
