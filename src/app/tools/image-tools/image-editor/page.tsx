@@ -7,6 +7,7 @@ import {
   buildWebAppSchema,
   buildBreadcrumbSchema,
   buildFaqSchema,
+  buildHowToSchema,
 } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildToolMetadata({
