@@ -53,9 +53,9 @@ export default function BlogCover({
     shadow: "shadow-slate-500/20",
   };
 
-  const containerHeight = size === "sm" ? "h-34" : "h-45";
-  const iconBoxSize = size === "sm" ? "w-12 h-12" : "w-16 h-16";
-  const iconImgSize = size === "sm" ? 32 : 44;
+  const containerHeight = size === "sm" ? "h-full" : "h-45";
+  const iconBoxSize = size === "sm" ? "w-20 h-20" : "w-16 h-16";
+  const iconImgSize = size === "sm" ? 56 : 44;
 
   return (
     <div

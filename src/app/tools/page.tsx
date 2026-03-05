@@ -58,7 +58,7 @@ export default function AllToolsPage() {
           <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
             All Tools
           </h1>
-          <p className="mt-3 max-w-2xl text-lg text-slate-500">
+          <p className="mt-3 max-w-2xl text-base md:text-lg text-slate-500">
             {totalTools} free online tools across {CATEGORIES.length} categories.
             No signup, no uploads — everything runs in your browser.
           </p>

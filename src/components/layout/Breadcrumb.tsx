@@ -25,7 +25,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
               {item.label}
             </Link>
           ) : (
-            <span className="font-medium text-slate-900">{item.label}</span>
+            <span className="font-medium text-slate-900 line-clamp-1 md:line-clamp-none">{item.label}</span>
           )}
         </span>
       ))}

@@ -49,7 +49,7 @@ export default function BlogListPage() {
           <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
             Blogs
           </h1>
-          <p className="mt-3 max-w-2xl text-lg text-slate-500">
+          <p className="mt-3 max-w-2xl text-base md:text-lg text-slate-500">
             Guides, tips, and tutorials on how to get the most out of free
             online tools for PDF, image, developer, and SEO tasks.
           </p>
