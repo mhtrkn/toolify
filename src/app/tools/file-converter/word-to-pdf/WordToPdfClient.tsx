@@ -16,90 +16,121 @@ interface PdfResult {
 }
 
 async function convertFileToPdf(file: File, onProgress: (p: number) => void): Promise<string> {
-  // Step 1: Convert DOCX → HTML with mammoth
+  // Step 1: DOCX → HTML via mammoth (no DOM needed)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mod = (await import("mammoth")) as any;
   const mammoth = mod.default ?? mod;
   onProgress(20);
 
   const arrayBuffer = await file.arrayBuffer();
-  const result = await mammoth.convertToHtml({ arrayBuffer });
+  const { value: html } = await mammoth.convertToHtml({ arrayBuffer });
   onProgress(40);
 
-  const html = result.value;
-
-  // Step 2: Render HTML to a hidden, styled container
-  const wrapper = document.createElement("div");
-  wrapper.style.cssText = [
-    "position: fixed",
-    "top: -9999px",
-    "left: -9999px",
-    "width: 794px",
-    "background: white",
-    "color: black",
-    "font-family: Georgia, serif",
-    "font-size: 13px",
-    "line-height: 1.6",
-    "padding: 60px 80px",
-    "box-sizing: border-box",
-  ].join("; ");
-  wrapper.innerHTML = `
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font-family: Georgia, serif; }
-      h1 { font-size: 24px; margin-bottom: 12px; font-weight: bold; }
-      h2 { font-size: 20px; margin-bottom: 10px; font-weight: bold; }
-      h3 { font-size: 16px; margin-bottom: 8px; font-weight: bold; }
-      p  { margin-bottom: 10px; }
-      ul, ol { margin-left: 24px; margin-bottom: 10px; }
-      li { margin-bottom: 4px; }
-      table { border-collapse: collapse; width: 100%; margin-bottom: 12px; }
-      td, th { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
-      th { background: #f0f0f0; font-weight: bold; }
-      strong { font-weight: bold; }
-      em { font-style: italic; }
-    </style>
-    ${html}
-  `;
-  document.body.appendChild(wrapper);
+  // Step 2: Parse HTML in memory via DOMParser.
+  // DOMParser produces a detached document — it is never attached to the main DOM,
+  // never rendered, and has zero visual side effects on the page.
+  const doc = new DOMParser().parseFromString(html, "text/html");
   onProgress(55);
 
-  // Step 3: Capture with html2canvas
-  const html2canvas = (await import("html2canvas")).default;
-  const pageHeight = 1123;
-  const pageWidth = 794;
-  const totalHeight = wrapper.scrollHeight;
-  onProgress(65);
-
-  // Step 4: Generate PDF with jsPDF
+  // Step 3: Build PDF with jsPDF using text/vector rendering (no canvas, no DOM mutation)
   const { jsPDF } = await import("jspdf");
-  const pdf = new jsPDF({ unit: "px", format: "a4", orientation: "portrait" });
-  let y = 0;
-  let firstPage = true;
-  onProgress(70);
+  const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "portrait" });
 
-  while (y < totalHeight) {
-    const canvas = await html2canvas(wrapper, {
-      scale: 1,
-      useCORS: true,
-      y,
-      height: Math.min(pageHeight, totalHeight - y),
-      width: pageWidth,
-      windowWidth: pageWidth,
-      backgroundColor: "#ffffff",
-    });
+  const pW = pdf.internal.pageSize.getWidth();
+  const pH = pdf.internal.pageSize.getHeight();
+  const mX = 60;
+  const mY = 60;
+  const maxW = pW - mX * 2;
+  let curY = mY;
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.92);
-    const imgHeight = Math.min(pageHeight, totalHeight - y);
-
-    if (!firstPage) pdf.addPage();
-    pdf.addImage(imgData, "JPEG", 0, 0, pageWidth, imgHeight);
-    firstPage = false;
-    y += pageHeight;
-    onProgress(70 + Math.round(Math.min((y / totalHeight) * 25, 25)));
+  function ensureSpace(h: number) {
+    if (curY + h > pH - mY) { pdf.addPage(); curY = mY; }
   }
 
-  document.body.removeChild(wrapper);
+  function addText(str: string, fontSize: number, fontStyle: "normal" | "bold" | "italic", indent = 0) {
+    if (!str.trim()) return;
+    pdf.setFontSize(fontSize);
+    pdf.setFont("helvetica", fontStyle);
+    const lh = fontSize * 1.4;
+    const lines: string[] = pdf.splitTextToSize(str.trim(), maxW - indent);
+    for (const line of lines) {
+      ensureSpace(lh);
+      pdf.text(line, mX + indent, curY);
+      curY += lh;
+    }
+  }
+
+  function processNode(node: Node) {
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    const el = node as Element;
+    const tag = el.tagName.toLowerCase();
+    const content = el.textContent?.trim() ?? "";
+
+    switch (tag) {
+      case "h1": curY += 8; addText(content, 22, "bold"); curY += 6; break;
+      case "h2": curY += 6; addText(content, 17, "bold"); curY += 4; break;
+      case "h3": curY += 4; addText(content, 13, "bold"); curY += 2; break;
+      case "h4":
+      case "h5":
+      case "h6": curY += 2; addText(content, 11, "bold"); curY += 2; break;
+      case "p":
+        if (content) { addText(content, 11, "normal"); curY += 5; }
+        else curY += 8;
+        break;
+      case "ul":
+        for (const li of Array.from(el.querySelectorAll(":scope > li"))) {
+          addText(`\u2022 ${li.textContent?.trim() ?? ""}`, 11, "normal", 12);
+          curY += 2;
+        }
+        curY += 4;
+        break;
+      case "ol":
+        Array.from(el.querySelectorAll(":scope > li")).forEach((li, i) => {
+          addText(`${i + 1}. ${li.textContent?.trim() ?? ""}`, 11, "normal", 12);
+          curY += 2;
+        });
+        curY += 4;
+        break;
+      case "table": {
+        const rows = Array.from(el.querySelectorAll("tr"));
+        if (!rows.length) break;
+        const colCount = Math.max(...rows.map(r => r.querySelectorAll("td, th").length));
+        if (!colCount) break;
+        const colW = maxW / colCount;
+        for (const row of rows) {
+          const cells = Array.from(row.querySelectorAll("td, th"));
+          const isHeader = cells.some(c => c.tagName.toLowerCase() === "th");
+          ensureSpace(18);
+          pdf.setFontSize(10);
+          pdf.setFont("helvetica", isHeader ? "bold" : "normal");
+          cells.forEach((cell, ci) => {
+            const lines: string[] = pdf.splitTextToSize(cell.textContent?.trim() ?? "", colW - 8);
+            pdf.text(lines[0] ?? "", mX + ci * colW + 4, curY);
+          });
+          curY += 18;
+          if (isHeader) {
+            pdf.setDrawColor(150, 150, 150);
+            pdf.line(mX, curY - 12, mX + maxW, curY - 12);
+          }
+        }
+        curY += 6;
+        break;
+      }
+      case "br": curY += 8; break;
+      case "hr":
+        ensureSpace(12);
+        pdf.setDrawColor(180, 180, 180);
+        pdf.line(mX, curY, mX + maxW, curY);
+        curY += 12;
+        break;
+      default:
+        el.childNodes.forEach(processNode);
+        break;
+    }
+  }
+
+  doc.body.childNodes.forEach(processNode);
+  onProgress(90);
 
   const pdfBlob = pdf.output("blob");
   return URL.createObjectURL(pdfBlob);
@@ -114,6 +145,13 @@ export default function WordToPdfClient() {
   const [results, setResults] = useState<PdfResult[]>([]);
 
   const handleFiles = (incoming: File[]) => {
+    const invalid = incoming.filter((f) => !f.name.toLowerCase().endsWith(".docx"));
+    if (invalid.length > 0) {
+      toast.error("Unsupported Format", {
+        description: "Only .docx files are supported. Please save as .docx from Word first.",
+      });
+      return;
+    }
     setFiles((prev) => [...prev, ...incoming]);
     setStatus("ready");
     setError(null);
@@ -125,6 +163,7 @@ export default function WordToPdfClient() {
 
   const convert = async () => {
     if (files.length === 0) return;
+
     setStatus("processing");
     setProgress(0);
     setError(null);
@@ -152,9 +191,6 @@ export default function WordToPdfClient() {
       setError(msg);
       setStatus("error");
       toast.error("Conversion Failed", { description: msg });
-      document.querySelectorAll("body > div[style*='-9999px']").forEach((el) =>
-        document.body.removeChild(el)
-      );
     }
   };
 
@@ -193,12 +229,12 @@ export default function WordToPdfClient() {
       {(status === "idle" || status === "ready") && (
         <>
           <FileUploader
-            accept=".doc,.docx"
+            accept=".docx"
             multiple
             maxSizeMB={50}
             onFiles={handleFiles}
             label={files.length > 0 ? "Add More Word Documents" : "Upload Word Documents"}
-            hint="Supports .doc and .docx files — up to 50MB each"
+            hint="Supports .docx files — up to 50MB each"
           />
 
           {files.length > 0 && (
@@ -220,7 +256,7 @@ export default function WordToPdfClient() {
                 ))}
               </div>
               <div className="px-4 py-4 border-t border-slate-100 space-y-3">
-                <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800">
+                <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
                   <strong>Note:</strong> Basic formatting (headings, paragraphs, bold, italic, tables) is preserved. Complex layouts may differ.
                 </div>
                 <Button onClick={convert} variant="primary" size="lg" className="w-full">
@@ -240,8 +276,9 @@ export default function WordToPdfClient() {
       )}
 
       {status === "error" && error && (
-        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 whitespace-pre-line">
           {error}
+          <button onClick={reset} className="mt-3 block text-xs underline hover:text-red-900">Try Again</button>
         </div>
       )}
 
