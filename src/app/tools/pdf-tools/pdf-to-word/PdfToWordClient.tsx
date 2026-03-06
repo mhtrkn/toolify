@@ -10,11 +10,95 @@ import { formatBytes } from "@/lib/utils";
 
 type Status = "idle" | "ready" | "processing" | "done" | "error";
 
+interface TextFragment {
+  str: string;
+  x: number;
+  y: number;
+  width: number;
+  fontSize: number;
+}
+
+function extractLines(items: unknown[]): string[] {
+  const fragments: TextFragment[] = [];
+  for (const item of items) {
+    if (!item || typeof item !== "object") continue;
+    if (!("str" in item) || !("transform" in item) || !("width" in item)) continue;
+    const str = (item as { str: string }).str;
+    if (!str || !str.trim()) continue;
+    const transform = (item as { transform: number[] }).transform;
+    const width = (item as { width: number }).width;
+    const fontSize = Math.abs(transform[3]) || Math.abs(transform[0]) || 12;
+    fragments.push({ str, x: transform[4], y: transform[5], width, fontSize });
+  }
+  if (fragments.length === 0) return [];
+
+  // Sort by Y descending (top to bottom), then X ascending (left to right)
+  fragments.sort((a, b) => b.y - a.y || a.x - b.x);
+
+  // Group into lines using font-size-relative Y threshold
+  const lines: TextFragment[][] = [];
+  let currentLine: TextFragment[] = [fragments[0]];
+  for (let i = 1; i < fragments.length; i++) {
+    const prev = currentLine[0];
+    const curr = fragments[i];
+    const threshold = Math.max(prev.fontSize, curr.fontSize) * 0.4;
+    if (Math.abs(prev.y - curr.y) <= threshold) {
+      currentLine.push(curr);
+    } else {
+      lines.push(currentLine);
+      currentLine = [curr];
+    }
+  }
+  lines.push(currentLine);
+
+  // Build text for each line with smart spacing
+  return lines.map((line) => {
+    line.sort((a, b) => a.x - b.x);
+    let text = "";
+    for (let i = 0; i < line.length; i++) {
+      if (i === 0) {
+        text = line[i].str;
+        continue;
+      }
+      const prev = line[i - 1];
+      const gap = line[i].x - (prev.x + prev.width);
+      const spaceWidth = prev.fontSize * 0.3;
+      if (gap > spaceWidth * 3) {
+        text += "\t" + line[i].str;
+      } else if (gap > spaceWidth * 0.3) {
+        text += " " + line[i].str;
+      } else {
+        text += line[i].str;
+      }
+    }
+    return text;
+  });
+}
+
+function detectParagraphs(lines: string[]): string[] {
+  if (lines.length <= 1) return lines;
+  const result: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    result.push(lines[i]);
+    if (i < lines.length - 1) {
+      const curr = lines[i].trim();
+      const next = lines[i + 1].trim();
+      const endsWithPunctuation = /[.!?:。]$/.test(curr);
+      const nextStartsUpper = /^[A-ZÀ-ÖÜŞĞİÇ0-9•\-–—]/.test(next);
+      if (endsWithPunctuation && nextStartsUpper) {
+        result.push("");
+      }
+    }
+  }
+  return result;
+}
+
 function escapeRtf(text: string): string {
   return text
     .replace(/\\/g, "\\\\")
     .replace(/\{/g, "\\{")
     .replace(/\}/g, "\\}")
+    .replace(/\t/g, "\\tab ")
     .replace(/[^\x00-\x7F]/g, (ch) => {
       const code = ch.charCodeAt(0);
       return `\\u${code}?`;
@@ -30,8 +114,7 @@ function buildRtf(pages: string[][]): string {
   const body = pages
     .map((lines, pageIdx) => {
       const content = lines
-        .filter((l) => l.trim().length > 0)
-        .map((l) => escapeRtf(l) + "\\par\n")
+        .map((l) => (l.trim().length === 0 ? "\\par\n" : escapeRtf(l) + "\\par\n"))
         .join("");
       return pageIdx < pages.length - 1 ? content + "\\page\n" : content;
     })
@@ -74,18 +157,9 @@ export default function PdfToWordClient() {
       for (let i = 1; i <= total; i++) {
         const page = await pdf.getPage(i);
         const content = await page.getTextContent();
-        type TextItem = { str: string; transform: number[] };
-        const items = content.items as TextItem[];
-        const lineMap = new Map<number, string[]>();
-        for (const item of items) {
-          if (!item.str.trim()) continue;
-          const y = Math.round(item.transform[5] / 2) * 2;
-          if (!lineMap.has(y)) lineMap.set(y, []);
-          lineMap.get(y)!.push(item.str);
-        }
-        const sortedYs = [...lineMap.keys()].sort((a, b) => b - a);
-        const lines = sortedYs.map((y) => lineMap.get(y)!.join(" "));
-        pages.push(lines);
+        const lines = extractLines(content.items);
+        const paragraphed = detectParagraphs(lines);
+        pages.push(paragraphed);
         setProgress(30 + Math.round((i / total) * 60));
       }
       const rtf = buildRtf(pages);
@@ -98,7 +172,8 @@ export default function PdfToWordClient() {
       });
     } catch (e) {
       console.error(e);
-      const msg = "Could not extract text from this PDF. The file may be scanned or password-protected.";
+      const detail = e instanceof Error ? e.message : String(e);
+      const msg = `Conversion failed: ${detail}`;
       setError(msg);
       toast.error("Conversion Failed", { description: msg });
       setStatus("error");
@@ -138,7 +213,7 @@ export default function PdfToWordClient() {
               <p className="text-sm text-slate-500">{formatBytes(file.size)}</p>
             </div>
           </div>
-          <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800">
+          <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
             <strong>Note:</strong> Text is extracted from the PDF and saved as an RTF file — opens in Word, LibreOffice, and Google Docs. Scanned PDFs (images) require OCR and cannot be converted this way.
           </div>
           <div className="flex gap-3">
