@@ -30,7 +30,7 @@ export default function PngToJpgClient() {
       for (const file of files) {
         try {
           const blobUrl = URL.createObjectURL(file);
-          const img = new Image();
+          const img = document.createElement("img");
           await new Promise<void>((resolve, reject) => {
             img.onload = () => resolve();
             img.onerror = () =>

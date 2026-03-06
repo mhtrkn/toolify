@@ -8,6 +8,7 @@ import LottieLoader from "@/components/tools/LottieLoader";
 import { formatBytes } from "@/lib/utils";
 import Image from "next/image";
 
+
 interface ConvertedFile {
   id: string;
   originalName: string;
@@ -28,7 +29,7 @@ export default function JpgToPngClient() {
     for (const file of files) {
       try {
         const url = URL.createObjectURL(file);
-        const img = new Image();
+        const img = document.createElement("img");
         await new Promise<void>((resolve, reject) => {
           img.onload = () => resolve();
           img.onerror = () => reject(new Error(`Failed to load ${file.name}`));
