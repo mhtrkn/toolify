@@ -308,7 +308,7 @@ export default function WordToPdfClient() {
                   href={r.pdfUrl}
                   download={r.originalName.replace(/\.(docx?|doc)$/i, ".pdf")}
                   onClick={() => toast.success("Downloading", { description: r.originalName.replace(/\.(docx?|doc)$/i, ".pdf") })}
-                  className="shrink-0 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+                  className="shrink-0 text-sm rounded-xl bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
                 >
                   Download PDF
                 </a>

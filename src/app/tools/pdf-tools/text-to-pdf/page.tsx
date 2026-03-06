@@ -81,7 +81,7 @@ export default function TextToPdfPage() {
         data={buildBreadcrumbSchema([
           { name: "Home", url: SITE_URL },
           { name: "Tools", url: `${SITE_URL}/tools` },
-          { name: "Web Tools", url: `${SITE_URL}/tools/web-tools` },
+          { name: "PDF Tools", url: `${SITE_URL}/tools/pdf-tools` },
           { name: "Text to PDF", url: `${SITE_URL}/tools/web-tools/text-to-pdf` },
         ])}
       />
