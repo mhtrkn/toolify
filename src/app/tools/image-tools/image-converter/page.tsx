@@ -13,7 +13,7 @@ import ImageFormatConverterClient from "./ImageFormatConverterClient";
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Image Converter",
   toolDescription:
-    "Convert HEIC, HEIF, JPG, PNG, WebP, GIF, TIFF, and AVIF images online for free. Server-powered by sharp with a browser fallback — no watermarks, no sign-up, batch conversion supported.",
+    "Convert HEIC, HEIF, JPG, PNG, WebP, GIF, TIFF, AVIF, and SVG images online for free. Server-powered by sharp with a browser fallback — no watermarks, no sign-up, batch conversion supported.",
   categorySlug: "image-tools",
   toolSlug: "image-converter",
   keywords: [
@@ -29,17 +29,22 @@ export const metadata: Metadata = buildToolMetadata({
     "tiff converter online",
     "batch image converter",
     "webp to jpg converter online",
+    "png to svg converter",
+    "jpg to svg converter",
+    "svg to png converter",
+    "svg to jpg converter",
+    "svg converter online free",
   ],
 });
 
 const HOW_TO_STEPS = [
   {
     title:       "Upload your images",
-    description: "Drop one or more files onto the page — or click Browse. HEIC, HEIF, JPG, PNG, WebP, GIF, BMP, TIFF, and AVIF are all supported.",
+    description: "Drop one or more files onto the page — or click Browse. HEIC, HEIF, JPG, PNG, WebP, GIF, BMP, TIFF, AVIF, and SVG are all supported.",
   },
   {
     title:       "Pick the output format",
-    description: "Each file has its own format selector. Choose JPG, PNG, WebP, GIF, TIFF, AVIF, or HEIC — mix and match freely across files.",
+    description: "Each file has its own format selector. Choose JPG, PNG, WebP, GIF, TIFF, AVIF, HEIC, or SVG — mix and match freely across files.",
   },
   {
     title:       "Convert & download",
@@ -51,6 +56,10 @@ const BENEFITS = [
   {
     title:       "HEIC / HEIF support",
     description: "iPhone HEIC and HEIF photos are handled natively — no app installs, no plugins.",
+  },
+  {
+    title:       "SVG ↔ Raster conversion",
+    description: "Convert SVG to PNG, JPG, or WebP — or wrap raster images into SVG. Great for web development workflows.",
   },
   {
     title:       "Server-powered quality",
@@ -70,7 +79,7 @@ const BENEFITS = [
   },
   {
     title:       "All major formats",
-    description: "In → JPG, PNG, WebP, GIF, BMP, TIFF, HEIC, HEIF, AVIF.  Out → JPG, PNG, WebP, GIF, TIFF, AVIF, HEIC.",
+    description: "In → JPG, PNG, WebP, GIF, BMP, TIFF, HEIC, HEIF, AVIF, SVG.  Out → JPG, PNG, WebP, GIF, TIFF, AVIF, HEIC, SVG.",
   },
 ];
 
@@ -93,7 +102,7 @@ const FAQS = [
   {
     question: "Which output formats are available?",
     answer:
-      "Server-side: JPG, PNG, WebP, GIF, TIFF, AVIF, and HEIC. In the browser fallback (when the server is unavailable): JPG, PNG, and WebP.",
+      "Server-side: JPG, PNG, WebP, GIF, TIFF, AVIF, HEIC, and SVG. In the browser fallback (when the server is unavailable): JPG, PNG, WebP, and SVG.",
   },
   {
     question: "Does converting to JPG reduce quality?",
@@ -105,6 +114,16 @@ const FAQS = [
     answer:
       "Yes. Drop as many files as you like. Each file gets its own output format selector so you can mix formats in a single batch. Download them individually or as a ZIP.",
   },
+  {
+    question: "Can I convert PNG or JPG to SVG?",
+    answer:
+      "Yes. The converter wraps your raster image inside an SVG container, preserving the original dimensions and quality. This is ideal for embedding in web pages or vector editors. For true vector tracing of line art, a dedicated vectorization tool is recommended.",
+  },
+  {
+    question: "Can I convert SVG to PNG or JPG?",
+    answer:
+      "Yes. Drop your SVG file and select PNG, JPG, or any other raster format. The SVG is rendered at high resolution (minimum 1024px on the longest side) for crisp output.",
+  },
 ];
 
 export default function ImageFormatConverterPage() {
@@ -114,7 +133,7 @@ export default function ImageFormatConverterPage() {
         data={[
           buildWebAppSchema({
             name:         "Image Converter",
-            description:  "Convert HEIC, HEIF, JPG, PNG, WebP, GIF, TIFF and AVIF images online for free.",
+            description:  "Convert HEIC, HEIF, JPG, PNG, WebP, GIF, TIFF, AVIF, and SVG images online for free.",
             slug:         "image-converter",
             categorySlug: "image-tools",
           }),
@@ -126,7 +145,7 @@ export default function ImageFormatConverterPage() {
           ]),
           buildHowToSchema({
             name:        "How to Convert Images Online",
-            description: "Step-by-step guide to converting HEIC, JPG, PNG, WebP and other image formats.",
+            description: "Step-by-step guide to converting HEIC, JPG, PNG, WebP, SVG and other image formats.",
             steps:       HOW_TO_STEPS.map((s) => ({ name: s.title, text: s.description })),
           }),
           buildFaqSchema(FAQS),
@@ -140,7 +159,7 @@ export default function ImageFormatConverterPage() {
           { label: "Image Converter" },
         ]}
         title="Image Converter"
-        description="Convert HEIC, HEIF, JPG, PNG, WebP, GIF, TIFF, and AVIF — server-powered with sharp, browser fallback included. Free, private, no sign-up."
+        description="Convert HEIC, HEIF, JPG, PNG, WebP, GIF, TIFF, AVIF, and SVG — server-powered with sharp, browser fallback included. Free, private, no sign-up."
         howToSteps={HOW_TO_STEPS}
         benefits={BENEFITS}
         faqs={FAQS}

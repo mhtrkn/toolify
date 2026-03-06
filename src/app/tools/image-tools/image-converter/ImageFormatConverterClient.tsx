@@ -6,7 +6,6 @@ import {
   AlertCircle,
   ArrowRight,
   CheckCircle2,
-  ChevronDown,
   Download,
   FileImage,
   Loader2,
@@ -15,6 +14,13 @@ import {
   Upload,
   X,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import JSZip from "jszip";
 import { toast } from "sonner";
 import {
@@ -26,6 +32,7 @@ import {
   getMimeType,
   getOutputExtension,
   isHeicFormat,
+  isSvgFormat,
   type ImageFormat,
 } from "@/lib/formatDetector";
 import { downloadBlob, formatBytes } from "@/lib/utils";
@@ -54,7 +61,7 @@ interface ConversionItem {
 
 const MAX_FILE_BYTES = 50 * 1024 * 1024;
 const ACCEPTED_FORMATS =
-  ".heic,.heif,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.tif,.avif";
+  ".heic,.heif,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.tif,.avif,.svg";
 
 const OUTPUT_OPTIONS = SERVER_OUTPUT_FORMATS.map((fmt) => ({
   value: fmt,
@@ -148,13 +155,146 @@ function drawBlobToCanvas(source: Blob, targetFormat: ImageFormat): Promise<Blob
   });
 }
 
+/** Convert a raster blob to SVG by embedding as base64 data URI. */
+async function rasterToSvgClient(source: Blob): Promise<Blob> {
+  return new Promise<Blob>((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(source);
+
+    img.onload = () => {
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
+
+      // Convert to PNG via canvas for a clean base64
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        URL.revokeObjectURL(url);
+        return reject(new Error("Canvas 2D context unavailable."));
+      }
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+
+      const dataUrl = canvas.toDataURL("image/png");
+      const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+  <image width="${w}" height="${h}" href="${dataUrl}"/>
+</svg>`;
+
+      resolve(new Blob([svg], { type: "image/svg+xml" }));
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Failed to load image for SVG conversion."));
+    };
+
+    img.src = url;
+  });
+}
+
+/** Load an SVG file as an Image and draw onto canvas to produce a raster blob. */
+function svgToRasterClient(svgFile: File, targetFormat: ImageFormat): Promise<Blob> {
+  return new Promise<Blob>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const svgText = reader.result as string;
+      // Parse SVG to get dimensions
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, "image/svg+xml");
+      const svgEl = doc.documentElement;
+
+      let w = parseFloat(svgEl.getAttribute("width") || "0");
+      let h = parseFloat(svgEl.getAttribute("height") || "0");
+
+      // Fallback to viewBox
+      if (!w || !h) {
+        const vb = svgEl.getAttribute("viewBox");
+        if (vb) {
+          const parts = vb.split(/[\s,]+/).map(Number);
+          if (parts.length === 4) {
+            w = parts[2];
+            h = parts[3];
+          }
+        }
+      }
+
+      // Default if still no dimensions
+      if (!w) w = 800;
+      if (!h) h = 600;
+
+      // Scale up small SVGs for quality (min 1024px on longest side)
+      const scale = Math.max(1, 1024 / Math.max(w, h));
+      const canvasW = Math.round(w * scale);
+      const canvasH = Math.round(h * scale);
+
+      const img = new Image();
+      const blob = new Blob([svgText], { type: "image/svg+xml" });
+      const url = URL.createObjectURL(blob);
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = canvasW;
+        canvas.height = canvasH;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          URL.revokeObjectURL(url);
+          return reject(new Error("Canvas 2D context unavailable."));
+        }
+
+        if (targetFormat === "jpg") {
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvasW, canvasH);
+        }
+        ctx.drawImage(img, 0, 0, canvasW, canvasH);
+        URL.revokeObjectURL(url);
+
+        const mime = targetFormat === "jpg" ? "image/jpeg" : getMimeType(targetFormat);
+        const quality = targetFormat === "jpg" || targetFormat === "webp" ? 0.92 : undefined;
+
+        canvas.toBlob(
+          (result) => {
+            if (result) resolve(result);
+            else reject(new Error("Canvas conversion produced no output."));
+          },
+          mime,
+          quality,
+        );
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error("Failed to render SVG for conversion."));
+      };
+
+      img.src = url;
+    };
+    reader.onerror = () => reject(new Error("Failed to read SVG file."));
+    reader.readAsText(svgFile);
+  });
+}
+
 async function convertViaCanvas(
   file: File,
   targetFormat: ImageFormat,
 ): Promise<Blob> {
+  const inputFmt = detectFileFormat(file);
+
+  // SVG input → raster output
+  if (inputFmt && isSvgFormat(inputFmt) && !isSvgFormat(targetFormat)) {
+    return svgToRasterClient(file, targetFormat);
+  }
+
+  // Raster input → SVG output
+  if (isSvgFormat(targetFormat)) {
+    return rasterToSvgClient(file);
+  }
+
   let source: Blob = file;
 
-  const inputFmt = detectFileFormat(file);
   if (inputFmt && isHeicFormat(inputFmt)) {
     // Step 1: check if the browser natively supports HEIC (Safari on macOS/iOS does).
     const nativeOk = await canBrowserLoadBlob(file);
@@ -255,21 +395,22 @@ function FileRow({
 
           <ArrowRight className="h-4 w-4 text-slate-300" />
 
-          <div className="relative">
-            <select
-              value={item.targetFormat}
-              onChange={(e) => onFormatChange(e.target.value as ImageFormat)}
-              disabled={isConverting}
-              className="cursor-pointer appearance-none rounded border border-red-200 bg-red-50 py-0.5 pl-2.5 pr-6 font-mono text-xs text-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 disabled:opacity-50"
-            >
+          <Select
+            value={item.targetFormat}
+            onValueChange={(v) => onFormatChange(v as ImageFormat)}
+            disabled={isConverting}
+          >
+            <SelectTrigger className="h-auto w-auto min-w-20 rounded border border-red-200 bg-red-50 py-0.5 pl-2.5 pr-1 font-mono text-xs text-red-700 focus:ring-red-300">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
               {OUTPUT_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
+                <SelectItem key={opt.value} value={opt.value} className="font-mono text-xs">
                   {opt.label}
-                </option>
+                </SelectItem>
               ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 h-3 w-3 -translate-y-1/2 text-red-500" />
-          </div>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Action button */}
@@ -606,7 +747,7 @@ export default function ImageFormatConverterClient() {
             {isDragging ? "Drop files here" : "Drop files or click to browse"}
           </p>
           <p className="mt-1 text-sm text-slate-500">
-            HEIC · HEIF · JPG · PNG · WebP · GIF · BMP · TIFF · AVIF
+            HEIC · HEIF · JPG · PNG · WebP · GIF · BMP · TIFF · AVIF · SVG
           </p>
           <p className="mt-1 text-xs text-slate-400">Max 50 MB per file</p>
         </div>

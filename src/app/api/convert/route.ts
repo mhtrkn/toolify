@@ -113,6 +113,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // ── Block SVG → SVG (no-op) ──────────────────────────────────────────
+    if (inputFormat === "svg" && targetFormat === "svg") {
+      return json({ error: "Input and output formats are the same." }, 400);
+    }
+
     // ── Read into buffer ────────────────────────────────────────────────────
     let inputBuffer: Buffer;
     try {

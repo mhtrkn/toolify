@@ -44,6 +44,12 @@ export async function convertImage(
   options: ConversionOptions = {}
 ): Promise<Buffer> {
   const buffer = Buffer.isBuffer(input) ? input : Buffer.from(input);
+
+  // ── Raster → SVG: embed as base64 data URI inside an SVG wrapper ──────
+  if (targetFormat === "svg") {
+    return rasterToSvg(buffer);
+  }
+
   const sharpFormat = FORMAT_TO_SHARP[targetFormat];
 
   if (!sharpFormat) {
@@ -90,6 +96,30 @@ export async function convertImage(
         .toFormat(sharpFormat as keyof sharp.FormatEnum)
         .toBuffer();
   }
+}
+
+/**
+ * Convert a raster image to SVG by embedding it as a base64 data URI.
+ * The resulting SVG preserves the original dimensions and pixel data.
+ */
+async function rasterToSvg(buffer: Buffer): Promise<Buffer> {
+  const meta = await sharp(buffer, { limitInputPixels: false }).metadata();
+  const width = meta.width ?? 800;
+  const height = meta.height ?? 600;
+
+  // Convert to PNG first for consistent embedding (lossless)
+  const pngBuffer = await sharp(buffer, { limitInputPixels: false })
+    .png()
+    .toBuffer();
+  const b64 = pngBuffer.toString("base64");
+
+  const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <image width="${width}" height="${height}" href="data:image/png;base64,${b64}"/>
+</svg>`;
+
+  return Buffer.from(svg, "utf-8");
 }
 
 /** Return lightweight image metadata without decoding pixel data. */

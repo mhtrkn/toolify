@@ -13,11 +13,12 @@ export type ImageFormat =
   | "tiff"
   | "heic"
   | "heif"
-  | "avif";
+  | "avif"
+  | "svg";
 
 /** Every format we accept as input */
 export const SUPPORTED_INPUT_FORMATS: readonly ImageFormat[] = [
-  "jpg", "jpeg", "png", "webp", "gif", "bmp", "tiff", "heic", "heif", "avif",
+  "jpg", "jpeg", "png", "webp", "gif", "bmp", "tiff", "heic", "heif", "avif", "svg",
 ] as const;
 
 /**
@@ -25,7 +26,7 @@ export const SUPPORTED_INPUT_FORMATS: readonly ImageFormat[] = [
  * BMP is excluded — sharp does not support BMP as an output format.
  */
 export const SERVER_OUTPUT_FORMATS: readonly ImageFormat[] = [
-  "jpg", "png", "webp", "gif", "tiff", "avif", "heic",
+  "jpg", "png", "webp", "gif", "tiff", "avif", "heic", "svg",
 ] as const;
 
 /**
@@ -33,7 +34,7 @@ export const SERVER_OUTPUT_FORMATS: readonly ImageFormat[] = [
  * GIF/TIFF/AVIF/HEIC are not available via canvas.toBlob().
  */
 export const CANVAS_OUTPUT_FORMATS: readonly ImageFormat[] = [
-  "jpg", "png", "webp",
+  "jpg", "png", "webp", "svg",
 ] as const;
 
 export const FORMAT_DISPLAY: Record<ImageFormat, string> = {
@@ -47,6 +48,7 @@ export const FORMAT_DISPLAY: Record<ImageFormat, string> = {
   heic: "HEIC",
   heif: "HEIF",
   avif: "AVIF",
+  svg:  "SVG",
 };
 
 export const FORMAT_MIME: Record<ImageFormat, string> = {
@@ -60,6 +62,7 @@ export const FORMAT_MIME: Record<ImageFormat, string> = {
   heic: "image/heic",
   heif: "image/heif",
   avif: "image/avif",
+  svg:  "image/svg+xml",
 };
 
 const MIME_TO_FORMAT: Record<string, ImageFormat> = {
@@ -76,6 +79,7 @@ const MIME_TO_FORMAT: Record<string, ImageFormat> = {
   "image/heic":    "heic",
   "image/heif":    "heif",
   "image/avif":    "avif",
+  "image/svg+xml": "svg",
 };
 
 const EXT_TO_FORMAT: Record<string, ImageFormat> = {
@@ -90,6 +94,7 @@ const EXT_TO_FORMAT: Record<string, ImageFormat> = {
   heic: "heic",
   heif: "heif",
   avif: "avif",
+  svg:  "svg",
 };
 
 export function detectFormatFromMime(mime: string): ImageFormat | null {
@@ -123,6 +128,11 @@ export function isHeicFormat(format: ImageFormat): boolean {
   return format === "heic" || format === "heif";
 }
 
+/** True for SVG format */
+export function isSvgFormat(format: ImageFormat): boolean {
+  return format === "svg";
+}
+
 /** Normalise aliases: jpeg → jpg, heif → heic */
 export function normalizeFormat(format: ImageFormat): ImageFormat {
   if (format === "jpeg") return "jpg";
@@ -135,12 +145,14 @@ export function getOutputExtension(format: ImageFormat): string {
   if (format === "jpeg" || format === "jpg") return "jpg";
   if (format === "heif") return "heic";
   if (format === "tiff") return "tiff";
+  if (format === "svg") return "svg";
   return format;
 }
 
 /** Sensible default output format for a given input */
 export function getDefaultOutputFormat(input: ImageFormat): ImageFormat {
   if (isHeicFormat(input)) return "jpg";
+  if (input === "svg") return "png";
   if (input === "jpg" || input === "jpeg") return "png";
   if (input === "png") return "jpg";
   return "jpg";
