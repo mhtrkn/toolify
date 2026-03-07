@@ -1,22 +1,23 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import JsonLd from "@/components/seo/JsonLd";
+import BackToTop from "@/components/ui/back-to-top";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/metadata";
 import {
   buildOrganizationSchema,
   buildWebSiteSchema,
 } from "@/lib/structured-data";
-import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Toaster } from "sonner";
-import BackToTop from "@/components/ui/back-to-top";
-import "./globals.css";
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
 import Script from "next/script";
+import { Toaster } from "sonner";
+import "./globals.css";
 
-const inter = Inter({
+const inter = Poppins({
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-sans",
   display: "swap",
 });

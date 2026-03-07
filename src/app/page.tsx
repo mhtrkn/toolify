@@ -1,5 +1,5 @@
-import SearchBar from "@/components/home/SearchBar";
 import FeaturedBlogs from "@/components/blog/FeaturedBlogs";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import JsonLd from "@/components/seo/JsonLd";
 import ToolCard from "@/components/tools/ToolCard";
 import { whyChooseData } from "@/lib/mockdata";
@@ -27,28 +27,29 @@ export default function HomePage() {
       <JsonLd data={buildWebSiteSchema()} />
 
       {/* Hero */}
-      <section className="relative border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
+      <section className="relative border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-25 lg:px-8">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative mx-auto max-w-4xl">
           {/* Trust badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-500">
-            <span className="h-2 w-2 rounded-full bg-green-500" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 px-2 py-1 text-xs text-slate-500">
+            <span className="w-1.5 aspect-square rounded-full bg-green-500" />
             100% Free · No Account · Runs in Your Browser
           </div>
 
-          <h1 className="mt-6 text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl">
             Free Online Tools –{" "}
             <span className="text-red-600">PDF, Image & File Converter</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-500">
+          <p className="mx-auto font-light mt-2 max-w-2xl text-slate-500">
             Merge PDFs, compress images, convert files, generate QR codes —
             everything processes instantly in your browser. Fast, private, and
             free.
           </p>
 
-          <div className="mx-auto mt-10 max-w-xl">
-            <SearchBar />
+          <div className="mx-auto mt-10 max-w-3xl">
+            {/* <SearchBar /> */}
+            <GlobalUpload />
           </div>
         </div>
       </section>

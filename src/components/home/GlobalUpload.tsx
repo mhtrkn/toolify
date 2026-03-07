@@ -125,9 +125,8 @@ function SuccessScreen({ count, errorCount, onConvertMore }: { count: number; er
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.96, y: 8 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="flex flex-col items-center gap-6 rounded-3xl border border-slate-100 bg-white px-8 py-14 text-center shadow-sm"
+      className="flex flex-col items-center gap-6 rounded-2xl border border-slate-100 bg-white px-8 pt-8 pb-12 text-center shadow-sm"
     >
-      {/* Animated checkmark */}
       <div className="flex-center h-40 aspect-square -my-10">
         <Lottie animationData={animationData} loop />
       </div>
@@ -331,7 +330,7 @@ export default function GlobalUpload() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onClick={() => inputRef.current?.click()}
-              className={`cursor-pointer rounded-3xl border-2 border-dashed px-6 py-12 text-center transition-all duration-200 ${isDragging
+              className={`cursor-pointer rounded-3xl max-w-2xl mx-auto border-2 border-dashed px-6 py-12 text-center transition-all duration-200 ${isDragging
                 ? "border-red-400 bg-red-50 scale-[1.01]"
                 : "border-slate-300 bg-white hover:border-red-300"
                 }`}

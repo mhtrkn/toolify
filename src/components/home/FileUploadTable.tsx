@@ -187,7 +187,7 @@ function FormatDropdown({ value, onChange, allowedFormats }: { value?: string; o
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex min-w-29 items-center justify-between gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+        className="flex min-w-29 w-32 items-center justify-between gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
       >
         <span className={value ? "text-slate-800 uppercase" : "text-slate-400"}>
           {value ? `${value}` : "Select format"}
