@@ -14,6 +14,7 @@ import { Poppins } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
 import "./globals.css";
+import GlobalDragOverlay from "@/components/layout/GlobalDragOverlay";
 
 const inter = Poppins({
   subsets: ["latin"],
@@ -130,6 +131,7 @@ export default function RootLayout({
         <SpeedInsights />
         <Header />
         {children}
+        <GlobalDragOverlay />
         <Toaster />
         <BackToTop />
         <Footer />

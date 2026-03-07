@@ -33,7 +33,7 @@ export default function HomePage() {
           {/* Trust badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 px-2 py-1 text-xs text-slate-500">
             <span className="w-1.5 aspect-square rounded-full bg-green-500" />
-            100% Free · No Account · Runs in Your Browser
+            100% Free · No Account
           </div>
 
           <h1 className="mt-4 text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl">

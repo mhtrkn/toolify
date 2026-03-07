@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import FileUploadTable, { UploadedFile } from "./FileUploadTable";
@@ -180,14 +180,16 @@ export default function GlobalUpload() {
     const dupes: string[] = [];
 
     setFiles((prev) => {
-      const existingNames = new Set(prev.map((f) => f.name));
+      const existingKeys = new Set(prev.map((f) => `${f.name}::${f.type}`));
 
       list.forEach((file) => {
+        const key = `${file.name}::${file.type}`;
         if (!isSupported(file)) {
           bad.push(file.name);
-        } else if (existingNames.has(file.name)) {
+        } else if (existingKeys.has(key)) {
           dupes.push(file.name);
         } else {
+          existingKeys.add(key);
           good.push({
             id: randomId(),
             name: file.name,
@@ -302,6 +304,22 @@ export default function GlobalUpload() {
   const handleConvertMore = useCallback(() => {
     setFiles([]);
   }, []);
+
+  useEffect(() => {
+    const handleGlobalDrop = (e: Event) => {
+      const customEvent = e as CustomEvent<FileList>;
+      const droppedFiles = customEvent.detail;
+      if (droppedFiles?.length) {
+        addFiles(droppedFiles);
+      }
+    };
+
+    window.addEventListener("global-files-dropped", handleGlobalDrop);
+
+    return () => {
+      window.removeEventListener("global-files-dropped", handleGlobalDrop);
+    };
+  }, [addFiles]);
 
   return (
     <div className="flex w-full flex-col gap-3">
