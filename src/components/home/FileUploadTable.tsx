@@ -436,14 +436,14 @@ export default function FileUploadTable({
             </button>
           )}
           <AnimatePresence>
-            {files.some((f) => f.targetFormat && f.status === "ready") && onConvert && (
+            {files.some((f) => f.targetFormat && (f.status === "ready" || f.status === "error")) && onConvert && (
               <motion.button
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.15 }}
                 onClick={async () => {
-                  const toConvert = files.filter((f) => f.targetFormat && f.status === "ready");
+                  const toConvert = files.filter((f) => f.targetFormat && (f.status === "ready" || f.status === "error"));
                   for (const f of toConvert) {
                     await onConvert(f.id);
                   }

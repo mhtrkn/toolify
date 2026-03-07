@@ -251,7 +251,12 @@ export default function GlobalUpload() {
 
   const updateFormat = useCallback((id: string, format: string) => {
     setFiles((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, targetFormat: format } : f))
+      prev.map((f) => {
+        if (f.id !== id) return f;
+        // Reset status so the download button re-appears after error or done
+        const resetStatus = f.status === "error" || f.status === "done" ? "ready" : f.status;
+        return { ...f, targetFormat: format, status: resetStatus };
+      })
     );
   }, []);
 
