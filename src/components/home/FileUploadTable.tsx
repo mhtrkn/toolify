@@ -311,7 +311,7 @@ export default function FileUploadTable({
 
   return (
     <div
-      className={`w-full rounded-2xl border bg-white shadow-sm transition-colors duration-150 ${isDragging ? "border-red-400 bg-red-50/20" : "border-slate-200 shadow-slate-100"
+      className={`w-full rounded-2xl border bg-white shadow-sm transition-colors duration-300 ${isDragging ? "border-red-400 bg-red-50/20" : "border-slate-200 shadow-slate-100"
         }`}
       onDrop={onDrop}
       onDragOver={onDragOver}

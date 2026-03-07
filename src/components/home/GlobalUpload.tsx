@@ -338,15 +338,35 @@ export default function GlobalUpload() {
         accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.mp4,.mov,.avi,.webm,.mkv,.docx,.xlsx,.xls"
       />
 
-      {/* Drop zone — only shown when no files */}
-      <AnimatePresence initial={false}>
+      {/* Unsupported file warning */}
+      <AnimatePresence>
+        {unsupportedNames.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="rounded-xl max-w-2xl w-full mx-auto border border-orange-200 bg-orange-50 px-4 py-3"
+          >
+            <p className="text-xs font-semibold text-orange-700">
+              Unsupported file{unsupportedNames.length > 1 ? "s" : ""} skipped:
+            </p>
+            <p className="mt-0.5 truncate text-xs text-orange-500">
+              {unsupportedNames.join(", ")}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Drop zone / File table / Success — single AnimatePresence to prevent layout shift */}
+      <AnimatePresence mode="popLayout" initial={false}>
         {!hasFiles && (
           <motion.div
             key="dropzone"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
           >
             <div
               onDrop={handleDrop}
@@ -384,31 +404,8 @@ export default function GlobalUpload() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
 
-      {/* Unsupported file warning */}
-      <AnimatePresence>
-        {unsupportedNames.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.18 }}
-            className="rounded-xl border border-orange-200 bg-orange-50 px-4 py-3"
-          >
-            <p className="text-xs font-semibold text-orange-700">
-              Unsupported file{unsupportedNames.length > 1 ? "s" : ""} skipped:
-            </p>
-            <p className="mt-0.5 truncate text-xs text-orange-500">
-              {unsupportedNames.join(", ")}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Success screen */}
-      <AnimatePresence>
-        {showSuccess && (
+        {hasFiles && showSuccess && (
           <SuccessScreen
             key="success"
             count={doneCount}
@@ -416,17 +413,14 @@ export default function GlobalUpload() {
             onConvertMore={handleConvertMore}
           />
         )}
-      </AnimatePresence>
 
-      {/* File table */}
-      <AnimatePresence initial={false}>
         {hasFiles && !showSuccess && (
           <motion.div
             key="table"
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
             className="flex flex-col gap-2"
           >
             <FileUploadTable

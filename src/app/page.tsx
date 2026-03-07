@@ -3,11 +3,26 @@ import GlobalUpload from "@/components/home/GlobalUpload";
 import JsonLd from "@/components/seo/JsonLd";
 import ToolCard from "@/components/tools/ToolCard";
 import { whyChooseData } from "@/lib/mockdata";
-import { buildWebSiteSchema } from "@/lib/structured-data";
+import { buildHowToSchema, buildWebSiteSchema } from "@/lib/structured-data";
 import { CATEGORIES, getPopularTools } from "@/lib/tools";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+const HOW_TO_STEPS = [
+  {
+    title: "Upload Files",
+    description: "Drag, drop, or browse to add images, PDFs, Word, or Excel files.",
+  },
+  {
+    title: "Select Format",
+    description: "Choose the desired output format from the dropdown.",
+  },
+  {
+    title: "Download",
+    description: "Convert and download instantly, no uploads needed.",
+  },
+];
 
 export const metadata: Metadata = {
   title:
@@ -25,11 +40,19 @@ export default function HomePage() {
   return (
     <main>
       <JsonLd data={buildWebSiteSchema()} />
+      <JsonLd
+        data={buildHowToSchema({
+          name: "How to Convert Files Online for Free",
+          description:
+            "Upload any file, choose your target format, and download the converted result instantly — all in your browser.",
+          steps: HOW_TO_STEPS.map((s) => ({ name: s.title, text: s.description })),
+        })}
+      />
 
       {/* Hero */}
-      <section className="relative border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-25 lg:px-8">
+      <section className="relative border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-30 lg:px-8">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
-        <div className="relative mx-auto max-w-4xl">
+        <div className="relative mx-auto max-w-4xl min-h-97.75 transition duration-300">
           {/* Trust badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 px-2 py-1 text-xs text-slate-500">
             <span className="w-1.5 aspect-square rounded-full bg-green-500" />
@@ -50,6 +73,27 @@ export default function HomePage() {
           <div className="mx-auto mt-10 max-w-3xl">
             {/* <SearchBar /> */}
             <GlobalUpload />
+          </div>
+        </div>
+      </section>
+
+      {/* How To */}
+      <section className="bg-white px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Guide</p>
+          <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">How to Use</h2>
+          <div className="mt-8 grid gap-6 sm:grid-cols-3">
+            {HOW_TO_STEPS.map((step, i) => (
+              <div key={i} className="flex gap-4">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-sm font-bold text-white">
+                  {i + 1}
+                </span>
+                <div>
+                  <h3 className="font-semibold text-slate-900">{step.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-slate-500">{step.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
