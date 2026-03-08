@@ -9,12 +9,12 @@ export interface CategoryToolConfig {
 
 export const TOOL_REGISTRY: Record<FileCategory, CategoryToolConfig> = {
   image: {
-    formats: ["jpg", "png", "webp", "pdf"],
+    formats: ["jpg", "png", "webp", "pdf", "svg"],
     execution: "local",
   },
   pdf: {
     formats: ["jpg", "png", "docx", "txt"],
-    execution: "redirect",
+    execution: "local",
   },
   video: {
     formats: ["mp3"],
@@ -22,15 +22,19 @@ export const TOOL_REGISTRY: Record<FileCategory, CategoryToolConfig> = {
   },
   word: {
     formats: ["pdf"],
-    execution: "redirect",
+    execution: "local",
   },
   excel: {
     formats: ["pdf"],
-    execution: "redirect",
+    execution: "local",
+  },
+  powerpoint: {
+    formats: ["pdf"],
+    execution: "local",
   },
   text: {
     formats: ["pdf", "docx"],
-    execution: "redirect",
+    execution: "local",
   },
   unknown: {
     formats: [],
@@ -38,40 +42,7 @@ export const TOOL_REGISTRY: Record<FileCategory, CategoryToolConfig> = {
   },
 };
 
-export const TOOL_URLS: Record<string, string> = {
-  "pdf→jpg": "/tools/pdf-tools/pdf-to-jpg",
-  "pdf→png": "/tools/pdf-tools/pdf-to-jpg",
-  "pdf→docx": "/tools/pdf-tools/pdf-to-word",
-  "pdf→txt": "/tools/ocr-tools/pdf-to-text",
-  "video→mp3": "/tools/video-tools/video-to-mp3",
-  "doc→pdf": "/tools/file-converter/word-to-pdf",
-  "docx→pdf": "/tools/file-converter/word-to-pdf",
-  "xls→pdf": "/tools/file-converter/excel-to-pdf",
-  "xlsx→pdf": "/tools/file-converter/excel-to-pdf",
-};
-
 export function getCategoryConfig(category: FileCategory): CategoryToolConfig {
   return TOOL_REGISTRY[category] ?? TOOL_REGISTRY.unknown;
-}
-
-export function getRedirectUrl(
-  sourceExtension: string,
-  category: FileCategory,
-  targetFormat: string,
-): string | undefined {
-  const ext = sourceExtension.toLowerCase();
-  const fmt = targetFormat.toLowerCase();
-
-  const byExtensionKey = `${ext}→${fmt}`;
-  if (byExtensionKey in TOOL_URLS) {
-    return TOOL_URLS[byExtensionKey];
-  }
-
-  const byCategoryKey = `${category}→${fmt}`;
-  if (byCategoryKey in TOOL_URLS) {
-    return TOOL_URLS[byCategoryKey];
-  }
-
-  return undefined;
 }
 

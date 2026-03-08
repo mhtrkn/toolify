@@ -1,17 +1,20 @@
-import type { ConversionEngine } from "./types";
+import type { ConversionEngine, ConversionResult } from "./types";
 import { pdfToImageBlobs, pdfToTxtBlob } from "@/lib/global-converters";
 import { convertViaServer } from "@/lib/server-convert";
 
-async function pdfToSingleImageBlob(
+/**
+ * Convert PDF pages to images.
+ * - 1 page  → single Blob
+ * - N pages → ConversionFile[] so GlobalUpload downloads each page separately
+ */
+async function pdfToImageResult(
   file: File,
   format: "jpg" | "png",
-): Promise<Blob> {
-  const pages = await pdfToImageBlobs(file, format, 0.95, 2.5);
-  if (!pages.length) {
-    throw new Error("PDF has no pages");
-  }
-  // Return only the first page as a single image.
-  return pages[0].blob;
+): Promise<ConversionResult> {
+  const pages = await pdfToImageBlobs(file, format, 0.95, 3.0);
+  if (!pages.length) throw new Error("PDF has no pages");
+  if (pages.length === 1) return pages[0].blob;
+  return pages; // array of { blob, filename }
 }
 
 const pdfEngine: ConversionEngine = {
@@ -21,11 +24,11 @@ const pdfEngine: ConversionEngine = {
     const fmt = targetFormat.toLowerCase();
 
     if (fmt === "jpg" || fmt === "jpeg") {
-      return pdfToSingleImageBlob(file, "jpg");
+      return pdfToImageResult(file, "jpg");
     }
 
     if (fmt === "png") {
-      return pdfToSingleImageBlob(file, "png");
+      return pdfToImageResult(file, "png");
     }
 
     if (fmt === "txt") {

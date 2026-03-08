@@ -4,6 +4,7 @@ export type FileCategory =
   | "video"
   | "word"
   | "excel"
+  | "powerpoint"
   | "text"
   | "unknown";
 
@@ -18,6 +19,7 @@ const IMAGE_EXTENSIONS = new Set([
   "avif",
   "heic",
   "heif",
+  "svg",
 ]);
 
 const PDF_EXTENSIONS = new Set(["pdf"]);
@@ -27,6 +29,8 @@ const VIDEO_EXTENSIONS = new Set(["mp4", "mov", "avi", "mkv", "webm"]);
 const WORD_EXTENSIONS = new Set(["doc", "docx"]);
 
 const EXCEL_EXTENSIONS = new Set(["xls", "xlsx"]);
+
+const POWERPOINT_EXTENSIONS = new Set(["ppt", "pptx"]);
 
 const TEXT_EXTENSIONS = new Set(["txt"]);
 
@@ -44,6 +48,7 @@ function detectCategoryByExtension(ext: string): FileCategory {
   if (VIDEO_EXTENSIONS.has(normalized)) return "video";
   if (WORD_EXTENSIONS.has(normalized)) return "word";
   if (EXCEL_EXTENSIONS.has(normalized)) return "excel";
+  if (POWERPOINT_EXTENSIONS.has(normalized)) return "powerpoint";
   if (TEXT_EXTENSIONS.has(normalized)) return "text";
   return "unknown";
 }
@@ -72,6 +77,14 @@ function detectCategoryByMime(mime: string): FileCategory {
     return "excel";
   }
 
+  if (
+    type === "application/vnd.ms-powerpoint" ||
+    type ===
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+  ) {
+    return "powerpoint";
+  }
+
   if (type.startsWith("text/")) return "text";
 
   return "unknown";
@@ -97,13 +110,4 @@ export function detectCategoryFromNameAndType(
 export function isSupportedFile(file: File): boolean {
   return detectFileCategory(file) !== "unknown";
 }
-
-export const FILE_TYPE_CONSTANTS = {
-  IMAGE_EXTENSIONS,
-  PDF_EXTENSIONS,
-  VIDEO_EXTENSIONS,
-  WORD_EXTENSIONS,
-  EXCEL_EXTENSIONS,
-  TEXT_EXTENSIONS,
-} as const;
 

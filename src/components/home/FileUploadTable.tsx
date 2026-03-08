@@ -191,6 +191,29 @@ const FORMAT_META: Record<string, FormatMeta> = {
       </svg>
     ),
   },
+  svg: {
+    label: "SVG",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.7}
+        className="w-4 h-4"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+        />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M8 12h8M12 8v8"
+        />
+      </svg>
+    ),
+  },
   mp3: {
     label: "MP3",
     icon: (
@@ -213,7 +236,7 @@ const FORMAT_META: Record<string, FormatMeta> = {
   },
 };
 
-const ALL_FORMATS = ["jpg", "png", "webp", "pdf", "docx", "txt", "mp3"];
+const ALL_FORMATS = ["jpg", "png", "webp", "svg", "pdf", "docx", "txt", "mp3"];
 
 // ─── FileIcon ─────────────────────────────────────────────────────────────────
 

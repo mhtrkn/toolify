@@ -231,10 +231,17 @@ export default function GlobalUpload() {
           return;
         }
 
-        const blob = await engine.convert(rawFile, fmt);
+        const result = await engine.convert(rawFile, fmt);
 
-        const downloadExt = fmt === "jpeg" ? "jpg" : fmt;
-        triggerDownload(blob, `${base}.${downloadExt}`);
+        if (Array.isArray(result)) {
+          // Multi-file result (e.g. multi-page PDF → images): download each file
+          for (const { blob, filename } of result) {
+            triggerDownload(blob, filename);
+          }
+        } else {
+          const downloadExt = fmt === "jpeg" ? "jpg" : fmt;
+          triggerDownload(result, `${base}.${downloadExt}`);
+        }
 
         setFiles((prev) =>
           prev.map((f) =>
@@ -288,7 +295,7 @@ export default function GlobalUpload() {
         multiple
         className="hidden"
         onChange={handleInputChange}
-        accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.mp4,.mov,.avi,.webm,.mkv,.doc,.docx,.xlsx,.xls,.txt"
+        accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.heic,.heif,.avif,.svg,.mp4,.mov,.avi,.webm,.mkv,.doc,.docx,.xlsx,.xls,.ppt,.pptx,.txt"
       />
 
       {/* Unsupported file warning */}

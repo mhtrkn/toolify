@@ -8,14 +8,15 @@ import pdfEngine from "@/lib/conversion-engines/pdfEngine";
 import videoEngine from "@/lib/conversion-engines/videoEngine";
 import wordEngine from "@/lib/conversion-engines/wordEngine";
 import excelEngine from "@/lib/conversion-engines/excelEngine";
+import pptxEngine from "@/lib/conversion-engines/pptxEngine";
 import textEngine from "@/lib/conversion-engines/textEngine";
 
-export interface EngineSelectionResult {
+interface EngineSelectionResult {
   category: FileCategory;
   engine: ConversionEngine | null;
 }
 
-export function getEngineForCategory(
+function getEngineForCategory(
   category: FileCategory,
 ): ConversionEngine | null {
   switch (category) {
@@ -29,6 +30,8 @@ export function getEngineForCategory(
       return wordEngine;
     case "excel":
       return excelEngine;
+    case "powerpoint":
+      return pptxEngine;
     case "text":
       return textEngine;
     default:

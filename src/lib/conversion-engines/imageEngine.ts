@@ -9,6 +9,7 @@ const MIME: Record<string, string> = {
   gif: "image/gif",
   bmp: "image/bmp",
   tiff: "image/tiff",
+  svg: "image/svg+xml",
 };
 
 function imageToImageBlob(file: File, fmt: string): Promise<Blob> {
@@ -45,7 +46,7 @@ function imageToImageBlob(file: File, fmt: string): Promise<Blob> {
             }
           },
           mime,
-          fmt === "jpg" || fmt === "jpeg" ? 0.92 : undefined,
+          fmt === "jpg" || fmt === "jpeg" ? 0.95 : undefined,
         );
       } finally {
         URL.revokeObjectURL(src);
@@ -61,6 +62,39 @@ function imageToImageBlob(file: File, fmt: string): Promise<Blob> {
   });
 }
 
+/**
+ * Raster image → SVG via imagetracerjs (client-side vectorization).
+ * Works best for logos, icons, and simple graphics.
+ */
+async function imageToSvgBlob(file: File): Promise<Blob> {
+  const ImageTracer = (await import("imagetracerjs")).default;
+
+  const src = URL.createObjectURL(file);
+  try {
+    return await new Promise<Blob>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext("2d")!;
+          ctx.drawImage(img, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const svgStr = ImageTracer.imagedataToSVG(imageData, { scale: 1 });
+          resolve(new Blob([svgStr], { type: "image/svg+xml" }));
+        } catch (e) {
+          reject(e);
+        }
+      };
+      img.onerror = () => reject(new Error("Failed to load image"));
+      img.src = src;
+    });
+  } finally {
+    URL.revokeObjectURL(src);
+  }
+}
+
 const imageEngine: ConversionEngine = {
   id: "image",
 
@@ -71,6 +105,11 @@ const imageEngine: ConversionEngine = {
       return imageToPdfBlob(file);
     }
 
+    if (fmt === "svg") {
+      return imageToSvgBlob(file);
+    }
+
+    // SVG input can be drawn to canvas like any other image format
     if (fmt in MIME) {
       return imageToImageBlob(file, fmt);
     }
