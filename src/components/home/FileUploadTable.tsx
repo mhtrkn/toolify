@@ -2,6 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  detectCategoryFromNameAndType,
+  type FileCategory,
+} from "@/lib/file-tools/fileTypeDetector";
+import { getCategoryConfig } from "@/lib/file-tools/toolRegistry";
 
 export interface UploadedFile {
   id: string;
@@ -11,6 +16,7 @@ export interface UploadedFile {
   status: "ready" | "uploading" | "done" | "error";
   targetFormat?: string;
   rawFile?: File;
+   category?: FileCategory;
 }
 
 interface FileUploadTableProps {
@@ -26,53 +32,15 @@ interface FileUploadTableProps {
 }
 
 const FORMAT_GROUPS = [
-  { label: "Image", formats: ["jpg", "png", "webp", "svg", "gif", "bmp", "tiff"] },
-  { label: "Document", formats: ["pdf", "docx", "txt", "rtf", "odt"] },
-  { label: "Audio", formats: ["mp3", "aac", "wav", "ogg", "flac"] },
-  { label: "Video", formats: ["mp4", "webm", "avi", "mov", "mkv"] },
-  { label: "Ebook", formats: ["epub", "mobi", "azw3", "fb2"] },
-  { label: "Presentation", formats: ["ppt", "pptx", "odp"] },
+  { label: "Image", formats: ["jpg", "png", "webp"] },
+  { label: "Document", formats: ["pdf", "docx", "txt"] },
+  { label: "Audio", formats: ["mp3"] },
 ] as const;
 
-const FORMATS_FOR: Record<string, string[]> = {
-  pdf: ["jpg", "png", "webp", "txt", "docx"],
-  jpg: ["png", "webp", "svg", "gif", "bmp", "tiff", "pdf"],
-  jpeg: ["png", "webp", "svg", "gif", "bmp", "tiff", "pdf"],
-  png: ["jpg", "webp", "svg", "gif", "bmp", "tiff", "pdf"],
-  webp: ["jpg", "png", "svg", "gif", "bmp", "tiff", "pdf"],
-  gif: ["jpg", "png", "webp", "svg", "bmp", "tiff", "pdf"],
-  svg: ["jpg", "png", "webp", "gif", "bmp", "tiff", "pdf"],
-  bmp: ["jpg", "png", "webp", "svg", "gif", "tiff", "pdf"],
-  tiff: ["jpg", "png", "webp", "svg", "gif", "bmp", "pdf"],
-  heic: ["jpg", "png", "webp", "pdf"],
-  // Video
-  mp4: ["mp3", "aac", "wav", "webm", "avi", "mov"],
-  mov: ["mp3", "aac", "wav", "mp4", "webm", "avi"],
-  avi: ["mp3", "aac", "wav", "mp4", "webm", "mov"],
-  webm: ["mp3", "aac", "wav", "mp4", "avi", "mov"],
-  mkv: ["mp3", "aac", "wav", "mp4", "webm", "avi", "mov"],
-  // Word
-  docx: ["pdf", "txt", "rtf", "odt"],
-  doc: ["pdf", "txt", "rtf", "odt"],
-  // Excel
-  xlsx: ["pdf", "txt"],
-  xls: ["pdf", "txt"],
-  // Ebook
-  epub: ["pdf", "docx", "txt", "mobi"],
-  mobi: ["pdf", "docx", "txt", "epub"],
-  // Presentation
-  ppt: ["pdf", "jpg", "png"],
-  pptx: ["pdf", "jpg", "png"],
-};
-
 function getAllowedFormats(name: string, type: string): string[] {
-  const ext = getExt(name);
-  if (FORMATS_FOR[ext]) return FORMATS_FOR[ext];
-  const t = type.toLowerCase();
-  if (t === "application/pdf") return FORMATS_FOR.pdf;
-  if (t.startsWith("image/")) return ["jpg", "png", "webp", "svg", "gif", "bmp", "tiff", "pdf"].filter((f) => f !== ext);
-  if (t.startsWith("video/")) return ["mp3", "aac", "wav", "mp4", "webm", "avi", "mov"].filter((f) => f !== ext);
-  return FORMAT_GROUPS.flatMap((g) => [...g.formats]);
+  const category = detectCategoryFromNameAndType(name, type);
+  const config = getCategoryConfig(category);
+  return config.formats;
 }
 
 function formatBytes(bytes: number): string {

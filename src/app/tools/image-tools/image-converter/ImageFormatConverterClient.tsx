@@ -76,9 +76,11 @@ async function convertViaAPI(
 ): Promise<Blob> {
   const body = new FormData();
   body.append("file", file);
+  body.append("tool", "image");
   body.append("targetFormat", targetFormat);
+  body.append("quality", "0.95");
 
-  const res = await fetch("/api/convert", { method: "POST", body });
+  const res = await fetch("/api/tools/convert", { method: "POST", body });
 
   if (!res.ok) {
     let msg = `Server error (${res.status})`;

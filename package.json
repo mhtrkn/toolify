@@ -28,6 +28,7 @@
     "isomorphic-dompurify": "^3.0.0",
     "jspdf": "^4.2.0",
     "jszip": "^3.10.1",
+    "linkedom": "^0.18.12",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.576.0",
     "mammoth": "^1.11.0",

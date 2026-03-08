@@ -50,7 +50,7 @@ export default function HomePage() {
       />
 
       {/* Hero */}
-      <section className="relative border-b border-slate-100 bg-white px-4 py-24 text-center sm:px-6 sm:py-30 lg:px-8">
+      <section className="relative border-b border-slate-100 bg-white px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative mx-auto max-w-4xl min-h-97.75 transition duration-300">
           {/* Trust badge */}

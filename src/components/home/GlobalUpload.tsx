@@ -6,15 +6,16 @@ import { toast } from "sonner";
 import FileUploadTable, { UploadedFile } from "./FileUploadTable";
 import Lottie from "lottie-react";
 import animationData from "@/assets/lottie/success confetti.json";
+import {
+  detectFileCategory,
+  isSupportedFile,
+} from "@/lib/file-tools/fileTypeDetector";
+import { selectConversionEngine } from "@/lib/file-tools/conversionRouter";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function randomId() {
   return Math.random().toString(36).slice(2, 10);
-}
-
-function getExt(name: string) {
-  return name.split(".").pop()?.toLowerCase() ?? "";
 }
 
 function triggerDownload(blob: Blob, filename: string) {
@@ -28,108 +29,8 @@ function triggerDownload(blob: Blob, filename: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-// Image → image format via Canvas
-function imgToBlob(file: File, fmt: string): Promise<Blob> {
-  const MIME: Record<string, string> = {
-    jpg: "image/jpeg",
-    jpeg: "image/jpeg",
-    png: "image/png",
-    webp: "image/webp",
-    gif: "image/gif",
-    bmp: "image/bmp",
-  };
-  return new Promise((resolve, reject) => {
-    const src = URL.createObjectURL(file);
-    const img = new Image();
-    img.onload = () => {
-      const c = document.createElement("canvas");
-      c.width = img.naturalWidth;
-      c.height = img.naturalHeight;
-      const ctx = c.getContext("2d")!;
-      if (fmt === "jpg" || fmt === "jpeg") {
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, c.width, c.height);
-      }
-      ctx.drawImage(img, 0, 0);
-      URL.revokeObjectURL(src);
-      c.toBlob(
-        (b) => (b ? resolve(b) : reject(new Error("toBlob failed"))),
-        MIME[fmt] ?? "image/png",
-        fmt === "jpg" || fmt === "jpeg" ? 0.92 : undefined,
-      );
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(src);
-      reject(new Error("load failed"));
-    };
-    img.src = src;
-  });
-}
-
-// Image → PDF via jspdf
-async function imgToPdf(file: File): Promise<Blob> {
-  const { jsPDF } = await import("jspdf");
-  return new Promise((resolve, reject) => {
-    const src = URL.createObjectURL(file);
-    const img = new Image();
-    img.onload = () => {
-      const w = img.naturalWidth;
-      const h = img.naturalHeight;
-      const c = document.createElement("canvas");
-      c.width = w;
-      c.height = h;
-      c.getContext("2d")!.drawImage(img, 0, 0);
-      const data = c.toDataURL("image/jpeg", 0.92);
-      const pdf = new jsPDF({
-        orientation: w > h ? "landscape" : "portrait",
-        unit: "px",
-        format: [w, h],
-      });
-      pdf.addImage(data, "JPEG", 0, 0, w, h);
-      URL.revokeObjectURL(src);
-      resolve(pdf.output("blob"));
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(src);
-      reject(new Error("load failed"));
-    };
-    img.src = src;
-  });
-}
-
-// Map of "sourceExt→targetFmt" to the dedicated tool URL
-const TOOL_FOR: Record<string, string> = {
-  "docx→pdf": "/tools/file-converter/word-to-pdf",
-  "doc→pdf": "/tools/file-converter/word-to-pdf",
-  "xlsx→pdf": "/tools/file-converter/excel-to-pdf",
-  "xls→pdf": "/tools/file-converter/excel-to-pdf",
-  "mp4→mp3": "/tools/video-tools/video-to-mp3",
-  "mov→mp3": "/tools/video-tools/video-to-mp3",
-  "avi→mp3": "/tools/video-tools/video-to-mp3",
-  "webm→mp3": "/tools/video-tools/video-to-mp3",
-  "mkv→mp3": "/tools/video-tools/video-to-mp3",
-  "pdf→jpg": "/tools/pdf-tools/pdf-to-jpg",
-  "pdf→png": "/tools/pdf-tools/pdf-to-jpg",
-  "pdf→docx": "/tools/pdf-tools/pdf-to-word",
-  "pdf→txt": "/tools/ocr-tools/pdf-to-text",
-};
-
 function isSupported(file: File): boolean {
-  const type = file.type.toLowerCase();
-  const name = file.name.toLowerCase();
-  return (
-    type === "application/pdf" ||
-    type.startsWith("image/") ||
-    type.startsWith("video/") ||
-    type ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-    type ===
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-    type === "application/vnd.ms-excel" ||
-    name.endsWith(".docx") ||
-    name.endsWith(".xlsx") ||
-    name.endsWith(".xls")
-  );
+  return isSupportedFile(file);
 }
 
 // ─── Success Screen ───────────────────────────────────────────────────────────
@@ -233,6 +134,7 @@ export default function GlobalUpload() {
             type: file.type,
             status: "ready",
             rawFile: file,
+            category: detectFileCategory(file),
           });
         }
       });
@@ -306,47 +208,38 @@ export default function GlobalUpload() {
       const entry = files.find((f) => f.id === fileId);
       if (!entry?.rawFile || !entry.targetFormat) return;
 
-      const { rawFile, targetFormat: fmt, name } = entry;
-      const ext = getExt(name);
+      const { rawFile, targetFormat, name } = entry;
+      const fmt = targetFormat.toLowerCase();
       const base = name.replace(/\.[^/.]+$/, "");
-      const IMAGE_EXTS = ["jpg", "jpeg", "png", "webp", "gif", "bmp", "tiff"];
 
       setFiles((prev) =>
         prev.map((f) => (f.id === fileId ? { ...f, status: "uploading" } : f)),
       );
 
       try {
-        let blob: Blob;
+        const { engine } = selectConversionEngine(name, rawFile.type);
 
-        if (IMAGE_EXTS.includes(ext) || rawFile.type.startsWith("image/")) {
-          blob =
-            fmt === "pdf"
-              ? await imgToPdf(rawFile)
-              : await imgToBlob(rawFile, fmt);
-        } else {
-          // Redirect to dedicated tool
-          const toolUrl = TOOL_FOR[`${ext}→${fmt}`];
+        if (!engine) {
           setFiles((prev) =>
-            prev.map((f) => (f.id === fileId ? { ...f, status: "ready" } : f)),
+            prev.map((f) =>
+              f.id === fileId ? { ...f, status: "error" } : f,
+            ),
           );
-          toast.info("Use the dedicated tool for this conversion", {
-            description: toolUrl
-              ? "Click below to open the right tool."
-              : "This conversion is not supported here.",
-            ...(toolUrl && {
-              action: {
-                label: "Open tool",
-                onClick: () => window.open(toolUrl, "_blank"),
-              },
-            }),
-            duration: 5000,
-          });
+          toast.error(
+            "This conversion is not supported for the selected file and format.",
+          );
           return;
         }
 
-        triggerDownload(blob, `${base}.${fmt}`);
+        const blob = await engine.convert(rawFile, fmt);
+
+        const downloadExt = fmt === "jpeg" ? "jpg" : fmt;
+        triggerDownload(blob, `${base}.${downloadExt}`);
+
         setFiles((prev) =>
-          prev.map((f) => (f.id === fileId ? { ...f, status: "done" } : f)),
+          prev.map((f) =>
+            f.id === fileId ? { ...f, status: "done" } : f,
+          ),
         );
       } catch {
         setFiles((prev) =>
@@ -395,7 +288,7 @@ export default function GlobalUpload() {
         multiple
         className="hidden"
         onChange={handleInputChange}
-        accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.mp4,.mov,.avi,.webm,.mkv,.docx,.xlsx,.xls"
+        accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.mp4,.mov,.avi,.webm,.mkv,.doc,.docx,.xlsx,.xls,.txt"
       />
 
       {/* Unsupported file warning */}
