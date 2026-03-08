@@ -1,26 +1,21 @@
 import type { ConversionEngine } from "./types";
-
-async function textFileToString(file: File): Promise<string> {
-  return file.text();
-}
+import { registerUnicodeFont } from "@/lib/pdf-font";
 
 async function textToPdfBlob(file: File): Promise<Blob> {
+  const text = await file.text();
   const { jsPDF } = await import("jspdf");
-  const text = await textFileToString(file);
 
-  const pdf = new jsPDF({
-    unit: "pt",
-    format: "a4",
-    orientation: "portrait",
-  });
+  const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "portrait" });
+
+  // Register a full-Unicode font so Turkish (ç ş ü ı ö ğ) and other
+  // non-Latin characters render correctly instead of showing "?" glyphs.
+  await registerUnicodeFont(pdf);
+  pdf.setFontSize(11);
 
   const pageWidth = pdf.internal.pageSize.getWidth();
   const margin = 60;
   const maxWidth = pageWidth - margin * 2;
   const lineHeight = 14;
-
-  pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(11);
 
   const lines = pdf.splitTextToSize(text, maxWidth) as string[];
 
@@ -40,7 +35,7 @@ async function textToPdfBlob(file: File): Promise<Blob> {
 }
 
 async function textToDocxBlob(file: File): Promise<Blob> {
-  const text = await textFileToString(file);
+  const text = await file.text();
   const docxMod = await import("docx");
   const { Document, Packer, Paragraph } = docxMod;
 
@@ -82,4 +77,3 @@ const textEngine: ConversionEngine = {
 };
 
 export default textEngine;
-

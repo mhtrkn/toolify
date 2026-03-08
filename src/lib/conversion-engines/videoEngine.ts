@@ -1,43 +1,43 @@
 import type { ConversionEngine } from "./types";
 
-async function videoToMp3Blob(file: File): Promise<Blob> {
-  const [{ createFFmpeg }, { fetchFile }] = await Promise.all([
-    import("@ffmpeg/ffmpeg"),
-    import("@ffmpeg/util"),
-  ]);
+const FFMPEG_CORE_BASE = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
 
-  const ffmpeg = createFFmpeg({
-    log: false,
+async function videoToMp3Blob(file: File): Promise<Blob> {
+  const { FFmpeg } = await import("@ffmpeg/ffmpeg");
+  const { toBlobURL, fetchFile } = await import("@ffmpeg/util");
+
+  const ffmpeg = new FFmpeg();
+
+  await ffmpeg.load({
+    coreURL: await toBlobURL(`${FFMPEG_CORE_BASE}/ffmpeg-core.js`, "text/javascript"),
+    wasmURL: await toBlobURL(`${FFMPEG_CORE_BASE}/ffmpeg-core.wasm`, "application/wasm"),
   });
 
-  if (!ffmpeg.isLoaded()) {
-    await ffmpeg.load();
-  }
-
-  const ext = file.name.split(".").pop() ?? "mp4";
-  const inputName = `input.${ext.toLowerCase()}`;
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? "mp4";
+  const inputName = `input.${ext}`;
   const outputName = "output.mp3";
 
-  ffmpeg.FS("writeFile", inputName, await fetchFile(file));
+  await ffmpeg.writeFile(inputName, await fetchFile(file));
 
-  await ffmpeg.run(
-    "-i",
-    inputName,
+  await ffmpeg.exec([
+    "-i", inputName,
     "-vn",
-    "-acodec",
-    "libmp3lame",
-    "-q:a",
-    "2",
+    "-acodec", "libmp3lame",
+    "-q:a", "2",
     outputName,
-  );
+  ]);
 
-  const data = ffmpeg.FS("readFile", outputName);
+  const data = await ffmpeg.readFile(outputName);
 
-  // Clean up in-memory FS
-  ffmpeg.FS("unlink", inputName);
-  ffmpeg.FS("unlink", outputName);
+  await ffmpeg.deleteFile(inputName);
+  await ffmpeg.deleteFile(outputName);
 
-  return new Blob([data.buffer], { type: "audio/mpeg" });
+  // FileData is Uint8Array<ArrayBufferLike> | string. Copy into a plain
+  // Uint8Array<ArrayBuffer> so the Blob constructor's strict type check passes.
+  const raw = typeof data === "string" ? new TextEncoder().encode(data) : data;
+  const plain = new Uint8Array(raw.byteLength);
+  plain.set(raw as Uint8Array<ArrayBuffer>);
+  return new Blob([plain], { type: "audio/mpeg" });
 }
 
 const videoEngine: ConversionEngine = {
@@ -55,4 +55,3 @@ const videoEngine: ConversionEngine = {
 };
 
 export default videoEngine;
-

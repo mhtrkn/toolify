@@ -1,8 +1,6 @@
 import type { ConversionEngine } from "./types";
-import {
-  pdfToImageBlobs,
-  pdfToTxtBlob,
-} from "@/lib/global-converters";
+import { pdfToImageBlobs, pdfToTxtBlob } from "@/lib/global-converters";
+import { convertViaServer } from "@/lib/server-convert";
 
 async function pdfToSingleImageBlob(
   file: File,
@@ -12,35 +10,8 @@ async function pdfToSingleImageBlob(
   if (!pages.length) {
     throw new Error("PDF has no pages");
   }
-  // For now, only return the first page as a single image.
+  // Return only the first page as a single image.
   return pages[0].blob;
-}
-
-async function pdfToDocxBlob(file: File): Promise<Blob> {
-  const txtBlob = await pdfToTxtBlob(file);
-  const text = await txtBlob.text();
-
-  const docxMod = await import("docx");
-  const { Document, Packer, Paragraph } = docxMod;
-
-  const paragraphs = text
-    .split(/\n{2,}/)
-    .map((chunk) => chunk.trim())
-    .filter(Boolean)
-    .map((chunk) => new Paragraph(chunk));
-
-  const doc = new Document({
-    sections: [
-      {
-        properties: {},
-        children: paragraphs.length ? paragraphs : [new Paragraph(text)],
-      },
-    ],
-  });
-
-  // Packer.toBlob is available in browser builds and returns a Blob directly.
-  const blob = await Packer.toBlob(doc);
-  return blob;
 }
 
 const pdfEngine: ConversionEngine = {
@@ -62,7 +33,9 @@ const pdfEngine: ConversionEngine = {
     }
 
     if (fmt === "docx") {
-      return pdfToDocxBlob(file);
+      // Delegate to the server-side pipeline (pdf-parse + docx library) so that
+      // Unicode / Turkish characters in the source PDF are extracted correctly.
+      return convertViaServer(file, "docx");
     }
 
     throw new Error(`Unsupported PDF conversion to "${targetFormat}"`);
@@ -70,4 +43,3 @@ const pdfEngine: ConversionEngine = {
 };
 
 export default pdfEngine;
-
