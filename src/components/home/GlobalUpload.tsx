@@ -31,9 +31,12 @@ function triggerDownload(blob: Blob, filename: string) {
 // Image → image format via Canvas
 function imgToBlob(file: File, fmt: string): Promise<Blob> {
   const MIME: Record<string, string> = {
-    jpg: "image/jpeg", jpeg: "image/jpeg",
-    png: "image/png", webp: "image/webp",
-    gif: "image/gif", bmp: "image/bmp",
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    png: "image/png",
+    webp: "image/webp",
+    gif: "image/gif",
+    bmp: "image/bmp",
   };
   return new Promise((resolve, reject) => {
     const src = URL.createObjectURL(file);
@@ -52,10 +55,13 @@ function imgToBlob(file: File, fmt: string): Promise<Blob> {
       c.toBlob(
         (b) => (b ? resolve(b) : reject(new Error("toBlob failed"))),
         MIME[fmt] ?? "image/png",
-        fmt === "jpg" || fmt === "jpeg" ? 0.92 : undefined
+        fmt === "jpg" || fmt === "jpeg" ? 0.92 : undefined,
       );
     };
-    img.onerror = () => { URL.revokeObjectURL(src); reject(new Error("load failed")); };
+    img.onerror = () => {
+      URL.revokeObjectURL(src);
+      reject(new Error("load failed"));
+    };
     img.src = src;
   });
 }
@@ -70,15 +76,23 @@ async function imgToPdf(file: File): Promise<Blob> {
       const w = img.naturalWidth;
       const h = img.naturalHeight;
       const c = document.createElement("canvas");
-      c.width = w; c.height = h;
+      c.width = w;
+      c.height = h;
       c.getContext("2d")!.drawImage(img, 0, 0);
       const data = c.toDataURL("image/jpeg", 0.92);
-      const pdf = new jsPDF({ orientation: w > h ? "landscape" : "portrait", unit: "px", format: [w, h] });
+      const pdf = new jsPDF({
+        orientation: w > h ? "landscape" : "portrait",
+        unit: "px",
+        format: [w, h],
+      });
       pdf.addImage(data, "JPEG", 0, 0, w, h);
       URL.revokeObjectURL(src);
       resolve(pdf.output("blob"));
     };
-    img.onerror = () => { URL.revokeObjectURL(src); reject(new Error("load failed")); };
+    img.onerror = () => {
+      URL.revokeObjectURL(src);
+      reject(new Error("load failed"));
+    };
     img.src = src;
   });
 }
@@ -107,8 +121,10 @@ function isSupported(file: File): boolean {
     type === "application/pdf" ||
     type.startsWith("image/") ||
     type.startsWith("video/") ||
-    type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-    type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+    type ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+    type ===
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
     type === "application/vnd.ms-excel" ||
     name.endsWith(".docx") ||
     name.endsWith(".xlsx") ||
@@ -118,7 +134,15 @@ function isSupported(file: File): boolean {
 
 // ─── Success Screen ───────────────────────────────────────────────────────────
 
-function SuccessScreen({ count, errorCount, onConvertMore }: { count: number; errorCount: number; onConvertMore: () => void }) {
+function SuccessScreen({
+  count,
+  errorCount,
+  onConvertMore,
+}: {
+  count: number;
+  errorCount: number;
+  onConvertMore: () => void;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96, y: 8 }}
@@ -138,7 +162,8 @@ function SuccessScreen({ count, errorCount, onConvertMore }: { count: number; er
       >
         <h3 className="text-2xl font-bold text-slate-800">All done!</h3>
         <p className="mt-1.5 text-sm text-slate-500">
-          {count} file{count !== 1 ? "s" : ""} converted and downloaded successfully
+          {count} file{count !== 1 ? "s" : ""} converted and downloaded
+          successfully
           {errorCount > 0 && (
             <span className="ml-1 text-red-400">· {errorCount} failed</span>
           )}
@@ -155,8 +180,18 @@ function SuccessScreen({ count, errorCount, onConvertMore }: { count: number; er
           onClick={onConvertMore}
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-500 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-600"
         >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+            />
           </svg>
           Convert more files
         </button>
@@ -175,11 +210,12 @@ export default function GlobalUpload() {
 
   const addFiles = useCallback((incoming: FileList | File[]) => {
     const list = Array.from(incoming);
-    const good: UploadedFile[] = [];
-    const bad: string[] = [];
-    const dupes: string[] = [];
 
     setFiles((prev) => {
+      const good: UploadedFile[] = [];
+      const bad: string[] = [];
+      const dupes: string[] = [];
+
       const existingKeys = new Set(prev.map((f) => `${f.name}::${f.type}`));
 
       list.forEach((file) => {
@@ -203,14 +239,17 @@ export default function GlobalUpload() {
 
       dupes.forEach((name) => {
         toast.warning(`"${name}" is already in the list`, {
+          id: `dupe-${name}`,
           description: "You can select a different output format for it below.",
           duration: 4000,
         });
       });
 
       if (bad.length) {
-        setUnsupportedNames(bad);
-        setTimeout(() => setUnsupportedNames([]), 3500);
+        setTimeout(() => {
+          setUnsupportedNames(bad);
+          setTimeout(() => setUnsupportedNames([]), 3500);
+        }, 0);
       }
 
       return good.length ? [...prev, ...good] : prev;
@@ -220,10 +259,11 @@ export default function GlobalUpload() {
   const handleDrop = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
+      e.stopPropagation();
       setIsDragging(false);
       if (e.dataTransfer.files?.length) addFiles(e.dataTransfer.files);
     },
-    [addFiles]
+    [addFiles],
   );
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -254,49 +294,69 @@ export default function GlobalUpload() {
       prev.map((f) => {
         if (f.id !== id) return f;
         // Reset status so the download button re-appears after error or done
-        const resetStatus = f.status === "error" || f.status === "done" ? "ready" : f.status;
+        const resetStatus =
+          f.status === "error" || f.status === "done" ? "ready" : f.status;
         return { ...f, targetFormat: format, status: resetStatus };
-      })
+      }),
     );
   }, []);
 
-  const handleConvert = useCallback(async (fileId: string) => {
-    const entry = files.find((f) => f.id === fileId);
-    if (!entry?.rawFile || !entry.targetFormat) return;
+  const handleConvert = useCallback(
+    async (fileId: string) => {
+      const entry = files.find((f) => f.id === fileId);
+      if (!entry?.rawFile || !entry.targetFormat) return;
 
-    const { rawFile, targetFormat: fmt, name } = entry;
-    const ext = getExt(name);
-    const base = name.replace(/\.[^/.]+$/, "");
-    const IMAGE_EXTS = ["jpg", "jpeg", "png", "webp", "gif", "bmp", "tiff"];
+      const { rawFile, targetFormat: fmt, name } = entry;
+      const ext = getExt(name);
+      const base = name.replace(/\.[^/.]+$/, "");
+      const IMAGE_EXTS = ["jpg", "jpeg", "png", "webp", "gif", "bmp", "tiff"];
 
-    setFiles((prev) => prev.map((f) => f.id === fileId ? { ...f, status: "uploading" } : f));
+      setFiles((prev) =>
+        prev.map((f) => (f.id === fileId ? { ...f, status: "uploading" } : f)),
+      );
 
-    try {
-      let blob: Blob;
+      try {
+        let blob: Blob;
 
-      if (IMAGE_EXTS.includes(ext) || rawFile.type.startsWith("image/")) {
-        blob = fmt === "pdf" ? await imgToPdf(rawFile) : await imgToBlob(rawFile, fmt);
-      } else {
-        // Redirect to dedicated tool
-        const toolUrl = TOOL_FOR[`${ext}→${fmt}`];
-        setFiles((prev) => prev.map((f) => f.id === fileId ? { ...f, status: "ready" } : f));
-        toast.info("Use the dedicated tool for this conversion", {
-          description: toolUrl ? "Click below to open the right tool." : "This conversion is not supported here.",
-          ...(toolUrl && {
-            action: { label: "Open tool", onClick: () => window.open(toolUrl, "_blank") },
-          }),
-          duration: 5000,
-        });
-        return;
+        if (IMAGE_EXTS.includes(ext) || rawFile.type.startsWith("image/")) {
+          blob =
+            fmt === "pdf"
+              ? await imgToPdf(rawFile)
+              : await imgToBlob(rawFile, fmt);
+        } else {
+          // Redirect to dedicated tool
+          const toolUrl = TOOL_FOR[`${ext}→${fmt}`];
+          setFiles((prev) =>
+            prev.map((f) => (f.id === fileId ? { ...f, status: "ready" } : f)),
+          );
+          toast.info("Use the dedicated tool for this conversion", {
+            description: toolUrl
+              ? "Click below to open the right tool."
+              : "This conversion is not supported here.",
+            ...(toolUrl && {
+              action: {
+                label: "Open tool",
+                onClick: () => window.open(toolUrl, "_blank"),
+              },
+            }),
+            duration: 5000,
+          });
+          return;
+        }
+
+        triggerDownload(blob, `${base}.${fmt}`);
+        setFiles((prev) =>
+          prev.map((f) => (f.id === fileId ? { ...f, status: "done" } : f)),
+        );
+      } catch {
+        setFiles((prev) =>
+          prev.map((f) => (f.id === fileId ? { ...f, status: "error" } : f)),
+        );
+        toast.error("Conversion failed. Please try again.");
       }
-
-      triggerDownload(blob, `${base}.${fmt}`);
-      setFiles((prev) => prev.map((f) => f.id === fileId ? { ...f, status: "done" } : f));
-    } catch {
-      setFiles((prev) => prev.map((f) => f.id === fileId ? { ...f, status: "error" } : f));
-      toast.error("Conversion failed. Please try again.");
-    }
-  }, [files]);
+    },
+    [files],
+  );
 
   const hasFiles = files.length > 0;
   const showSuccess =
@@ -373,10 +433,11 @@ export default function GlobalUpload() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onClick={() => inputRef.current?.click()}
-              className={`cursor-pointer rounded-3xl max-w-2xl mx-auto border-2 border-dashed px-6 py-12 text-center transition-all duration-200 ${isDragging
-                ? "border-red-400 bg-red-50 scale-[1.01]"
-                : "border-slate-300 bg-white hover:border-red-300"
-                }`}
+              className={`cursor-pointer rounded-3xl max-w-2xl mx-auto border-2 border-dashed px-6 py-12 text-center transition-all duration-200 ${
+                isDragging
+                  ? "border-red-400 bg-red-50 scale-[1.01]"
+                  : "border-slate-300 bg-white hover:border-red-300"
+              }`}
             >
               <div className="pointer-events-none flex flex-col items-center gap-3">
                 <div className="flex aspect-square w-14 items-center justify-center rounded-2xl bg-red-50/50">
@@ -395,7 +456,9 @@ export default function GlobalUpload() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg text-red-600">Click, or drop your files here</p>
+                  <p className="text-lg text-red-600">
+                    Click, or drop your files here
+                  </p>
                   <p className="mt-1 text-xs text-slate-400">
                     Multiple content formats supported
                   </p>
