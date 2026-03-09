@@ -115,7 +115,7 @@ export default function AboutPage() {
           className="pointer-events-none absolute left-0 bottom-0 h-64 w-64 rounded-full bg-violet-50 opacity-60 blur-3xl translate-y-1/3 -translate-x-1/4"
         />
 
-        <div className="relative mx-auto max-w-4xl text-center">
+        <div className="relative mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 text-[10px] font-semibold text-slate-500 uppercase tracking-widest shadow-sm mb-6">
             Our Story
           </div>
@@ -160,7 +160,7 @@ export default function AboutPage() {
 
       {/* Stats */}
       <section className="border-b border-slate-100 bg-slate-50 px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-3xl">
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {siteStats.map((s) => (
               <div key={s.label} className="text-center">
@@ -178,13 +178,13 @@ export default function AboutPage() {
 
       {/* Mission */}
       <section className="px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-red-500 mb-3">
                 Our Mission
               </p>
-              <h2 className="text-3xl font-medium tracking-tight text-slate-900 sm:text-4xl leading-tight">
+              <h2 className="text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl leading-tight">
                 Democratizing access to professional-grade tools
               </h2>
               <p className="mt-5 text-slate-500 leading-relaxed">
@@ -262,7 +262,7 @@ export default function AboutPage() {
 
       {/* Values */}
       <section className="border-t border-slate-100 bg-slate-50 px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <div className="mb-10 text-center">
             <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
               What We Stand For
@@ -271,7 +271,7 @@ export default function AboutPage() {
               Our core values
             </h2>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2">
             {values.map((v) => (
               <div
                 key={v.title}
@@ -294,7 +294,7 @@ export default function AboutPage() {
 
       {/* Contact strip */}
       <section className="border-t border-slate-100 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mx-auto max-w-3xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <p className="font-semibold text-slate-900">
               Have a question or feedback?

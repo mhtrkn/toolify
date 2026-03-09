@@ -34,7 +34,7 @@ export default function ToolPageLayout({
       )}
       {/* Hero */}
       <section className="border-b border-slate-100 bg-white px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-3xl">
           <Breadcrumb items={breadcrumbs} />
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             {title}
@@ -45,13 +45,13 @@ export default function ToolPageLayout({
 
       {/* Tool UI */}
       <section className="px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">{children}</div>
+        <div className="mx-auto max-w-3xl">{children}</div>
       </section>
 
       {/* How To */}
       {howToSteps && howToSteps.length > 0 && (
         <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Guide</p>
             <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">How to Use</h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-3">
@@ -74,7 +74,7 @@ export default function ToolPageLayout({
       {/* Benefits */}
       {benefits && benefits.length > 0 && (
         <section className="px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Benefits</p>
             <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">Why Use Our Tool?</h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -95,7 +95,7 @@ export default function ToolPageLayout({
       {/* FAQ */}
       {faqs && faqs.length > 0 && (
         <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">FAQ</p>
             <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
               Frequently Asked Questions

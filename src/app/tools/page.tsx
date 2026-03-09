@@ -52,7 +52,7 @@ export default function AllToolsPage() {
 
       {/* Header */}
       <section className="border-b border-slate-100 bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <Breadcrumb items={[{ label: "All Tools" }]} />
 
           <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
@@ -91,7 +91,7 @@ export default function AllToolsPage() {
           id={category.slug}
           className="scroll-mt-20 border-b border-slate-100 bg-white px-4 py-12 odd:bg-slate-50 sm:px-6 lg:px-8"
         >
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             {/* Category header */}
             <div className="flex items-center gap-3">
               <div
@@ -118,7 +118,7 @@ export default function AllToolsPage() {
             </div>
 
             {/* Tools grid */}
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
               {tools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}

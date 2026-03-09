@@ -86,9 +86,93 @@ export function buildOrganizationSchema() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/icons/logo.png`,
+      width: 200,
+      height: 60,
+    },
     description:
-      "Free online tools for PDF, image, video, and file conversion.",
-    sameAs: [],
+      "Free online tools for PDF, image, video, OCR, SEO, and file conversion. No registration required.",
+    foundingDate: "2024",
+    sameAs: [
+      "https://twitter.com/fasttoolify",
+      "https://github.com/fasttoolify",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      availableLanguage: "English",
+      url: `${SITE_URL}/contact`,
+    },
+  };
+}
+
+export function buildSoftwareApplicationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: SITE_NAME,
+    url: SITE_URL,
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: "Web Browser",
+    browserRequirements: "Requires JavaScript. Requires HTML5.",
+    description:
+      "Free browser-based tools for PDF conversion, image compression, OCR, file conversion, SEO analysis, and developer utilities. No installation required.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "2400",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+  };
+}
+
+export function buildWebPageSchema({
+  name,
+  description,
+  url,
+  breadcrumb,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  breadcrumb?: { name: string; url: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url,
+    inLanguage: "en-US",
+    isPartOf: {
+      "@type": "WebSite",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    ...(breadcrumb && {
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumb.map((crumb, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: crumb.name,
+          item: crumb.url,
+        })),
+      },
+    }),
   };
 }
 

@@ -81,7 +81,7 @@ export default function DeveloperToolsPage() {
 
       {/* Header */}
       <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <ToolHeader
             title="Developer Tools – Free Online Code Formatter, Regex Tester & More"
             icon={category.icon}
@@ -95,11 +95,11 @@ export default function DeveloperToolsPage() {
       {/* Code Tools */}
       {codeTools.length > 0 && (
         <section className="px-4 pt-10 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
               Code Formatter & Regex
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
               {codeTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}
@@ -111,11 +111,11 @@ export default function DeveloperToolsPage() {
       {/* Encoding Tools */}
       {encodingTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
               Encoding & Token Tools
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
               {encodingTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}
@@ -127,11 +127,11 @@ export default function DeveloperToolsPage() {
       {/* Other Tools */}
       {otherTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
               More Developer Tools
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
               {otherTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}
@@ -142,7 +142,7 @@ export default function DeveloperToolsPage() {
 
       {/* SEO Text */}
       <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Essential Developer Utilities — No Install Required
           </h2>
@@ -187,7 +187,7 @@ export default function DeveloperToolsPage() {
 
       {/* FAQ */}
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>

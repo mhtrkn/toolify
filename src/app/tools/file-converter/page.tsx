@@ -55,7 +55,7 @@ export default function FileConverterPage() {
       <JsonLd data={buildFaqSchema(FAQS)} />
 
       <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <ToolHeader
             title="File Converter – Free Online Document Converter"
             icon={category.icon}
@@ -68,11 +68,11 @@ export default function FileConverterPage() {
 
       {/* Document to PDF */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Document to PDF
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) => ["word-to-pdf", "excel-to-pdf"].includes(t.slug))
               .map((tool) => (
@@ -84,11 +84,11 @@ export default function FileConverterPage() {
 
       {/* Data Format Converters */}
       <section className="px-4 pt-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Data Format Converters
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) =>
                 [
@@ -108,11 +108,11 @@ export default function FileConverterPage() {
 
       {/* Archive & Utilities */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Archive & Utilities
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) => ["zip-tools", "json-viewer"].includes(t.slug))
               .map((tool) => (
@@ -123,7 +123,7 @@ export default function FileConverterPage() {
       </section>
 
       <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Convert Any File Format Online
           </h2>
@@ -136,7 +136,7 @@ export default function FileConverterPage() {
       </section>
 
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>

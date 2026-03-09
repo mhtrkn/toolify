@@ -3,7 +3,15 @@ import GlobalUpload from "@/components/home/GlobalUpload";
 import JsonLd from "@/components/seo/JsonLd";
 import ToolCard from "@/components/tools/ToolCard";
 import { siteStats, whyChooseData } from "@/lib/mockdata";
-import { buildHowToSchema, buildWebSiteSchema } from "@/lib/structured-data";
+import {
+  buildBreadcrumbSchema,
+  buildFaqSchema,
+  buildHowToSchema,
+  buildItemListSchema,
+  buildWebPageSchema,
+  buildWebSiteSchema,
+} from "@/lib/structured-data";
+import { SITE_URL } from "@/lib/metadata";
 import { CATEGORIES, getPopularTools } from "@/lib/tools";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -103,14 +111,47 @@ const HOW_TO_STEPS = [
   },
 ];
 
+const HOME_FAQS = [
+  {
+    question: "Are these tools really free?",
+    answer:
+      "Yes. Every tool on toolify is 100% free to use with no hidden costs, no subscription, and no credit card required. We are ad-supported to keep the service free.",
+  },
+  {
+    question: "Is my data private and secure?",
+    answer:
+      "Absolutely. All processing happens directly in your browser — your files are never uploaded to our servers. We have no access to your data at any point.",
+  },
+  {
+    question: "Do I need to install any software?",
+    answer:
+      "No installation is required. toolify runs entirely in your web browser. Any modern browser (Chrome, Firefox, Safari, Edge) on desktop or mobile works perfectly.",
+  },
+  {
+    question: "What file formats are supported?",
+    answer:
+      "We support a wide range of formats including PDF, JPG, PNG, WebP, HEIC, DOCX, XLSX, PPTX, MP4, MOV, and many more. Each tool page lists its supported input and output formats.",
+  },
+  {
+    question: "How fast are the conversions?",
+    answer:
+      "Most conversions complete in seconds because they run client-side in your browser using WebAssembly and the latest browser APIs. No round-trip to a remote server means near-instant results.",
+  },
+  {
+    question: "Can I use these tools on my phone or tablet?",
+    answer:
+      "Yes. toolify is fully responsive and works on all modern smartphones and tablets. The interface adapts to any screen size for a seamless mobile experience.",
+  },
+];
+
 export const metadata: Metadata = {
   title:
-    "Free Online Tools – PDF, Image, SEO, Developer & File Converter | toolify",
+    "Free Online Converter Tools – PDF, Image, SEO, Developer & File Converter | toolify",
   description:
-    "Free online tools for PDF, image, SEO, and developer utilities. Merge PDFs, generate keywords, format code, decode JWTs — fast, secure, no registration.",
+    "Free online converter tools for PDF, image, SEO, and developer utilities. Merge PDFs, compress images, convert Word to PDF, generate QR codes — fast, private, no registration.",
   alternates: { canonical: "/" },
   keywords:
-    "free online tools, pdf tools, image compressor, word to pdf, qr code generator, keyword generator, code formatter, regex tester, seo meta tag builder, file converter online",
+    "free online tools, pdf tools, image compressor, word to pdf, qr code generator, keyword generator, code formatter, regex tester, seo meta tag builder, file converter online, merge pdf online, compress pdf free, resize image online, ocr image to text",
 };
 
 export default function HomePage() {
@@ -129,6 +170,33 @@ export default function HomePage() {
             text: s.description,
           })),
         })}
+      />
+      <JsonLd data={buildFaqSchema(HOME_FAQS)} />
+      <JsonLd
+        data={buildItemListSchema(
+          popularTools.map((t) => ({
+            name: t.name,
+            url: `${SITE_URL}/tools/${t.categorySlug}/${t.slug}`,
+          })),
+        )}
+      />
+      <JsonLd
+        data={buildWebPageSchema({
+          name: "Free Online Tools – PDF, Image, SEO, Developer & File Converter",
+          description:
+            "Free browser-based tools for PDF, image, OCR, SEO, developer utilities and file conversion. No signup, no installation.",
+          url: SITE_URL,
+          breadcrumb: [
+            { name: "Home", url: SITE_URL },
+            { name: "Online Tools", url: `${SITE_URL}/tools` },
+          ],
+        })}
+      />
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: "Home", url: SITE_URL },
+          { name: "Online Tools", url: `${SITE_URL}/tools` },
+        ])}
       />
 
       {/* Hero */}
@@ -152,6 +220,73 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Top Tools – keyword-rich internal links */}
+      <nav
+        aria-label="Popular free online tools"
+        className="border-b border-slate-100 bg-slate-50 px-4 py-5 sm:px-6 lg:px-8"
+      >
+        <div className="mx-auto max-w-3xl">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
+            Quick Access
+          </p>
+          <ul className="flex flex-wrap gap-2">
+            {[
+              { label: "Merge PDF Online", href: "/tools/pdf-tools/merge-pdf" },
+              {
+                label: "Compress PDF Free",
+                href: "/tools/pdf-tools/compress-pdf",
+              },
+              {
+                label: "Convert Word to PDF",
+                href: "/tools/pdf-tools/word-to-pdf",
+              },
+              {
+                label: "PDF to JPG Converter",
+                href: "/tools/pdf-tools/pdf-to-jpg",
+              },
+              {
+                label: "Image Compressor Online",
+                href: "/tools/image-tools/image-compressor",
+              },
+              {
+                label: "Resize Image Online",
+                href: "/tools/image-tools/image-resize",
+              },
+              {
+                label: "QR Code Generator Free",
+                href: "/tools/web-tools/qr-code-generator",
+              },
+              {
+                label: "OCR Image to Text",
+                href: "/tools/ocr-tools/ocr-image-to-text",
+              },
+              {
+                label: "Keyword Generator Tool",
+                href: "/tools/seo-tools/keyword-generator",
+              },
+              {
+                label: "JSON Formatter Online",
+                href: "/tools/developer-tools/code-formatter",
+              },
+              {
+                label: "URL Shortener Free",
+                href: "/tools/web-tools/url-shortener",
+              },
+              { label: "PDF to Text", href: "/tools/ocr-tools/pdf-to-text" },
+            ].map(({ label, href }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className="inline-block rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
 
       {/* How To */}
       <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
@@ -342,13 +477,61 @@ export default function HomePage() {
       {/* Blog */}
       <FeaturedBlogs />
 
-      {/* SEO Text */}
+      {/* FAQ Section */}
+      <section
+        aria-labelledby="faq-heading"
+        className="border-t border-slate-100 bg-slate-50 px-4 py-20 sm:px-6 lg:px-8"
+      >
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-10 text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              FAQ
+            </p>
+            <h2
+              id="faq-heading"
+              className="mt-1 text-3xl font-bold tracking-tight text-slate-900"
+            >
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-2 text-slate-500">
+              Everything you need to know about toolify.
+            </p>
+          </div>
+          <div className="space-y-4">
+            {HOME_FAQS.map((faq) => (
+              <article
+                key={faq.question}
+                className="rounded-xl border border-slate-200 bg-white p-6"
+              >
+                <h3 className="text-sm font-semibold text-slate-900">
+                  {faq.question}
+                </h3>
+                <p className="mt-2 text-sm text-slate-500">{faq.answer}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Text – expanded */}
       <section className="border-t border-slate-100 bg-white px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl prose prose-slate">
+          {/* Featured snippet target */}
           <h2 className="text-xl font-bold text-slate-900">
+            What Are Free Online Tools?
+          </h2>
+          <p className="mt-3 text-slate-600">
+            Free online tools are browser-based utilities that let you convert,
+            edit, optimize, and analyze files without installing any software.
+            toolify provides PDF tools, image tools, SEO tools, OCR tools,
+            developer tools, and many other utilities that run entirely in your
+            browser — no account, no download, no waiting.
+          </p>
+
+          <h2 className="mt-10 text-xl font-bold text-slate-900">
             The Best Free Online Tools for Everyday Tasks
           </h2>
-          <p className="mt-3 text-slate-600 mb-8">
+          <p className="mt-3 text-slate-600">
             toolify offers a comprehensive suite of free online tools to handle
             your everyday file conversion, editing, and optimization needs.
             Whether you need to{" "}
@@ -379,31 +562,134 @@ export default function HomePage() {
             >
               convert Word to PDF
             </Link>{" "}
-            — we have you covered with 9 dedicated PDF tools.
+            — we have you covered with dedicated PDF tools that process files
+            instantly inside your browser.
           </p>
-          <h3 className="mt-5 text-lg font-semibold text-slate-900">
-            Image &amp; File Tools
+
+          <h3 className="mt-8 text-lg font-semibold text-slate-900">
+            PDF Tools – Merge, Compress, Convert &amp; Edit PDFs Online
           </h3>
-          <p className="mt-2 text-slate-600 mb-8">
-            Need to{" "}
+          <p className="mt-2 text-slate-600">
+            PDF remains the world&apos;s most popular document format, but
+            working with PDFs often requires expensive desktop software. Our
+            free{" "}
+            <Link
+              href="/tools/pdf-tools/merge-pdf"
+              className="text-red-600 hover:underline"
+            >
+              PDF merge tool
+            </Link>{" "}
+            lets you combine multiple PDF documents into one in seconds. The{" "}
+            <Link
+              href="/tools/pdf-tools/compress-pdf"
+              className="text-red-600 hover:underline"
+            >
+              PDF compressor
+            </Link>{" "}
+            shrinks file size without noticeable quality loss — ideal before
+            emailing or uploading. Use the{" "}
+            <Link
+              href="/tools/pdf-tools/word-to-pdf"
+              className="text-red-600 hover:underline"
+            >
+              Word to PDF converter
+            </Link>{" "}
+            to produce perfectly formatted PDFs from .docx files, or the{" "}
+            <Link
+              href="/tools/pdf-tools/pdf-to-jpg"
+              className="text-red-600 hover:underline"
+            >
+              PDF to JPG converter
+            </Link>{" "}
+            to extract each page as a high-resolution image. All PDF tools are
+            client-side — your documents never leave your device.
+          </p>
+
+          <h3 className="mt-8 text-lg font-semibold text-slate-900">
+            Image Tools – Compress, Resize &amp; Convert Images Online
+          </h3>
+          <p className="mt-2 text-slate-600">
+            Our image tools make it easy to prepare visuals for any platform.
+            The{" "}
             <Link
               href="/tools/image-tools/image-compressor"
               className="text-blue-600 hover:underline"
             >
-              compress an image
+              image compressor
             </Link>{" "}
-            before uploading? Or{" "}
+            reduces JPG and PNG file sizes by up to 90% while preserving
+            sharpness. The{" "}
             <Link
               href="/tools/image-tools/image-resize"
               className="text-blue-600 hover:underline"
             >
-              resize a photo
+              image resize tool
             </Link>{" "}
-            to exact pixel dimensions? Our image tools handle JPG, PNG, and WebP
-            in seconds.
+            lets you set exact pixel dimensions or percentage scales — perfect
+            for social media, email attachments, or web uploads. Need to convert
+            formats? Our{" "}
+            <Link
+              href="/tools/image-tools/image-format-converter"
+              className="text-blue-600 hover:underline"
+            >
+              image format converter
+            </Link>{" "}
+            handles HEIC, WebP, BMP, TIFF, PNG, and JPG conversions entirely in
+            your browser using the latest WebAssembly technology.
           </p>
-          <h3 className="mt-5 text-lg font-semibold text-slate-900">
-            Web &amp; Developer Tools
+
+          <h3 className="mt-8 text-lg font-semibold text-slate-900">
+            OCR Tools – Extract Text from Images &amp; Scanned PDFs
+          </h3>
+          <p className="mt-2 text-slate-600">
+            Optical character recognition (OCR) turns images and scanned
+            documents into editable text. Our{" "}
+            <Link
+              href="/tools/ocr-tools/ocr-image-to-text"
+              className="text-orange-600 hover:underline"
+            >
+              OCR image to text
+            </Link>{" "}
+            tool supports 14 languages including English, Spanish, French,
+            German, Chinese, and Arabic. The{" "}
+            <Link
+              href="/tools/ocr-tools/pdf-to-text"
+              className="text-orange-600 hover:underline"
+            >
+              PDF to text extractor
+            </Link>{" "}
+            handles both native and scanned PDFs, falling back to OCR
+            automatically when needed. Outputs can be downloaded as plain TXT,
+            DOCX, or JSON. No file ever leaves your browser.
+          </p>
+
+          <h3 className="mt-8 text-lg font-semibold text-slate-900">
+            Developer Tools – Format, Decode &amp; Test Code Online
+          </h3>
+          <p className="mt-2 text-slate-600">
+            Our developer utilities are built for speed and precision. The{" "}
+            <Link
+              href="/tools/developer-tools/code-formatter"
+              className="text-violet-600 hover:underline"
+            >
+              code formatter
+            </Link>{" "}
+            beautifies JSON, HTML, CSS, JavaScript, and SQL with one click. The{" "}
+            <Link
+              href="/tools/developer-tools/regex-tester"
+              className="text-violet-600 hover:underline"
+            >
+              regex tester
+            </Link>{" "}
+            provides live match highlighting and capture group details as you
+            type. Need to inspect an authentication token? Our JWT decoder
+            parses header, payload, and signature instantly, entirely
+            client-side. URL encoder/decoder, Base64 encoder, and color picker
+            tools round out the developer toolkit.
+          </p>
+
+          <h3 className="mt-8 text-lg font-semibold text-slate-900">
+            Web Tools – QR Code Generator, URL Shortener &amp; More
           </h3>
           <p className="mt-2 text-slate-600">
             Generate a{" "}
@@ -411,65 +697,58 @@ export default function HomePage() {
               href="/tools/web-tools/qr-code-generator"
               className="text-indigo-600 hover:underline"
             >
-              QR code for any URL or WiFi network
-            </Link>
-            , shorten links with our{" "}
+              QR code for any URL, WiFi network, vCard, or email
+            </Link>{" "}
+            with custom colors, sizes, and error-correction levels — download as
+            PNG or SVG. The{" "}
             <Link
               href="/tools/web-tools/url-shortener"
               className="text-indigo-600 hover:underline"
             >
               free URL shortener
-            </Link>
-            , or extract text from images using our{" "}
-            <Link
-              href="/tools/ocr-tools/ocr-image-to-text"
-              className="text-orange-600 hover:underline"
-            >
-              OCR image to text
             </Link>{" "}
-            tool. For code work, our{" "}
-            <Link
-              href="/tools/developer-tools/code-formatter"
-              className="text-violet-600 hover:underline"
-            >
-              Code Formatter
-            </Link>{" "}
-            handles JSON, HTML, CSS, JS, and SQL, while our{" "}
-            <Link
-              href="/tools/developer-tools/regex-tester"
-              className="text-violet-600 hover:underline"
-            >
-              Regex Tester
-            </Link>{" "}
-            provides live match highlighting.
+            creates clean, shareable short links in seconds.
           </p>
-          <h3 className="mt-5 text-lg font-semibold text-slate-900">
-            SEO &amp; Content Tools
+
+          <h3 className="mt-8 text-lg font-semibold text-slate-900">
+            SEO &amp; Content Tools – Keywords, Meta Tags &amp; More
           </h3>
           <p className="mt-2 text-slate-600">
-            Plan your content strategy with our{" "}
+            Plan your content strategy with the{" "}
             <Link
               href="/tools/seo-tools/keyword-generator"
               className="text-teal-600 hover:underline"
             >
-              Keyword Generator
+              keyword generator
             </Link>
-            , build perfect title and description tags with the{" "}
+            , craft perfectly optimised title and description tags with the{" "}
             <Link
               href="/tools/seo-tools/seo-meta-builder"
               className="text-teal-600 hover:underline"
             >
-              SEO Meta Tag Builder
+              SEO meta tag builder
             </Link>
-            , and discover semantic variations with the{" "}
+            , and discover semantic keyword variations with the{" "}
             <Link
               href="/tools/seo-tools/lsi-keyword-explorer"
               className="text-teal-600 hover:underline"
             >
-              LSI Keyword Explorer
+              LSI keyword explorer
             </Link>
-            . All tools are designed to be beginner-friendly with a clean,
-            distraction-free interface — no software, no signup, just results.
+            . All SEO tools are beginner-friendly and require no signup.
+          </p>
+
+          <h3 className="mt-8 text-lg font-semibold text-slate-900">
+            Why toolify Is the Best Free Online Tool Suite
+          </h3>
+          <p className="mt-2 text-slate-600">
+            Unlike many online tool sites, toolify processes everything
+            client-side. Your files are never sent to a remote server, which
+            means absolute privacy and instant results — even with a slow
+            connection. There is no file-size limit imposed by server resources,
+            no signup wall, and no forced format upgrades. Whether you are a
+            student, designer, developer, marketer, or business owner, toolify
+            has a free tool ready for you right now.
           </p>
         </div>
       </section>

@@ -108,7 +108,7 @@ export default function ContactPage() {
 
       {/* Contact channels */}
       <section className="px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <div className="grid gap-5 sm:grid-cols-3">
             {channels.map((ch) => (
               <a
@@ -134,7 +134,7 @@ export default function ContactPage() {
 
       {/* Quick info strip */}
       <section className="border-t border-b border-slate-100 bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl grid gap-8 sm:grid-cols-3 text-center">
+        <div className="mx-auto max-w-3xl grid gap-8 sm:grid-cols-3 text-center">
           <div>
             <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm">
               <svg className="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -196,7 +196,7 @@ export default function ContactPage() {
 
       {/* Bottom strip */}
       <section className="border-t border-slate-100 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mx-auto max-w-3xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <p className="font-semibold text-slate-900">Not sure where to start?</p>
             <p className="text-sm text-slate-500 mt-0.5">

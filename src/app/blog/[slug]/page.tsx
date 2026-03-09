@@ -87,7 +87,7 @@ export default async function BlogDetailPage({ params }: Props) {
 
       {/* Header */}
       <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <Breadcrumb
             items={[{ label: "Blog", href: "/blog" }, { label: post.title }]}
           />
@@ -118,9 +118,9 @@ export default async function BlogDetailPage({ params }: Props) {
 
       {/* Content + Sidebar */}
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl lg:grid lg:grid-cols-[1fr_280px] lg:gap-12">
+        <div className="mx-auto max-w-3xl">
           {/* Article */}
-          <article className="mx-auto w-full lg:mx-0">
+          <article className="w-full">
             <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-10">
               <BlogContent content={post.content} />
             </div>
@@ -139,8 +139,8 @@ export default async function BlogDetailPage({ params }: Props) {
           </article>
 
           {/* Sidebar */}
-          <aside className="mt-10 lg:mt-0">
-            <div className="sticky top-24 space-y-8">
+          <aside className="mt-10">
+            <div className="space-y-8">
               {/* Related Tools */}
               {post.relatedTools.length > 0 && (
                 <div className="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
@@ -212,11 +212,11 @@ export default async function BlogDetailPage({ params }: Props) {
       {/* Related Posts */}
       {related.length > 0 && (
         <section className="border-t border-slate-100 bg-white px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">
               Related Articles
             </h2>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 grid gap-3">
               {related.map((p) => (
                 <BlogCard key={p.slug} post={p} />
               ))}

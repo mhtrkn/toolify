@@ -83,7 +83,7 @@ export default function SeoToolsPage() {
 
       {/* Header */}
       <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <ToolHeader
             title="Free SEO & Content Tools – Keyword, Meta & Content Generator"
             icon={category.icon}
@@ -97,11 +97,11 @@ export default function SeoToolsPage() {
       {/* Keyword Research Tools */}
       {keywordTools.length > 0 && (
         <section className="px-4 pt-10 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
               Keyword Research Tools
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
               {keywordTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}
@@ -113,11 +113,11 @@ export default function SeoToolsPage() {
       {/* Content & Meta Tools */}
       {contentTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
               Content & Metadata Tools
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
               {contentTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}
@@ -129,11 +129,11 @@ export default function SeoToolsPage() {
       {/* Other tools */}
       {otherTools.length > 0 && (
         <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
               More SEO Tools
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
               {otherTools.map((tool) => (
                 <ToolCard key={tool.slug} tool={tool} />
               ))}
@@ -144,7 +144,7 @@ export default function SeoToolsPage() {
 
       {/* SEO Text */}
       <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Free SEO Tools for Content Creators & Marketers
           </h2>
@@ -185,7 +185,7 @@ export default function SeoToolsPage() {
 
       {/* FAQ */}
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>

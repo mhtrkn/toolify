@@ -30,54 +30,45 @@ export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-200 hover:shadow-lg"
+      className="group flex flex-row overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-200 hover:border-slate-200 hover:shadow-md"
     >
       {/* Cover */}
-      <div className="relative aspect-video overflow-hidden">
-        <BlogCover category={post.category} title={post.title} />
+      <div className="relative w-32 shrink-0 sm:w-40">
+        <BlogCover category={post.category} title={post.title} size="sm" className="rounded-none" />
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col justify-between p-4">
         {/* Meta */}
-        <div className="flex items-center w-full justify-between gap-3 text-xs text-slate-400 mb-2">
-          <span
-            className={`rounded-full px-2.5 py-0.5 font-medium ${colors.bg} ${colors.text}`}
-          >
-            {post.category}
-          </span>
-          <div className="flex items-center justify-center gap-2">
-            <time dateTime={post.publishedAt}>
-              {formatDate(post.publishedAt)}
-            </time>
+        <div>
+          <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
+            <span className={`rounded-full px-2.5 py-0.5 font-medium ${colors.bg} ${colors.text}`}>
+              {post.category}
+            </span>
+            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
           </div>
+
+          {/* Title */}
+          <h3 className="text-sm font-semibold leading-snug text-slate-900 transition-colors group-hover:text-red-600 line-clamp-2">
+            {post.title}
+          </h3>
+
+          {/* Excerpt */}
+          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-slate-500">
+            {post.excerpt}
+          </p>
         </div>
 
-        {/* Title */}
-        <h3 className="mt-3 text-base font-semibold leading-snug text-slate-900 transition-colors group-hover:text-red-600 line-clamp-2">
-          {post.title}
-        </h3>
-
-        {/* Excerpt */}
-        <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-500">
-          {post.excerpt}
-        </p>
-
         {/* Read more */}
-        <div className="mt-4 flex items-center gap-1 text-sm font-medium text-red-600">
+        <div className="mt-3 flex items-center gap-1 text-xs font-medium text-red-600">
           Read more
           <svg
-            className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+            className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </div>
       </div>

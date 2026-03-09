@@ -42,7 +42,7 @@ export default function BlogListPage() {
 
       {/* Header */}
       <section className="border-b border-slate-100 bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <Breadcrumb
             items={[{ label: "Blog" }]}
           />
@@ -58,8 +58,8 @@ export default function BlogListPage() {
 
       {/* Posts Grid */}
       <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto max-w-3xl">
+          <div className="grid gap-3">
             {posts.map((post) => (
               <BlogCard key={post.slug} post={post} />
             ))}

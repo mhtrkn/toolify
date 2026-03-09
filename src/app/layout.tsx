@@ -5,6 +5,7 @@ import BackToTop from "@/components/ui/back-to-top";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/metadata";
 import {
   buildOrganizationSchema,
+  buildSoftwareApplicationSchema,
   buildWebSiteSchema,
 } from "@/lib/structured-data";
 import { Analytics } from "@vercel/analytics/next";
@@ -35,14 +36,29 @@ export const metadata: Metadata = {
     "pdf converter",
     "image compressor",
     "file converter",
-    "ocr",
+    "ocr online",
+    "word to pdf",
+    "merge pdf online",
+    "compress pdf free",
+    "image resize online",
+    "qr code generator",
+    "developer tools online",
+    "seo tools online",
     "privacy-first online tools",
-    "no limits file converter",
-    "secure pdf editor",
+    "no registration file converter",
+    "browser based tools",
   ],
-
-  authors: [{ name: SITE_NAME }],
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "technology",
+  alternates: {
+    canonical: SITE_URL,
+    languages: {
+      "en-US": SITE_URL,
+    },
+  },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -51,20 +67,21 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: [
       {
-        url: "/icons/logo.png",
+        url: "/og-default.png",
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} Preview`,
+        alt: `toolify – Free Online PDF, Image, SEO & Developer Tools`,
       },
     ],
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
+    site: "@fasttoolify",
     title: `Free Online Tools – PDF, Image, SEO, Developer & File Converter | toolify`,
     description:
       "Free online tools for PDF, image, SEO, and developer utilities. Merge PDFs, generate keywords, format code, decode JWTs — fast, secure, no registration.",
-    images: ["/icons/logo.png"],
+    images: [{ url: "/og-default.png", alt: "toolify – Free Online Tools" }],
   },
   robots: {
     index: true,
@@ -79,6 +96,10 @@ export const metadata: Metadata = {
   },
   other: {
     "google-adsense-account": "ca-pub-8788445317754676",
+    "theme-color": "#dc2626",
+    "apple-mobile-web-app-title": SITE_NAME,
+    "apple-mobile-web-app-capable": "yes",
+    "mobile-web-app-capable": "yes",
   },
 };
 
@@ -129,6 +150,7 @@ export default function RootLayout({
 
         <JsonLd data={buildWebSiteSchema()} />
         <JsonLd data={buildOrganizationSchema()} />
+        <JsonLd data={buildSoftwareApplicationSchema()} />
         <Analytics />
         <SpeedInsights />
         <Header />

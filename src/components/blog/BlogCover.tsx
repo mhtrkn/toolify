@@ -42,10 +42,12 @@ const categoryStyles: Record<
 export default function BlogCover({
   category,
   size = "md",
+  className,
 }: {
   category: string;
   title: string;
   size?: "sm" | "md";
+  className?: string;
 }) {
   const style = categoryStyles[category] || {
     color: "#64748b",
@@ -56,10 +58,11 @@ export default function BlogCover({
   const containerHeight = size === "sm" ? "h-full" : "h-45";
   const iconBoxSize = size === "sm" ? "w-14 h-14" : "w-16 h-16";
   const iconImgSize = size === "sm" ? 32 : 44;
+  const roundedClass = className ?? "rounded-t-2xl";
 
   return (
     <div
-      className={`relative overflow-hidden rounded-t-2xl ${containerHeight} w-full flex flex-col items-center justify-center border border-white/10`}
+      className={`relative overflow-hidden ${roundedClass} ${containerHeight} w-full flex flex-col items-center justify-center border border-white/10`}
       style={{
         backgroundColor: "#0f172a", // Koyu modern arka plan
         backgroundImage: `radial-gradient(circle at 50% 0%, ${style.color}50 0%, transparent 70%)`,

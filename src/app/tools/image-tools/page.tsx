@@ -55,7 +55,7 @@ export default function ImageToolsPage() {
       <JsonLd data={buildFaqSchema(FAQS)} />
 
       <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <ToolHeader
             title="Image Tools – Free Online Image Editor"
             icon={category.icon}
@@ -68,11 +68,11 @@ export default function ImageToolsPage() {
 
       {/* Image Editing */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Image Editing
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) =>
                 [
@@ -91,11 +91,11 @@ export default function ImageToolsPage() {
 
       {/* Image Conversion */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Image Conversion
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) =>
                 ["image-converter", "jpg-to-png", "png-to-jpg"].includes(
@@ -110,7 +110,7 @@ export default function ImageToolsPage() {
       </section>
 
       <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Free Image Editing Tools
           </h2>
@@ -124,7 +124,7 @@ export default function ImageToolsPage() {
       </section>
 
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>

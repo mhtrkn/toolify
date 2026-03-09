@@ -59,7 +59,7 @@ export default function WebToolsPage() {
 
       {/* Header */}
       <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <ToolHeader
             title="Web Tools – Free Online Developer Utilities"
             icon={category.icon}
@@ -72,11 +72,11 @@ export default function WebToolsPage() {
 
       {/* Generator Tools */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Generator Tools
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) =>
                 ["qr-code-generator", "color-palette"].includes(t.slug),
@@ -90,11 +90,11 @@ export default function WebToolsPage() {
 
       {/* Data & Encoding Tools */}
       <section className="px-4 pt-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Data & Encoding Tools
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) => ["base64", "url-shortener"].includes(t.slug))
               .map((tool) => (
@@ -106,11 +106,11 @@ export default function WebToolsPage() {
 
       {/* HTML Tools */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             HTML Tools
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) => ["html-to-pdf", "html-minifier"].includes(t.slug))
               .map((tool) => (
@@ -122,7 +122,7 @@ export default function WebToolsPage() {
 
       {/* SEO Text */}
       <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             All-in-One Online Developer & Designer Tools
           </h2>
@@ -141,7 +141,7 @@ export default function WebToolsPage() {
 
       {/* FAQ */}
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>

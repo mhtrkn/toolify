@@ -55,7 +55,7 @@ export default function OcrToolsPage() {
       <JsonLd data={buildFaqSchema(FAQS)} />
 
       <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <ToolHeader
             title="OCR Tools – Free Image to Text Converter"
             icon={category.icon}
@@ -68,11 +68,11 @@ export default function OcrToolsPage() {
 
       {/* Text Extraction */}
       <section className="px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Text Extraction
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) =>
                 ["ocr-image-to-text", "pdf-to-text"].includes(t.slug),
@@ -86,11 +86,11 @@ export default function OcrToolsPage() {
 
       {/* Scanning & Editing */}
       <section className="px-4 pt-8 pb-10 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-slate-400">
             Scanning & Editing
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-3">
             {tools
               .filter((t) =>
                 ["barcode-qr-scanner", "ocr-text-editor"].includes(t.slug),
@@ -103,7 +103,7 @@ export default function OcrToolsPage() {
       </section>
 
       <section className="border-t border-slate-100 bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             AI-Powered OCR Text Recognition
           </h2>
@@ -116,7 +116,7 @@ export default function OcrToolsPage() {
       </section>
 
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>
