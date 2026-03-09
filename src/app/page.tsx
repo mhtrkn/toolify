@@ -39,7 +39,7 @@ const HOW_TO_STEPS = [
       "Drag and drop or click to select the file you want to convert.",
     icon: (
       <svg
-        className="w-7 h-7"
+        className="w-6 h-6"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -54,7 +54,7 @@ const HOW_TO_STEPS = [
     ),
     badge: "bg-red-600",
     iconBg: "bg-red-50",
-    iconColor: "text-red-600",
+    iconColor: "text-red-600 border-red-100",
   },
   {
     title: "Choose Format",
@@ -62,7 +62,7 @@ const HOW_TO_STEPS = [
       "Select your desired output format from 100+ supported options.",
     icon: (
       <svg
-        className="w-7 h-7"
+        className="w-6 h-6"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -77,14 +77,14 @@ const HOW_TO_STEPS = [
     ),
     badge: "bg-red-600",
     iconBg: "bg-red-50",
-    iconColor: "text-red-600",
+    iconColor: "text-red-600 border-red-100",
   },
   {
     title: "Download",
     description: "Get your converted file instantly, ready to use.",
     icon: (
       <svg
-        className="w-7 h-7"
+        className="w-6 h-6"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -99,7 +99,7 @@ const HOW_TO_STEPS = [
     ),
     badge: "bg-emerald-600",
     iconBg: "bg-emerald-50",
-    iconColor: "text-emerald-600",
+    iconColor: "text-emerald-600 border-emerald-100",
   },
 ];
 
@@ -176,7 +176,7 @@ export default function HomePage() {
                   Step {i + 1}
                 </div>
                 <div
-                  className={`w-14 h-14 ${step.iconBg} rounded-xl flex items-center justify-center mx-auto mb-4 mt-2 ${step.iconColor}`}
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 mt-2 border ${step.iconBg} ${step.iconColor}`}
                 >
                   {step.icon}
                 </div>
@@ -239,44 +239,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-            Browse
-          </p>
-          <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
-            Tool Categories
-          </h2>
-          <p className="mt-2 text-slate-500">
-            Choose a category to find the right tool for your task.
-          </p>
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
-            {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/tools/${cat.slug}`}
-                className={`group flex flex-col items-center gap-2.5 rounded-xl border bg-linear-to-br p-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${cat.bgColor} ${cat.borderColor}`}
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/70 shadow-sm">
-                  <Image
-                    src={`/icons/${cat.icon}.png`}
-                    alt={`${cat.name} tools icon`}
-                    width={24}
-                    height={24}
-                  />
-                </div>
-                <p
-                  className={`text-xs font-semibold leading-tight ${cat.color}`}
-                >
-                  {cat.name}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Popular Tools */}
       <section className="border-t border-slate-100 bg-white px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
@@ -315,6 +277,44 @@ export default function HomePage() {
               />
             </svg>
           </Link>
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section className="px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+            Browse
+          </p>
+          <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+            Tool Categories
+          </h2>
+          <p className="mt-2 text-slate-500">
+            Choose a category to find the right tool for your task.
+          </p>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+            {CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/tools/${cat.slug}`}
+                className={`group flex flex-col items-center gap-2.5 rounded-xl border bg-linear-to-br p-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${cat.bgColor} ${cat.borderColor}`}
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/70 shadow-sm">
+                  <Image
+                    src={`/icons/${cat.icon}.png`}
+                    alt={`${cat.name} tools icon`}
+                    width={24}
+                    height={24}
+                  />
+                </div>
+                <p
+                  className={`text-xs font-semibold leading-tight ${cat.color}`}
+                >
+                  {cat.name}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
