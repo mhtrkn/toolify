@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import PdfToTextClient from "./PdfToTextClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -142,7 +142,7 @@ export default function PdfToTextPage() {
         ]}
         faqs={FAQS}
       >
-        <PdfToTextClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

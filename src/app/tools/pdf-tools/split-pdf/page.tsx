@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import SplitPdfClient from "./SplitPdfClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -130,7 +130,7 @@ export default function SplitPdfPage() {
         ]}
         faqs={FAQS}
       >
-        <SplitPdfClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import DeletePdfPagesClient from "./DeletePdfPagesClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import { buildWebAppSchema, buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
 
@@ -97,7 +97,7 @@ export default function DeletePdfPagesPage() {
         ]}
         faqs={FAQS}
       >
-        <DeletePdfPagesClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

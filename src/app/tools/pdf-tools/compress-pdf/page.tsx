@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import CompressPdfClient from "./CompressPdfClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -102,7 +102,7 @@ export default function CompressPdfPage() {
         ]}
         faqs={FAQS}
       >
-        <CompressPdfClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

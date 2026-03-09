@@ -221,73 +221,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Top Tools – keyword-rich internal links */}
-      <nav
-        aria-label="Popular free online tools"
-        className="border-b border-slate-100 bg-slate-50 px-4 py-5 sm:px-6 lg:px-8"
-      >
-        <div className="mx-auto max-w-3xl">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
-            Quick Access
-          </p>
-          <ul className="flex flex-wrap gap-2">
-            {[
-              { label: "Merge PDF Online", href: "/tools/pdf-tools/merge-pdf" },
-              {
-                label: "Compress PDF Free",
-                href: "/tools/pdf-tools/compress-pdf",
-              },
-              {
-                label: "Convert Word to PDF",
-                href: "/tools/pdf-tools/word-to-pdf",
-              },
-              {
-                label: "PDF to JPG Converter",
-                href: "/tools/pdf-tools/pdf-to-jpg",
-              },
-              {
-                label: "Image Compressor Online",
-                href: "/tools/image-tools/image-compressor",
-              },
-              {
-                label: "Resize Image Online",
-                href: "/tools/image-tools/image-resize",
-              },
-              {
-                label: "QR Code Generator Free",
-                href: "/tools/web-tools/qr-code-generator",
-              },
-              {
-                label: "OCR Image to Text",
-                href: "/tools/ocr-tools/ocr-image-to-text",
-              },
-              {
-                label: "Keyword Generator Tool",
-                href: "/tools/seo-tools/keyword-generator",
-              },
-              {
-                label: "JSON Formatter Online",
-                href: "/tools/developer-tools/code-formatter",
-              },
-              {
-                label: "URL Shortener Free",
-                href: "/tools/web-tools/url-shortener",
-              },
-              { label: "PDF to Text", href: "/tools/ocr-tools/pdf-to-text" },
-            ].map(({ label, href }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className="inline-block rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-
       {/* How To */}
       <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
@@ -326,25 +259,25 @@ export default function HomePage() {
       </section>
 
       {/* Stats */}
-      <section className="bg-slate-50 border-t border-slate-100 px-4 py-12 sm:px-6 lg:px-8">
+      {/* <section className="bg-slate-50 border-t border-slate-100 px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {siteStats.map((stat) => (
               <div
                 key={stat.label}
-                className="bg-white rounded-2xl border border-gray-200 p-6 py-8 text-center hover:shadow-md transition-shadow"
+                className="bg-white rounded-2xl border border-gray-200 p-6 text-center hover:shadow-md transition-shadow"
               >
-                <div className="text-3xl sm:text-4xl font-medium text-gray-900 mb-1">
+                <div className="text-3xl font-medium text-gray-900 mb-1">
                   {stat.value}
                 </div>
-                <div className="text-gray-500 text-sm font-medium">
+                <div className="text-gray-500 text-xs font-medium">
                   {stat.label}
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Features / Trust Section */}
       <section className="bg-slate-50 px-4 py-16 sm:px-6 lg:px-8">
@@ -476,6 +409,76 @@ export default function HomePage() {
 
       {/* Blog */}
       <FeaturedBlogs />
+
+      {/* Top Tools – keyword-rich internal links */}
+      <nav
+        aria-label="Popular free online tools"
+        className="bg-white px-4 py-5 sm:px-6 lg:px-8 pb-20"
+      >
+        <div className="mx-auto max-w-3xl">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
+            Quick Access
+          </p>
+          <ul className="flex flex-wrap gap-2">
+            {[
+              {
+                label: "Merge PDF Online",
+                href: "/tools/pdf-tools/merge-pdf",
+              },
+              {
+                label: "Compress PDF Free",
+                href: "/tools/pdf-tools/compress-pdf",
+              },
+              {
+                label: "Convert Word to PDF",
+                href: "/tools/pdf-tools/word-to-pdf",
+              },
+              {
+                label: "PDF to JPG Converter",
+                href: "/tools/pdf-tools/pdf-to-jpg",
+              },
+              {
+                label: "Image Compressor Online",
+                href: "/tools/image-tools/image-compressor",
+              },
+              {
+                label: "Resize Image Online",
+                href: "/tools/image-tools/image-resize",
+              },
+              {
+                label: "QR Code Generator Free",
+                href: "/tools/web-tools/qr-code-generator",
+              },
+              {
+                label: "OCR Image to Text",
+                href: "/tools/ocr-tools/ocr-image-to-text",
+              },
+              {
+                label: "Keyword Generator Tool",
+                href: "/tools/seo-tools/keyword-generator",
+              },
+              {
+                label: "JSON Formatter Online",
+                href: "/tools/developer-tools/code-formatter",
+              },
+              {
+                label: "URL Shortener Free",
+                href: "/tools/web-tools/url-shortener",
+              },
+              { label: "PDF to Text", href: "/tools/ocr-tools/pdf-to-text" },
+            ].map(({ label, href }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className="inline-block rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
 
       {/* FAQ Section */}
       <section

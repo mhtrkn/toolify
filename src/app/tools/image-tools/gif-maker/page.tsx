@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import GifMakerClient from "./GifMakerClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -123,7 +123,7 @@ export default function GifMakerPage() {
         benefits={BENEFITS}
         faqs={FAQS}
       >
-        <GifMakerClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

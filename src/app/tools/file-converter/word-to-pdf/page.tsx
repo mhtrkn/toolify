@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import WordToPdfClient from "./WordToPdfClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -119,7 +119,7 @@ export default function WordToPdfPage() {
         ]}
         faqs={FAQS}
       >
-        <WordToPdfClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

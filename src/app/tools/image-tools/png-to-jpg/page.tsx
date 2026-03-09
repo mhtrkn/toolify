@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import PngToJpgClient from "./PngToJpgClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -120,7 +120,7 @@ export default function PngToJpgPage() {
         ]}
         faqs={FAQS}
       >
-        <PngToJpgClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

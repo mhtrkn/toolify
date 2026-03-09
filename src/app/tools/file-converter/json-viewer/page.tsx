@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import JsonViewerClient from "./JsonViewerClient";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -135,7 +135,7 @@ export default function JsonViewerPage() {
         ]}
         faqs={FAQS}
       >
-        <JsonViewerClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );
