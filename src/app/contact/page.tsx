@@ -89,7 +89,7 @@ export default function ContactPage() {
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 text-[10px] font-semibold text-slate-500 uppercase tracking-widest shadow-sm mb-6">
             Get in Touch
           </div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl leading-[1.1]">
+          <h1 className="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl leading-[1.1]">
             We&apos;d love to{" "}
             <span className="relative inline-block">
               <span className="text-red-600">hear from you</span>
@@ -120,7 +120,7 @@ export default function ContactPage() {
                   {ch.icon}
                 </div>
                 <div>
-                  <p className="font-bold text-slate-900 mb-0.5">{ch.label}</p>
+                  <p className="font-semibold text-slate-900 mb-0.5">{ch.label}</p>
                   <p className="text-sm font-medium text-slate-500 mb-2">{ch.description}</p>
                   <p className="text-sm font-semibold text-red-600 group-hover:underline underline-offset-2">
                     {ch.value}
@@ -176,7 +176,7 @@ export default function ContactPage() {
             <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
               FAQ
             </p>
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
+            <h2 className="text-3xl font-medium tracking-tight text-slate-900">
               Common questions
             </h2>
           </div>

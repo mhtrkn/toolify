@@ -96,7 +96,7 @@ export default function Footer() {
               <div key={cat.slug} className="flex flex-col">
                 <Link
                   href={`/tools/${cat.slug}`}
-                  className="text-sm font-bold uppercase tracking-wider text-slate-900 transition-colors hover:text-red-600"
+                  className="text-sm font-semibold uppercase tracking-wider text-slate-900 transition-colors hover:text-red-600"
                 >
                   {cat.name}
                 </Link>
