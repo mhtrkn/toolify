@@ -9,18 +9,97 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+const WHY_ICONS: Record<string, { bg: string; color: string; path: string }> = {
+  lightning: {
+    bg: "bg-emerald-50",
+    color: "text-emerald-600",
+    path: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  shield: {
+    bg: "bg-blue-50",
+    color: "text-blue-600",
+    path: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+  },
+  money: {
+    bg: "bg-emerald-50",
+    color: "text-emerald-600",
+    path: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+  },
+  world: {
+    bg: "bg-blue-50",
+    color: "text-blue-600",
+    path: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+  },
+};
+
 const HOW_TO_STEPS = [
   {
-    title: "Upload Files",
-    description: "Drag, drop, or browse to add images, PDFs, Word, or Excel files.",
+    title: "Upload Your File",
+    description:
+      "Drag and drop or click to select the file you want to convert.",
+    icon: (
+      <svg
+        className="w-7 h-7"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+        />
+      </svg>
+    ),
+    badge: "bg-red-600",
+    iconBg: "bg-red-50",
+    iconColor: "text-red-600",
   },
   {
-    title: "Select Format",
-    description: "Choose the desired output format from the dropdown.",
+    title: "Choose Format",
+    description:
+      "Select your desired output format from 100+ supported options.",
+    icon: (
+      <svg
+        className="w-7 h-7"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+        />
+      </svg>
+    ),
+    badge: "bg-red-600",
+    iconBg: "bg-red-50",
+    iconColor: "text-red-600",
   },
   {
     title: "Download",
-    description: "Convert and download instantly, no uploads needed.",
+    description: "Get your converted file instantly, ready to use.",
+    icon: (
+      <svg
+        className="w-7 h-7"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+        />
+      </svg>
+    ),
+    badge: "bg-emerald-600",
+    iconBg: "bg-emerald-50",
+    iconColor: "text-emerald-600",
   },
 ];
 
@@ -45,7 +124,10 @@ export default function HomePage() {
           name: "How to Convert Files Online for Free",
           description:
             "Upload any file, choose your target format, and download the converted result instantly — all in your browser.",
-          steps: HOW_TO_STEPS.map((s) => ({ name: s.title, text: s.description })),
+          steps: HOW_TO_STEPS.map((s) => ({
+            name: s.title,
+            text: s.description,
+          })),
         })}
       />
 
@@ -53,20 +135,14 @@ export default function HomePage() {
       <section className="relative border-b border-slate-100 bg-white px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative mx-auto max-w-4xl min-h-97.75 transition duration-300">
-          {/* Trust badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 px-2 py-1 text-xs text-slate-500">
-            <span className="w-1.5 aspect-square rounded-full bg-green-500" />
-            100% Free · No Account
-          </div>
-
           <h1 className="mt-4 text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl">
-            Free Online Tools –{" "}
+            Free Online Convert Tools
+            <br />
             <span className="text-red-600">PDF, Image & File Converter</span>
           </h1>
 
           <p className="mx-auto font-light mt-2 max-w-2xl text-slate-500">
-            Merge PDFs, compress images, convert files, generate QR codes —
-            everything processes instantly in your browser. Fast, private, and
+            Everything processes instantly in your browser. Fast, private, and
             free.
           </p>
 
@@ -78,22 +154,87 @@ export default function HomePage() {
       </section>
 
       {/* How To */}
-      <section className="bg-white px-4 py-12 sm:px-6 lg:px-8">
+      <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
-          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Guide</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">How to Use</h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-3">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 mb-3">
+              How It Works
+            </h2>
+            <p className="text-base text-slate-500">
+              Convert any file in three simple steps
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {HOW_TO_STEPS.map((step, i) => (
-              <div key={i} className="flex gap-4">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-sm font-bold text-white">
-                  {i + 1}
-                </span>
-                <div>
-                  <h3 className="font-semibold text-slate-900">{step.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-500">{step.description}</p>
+              <div
+                key={i}
+                className="relative bg-white rounded-2xl border border-slate-200 p-6 text-center hover:shadow-md transition-shadow"
+              >
+                <div
+                  className={`absolute -top-2.5 left-6 ${step.badge} text-white text-xs font-bold px-3 py-1 rounded-full`}
+                >
+                  Step {i + 1}
                 </div>
+                <div
+                  className={`w-14 h-14 ${step.iconBg} rounded-xl flex items-center justify-center mx-auto mb-4 mt-2 ${step.iconColor}`}
+                >
+                  {step.icon}
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-slate-500 text-sm">{step.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features / Trust Section */}
+      <section className="bg-slate-50 px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12 text-center">
+            <p className="text-2xl sm:text-3xl font-semibold text-slate-900 mb-3">
+              Why Toolify
+            </p>
+            <h2 className="text-base text-slate-500">
+              Built for speed and privacy
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {whyChooseData.map((feature) => {
+              const icon = WHY_ICONS[feature.icon];
+              return (
+                <div
+                  key={feature.title}
+                  className="flex flex-col items-center text-center bg-white rounded-xl p-6 shadow-sm"
+                >
+                  <div
+                    className={`w-12 h-12 ${icon.bg} rounded-xl flex items-center justify-center mb-4`}
+                  >
+                    <svg
+                      className={`w-6 h-6 ${icon.color}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d={icon.path}
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="font-bold text-slate-900 mb-1">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-500 text-sm">
+                    {feature.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -174,43 +315,6 @@ export default function HomePage() {
               />
             </svg>
           </Link>
-        </div>
-      </section>
-
-      {/* Features / Trust Section */}
-      <section className="bg-slate-50 px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-12 text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-              Why Toolify
-            </p>
-            <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
-              Built for speed and privacy
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {whyChooseData.map((feature) => (
-              <div
-                key={feature.title}
-                className="rounded-xl border border-slate-200 bg-white p-6"
-              >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center">
-                  <Image
-                    src={`/icons/${feature.icon}.png`}
-                    alt={`${feature.title} icon`}
-                    width={32}
-                    height={32}
-                  />
-                </div>
-                <h3 className="font-semibold text-slate-900">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
