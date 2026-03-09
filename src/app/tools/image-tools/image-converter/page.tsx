@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/seo/JsonLd";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
+import GlobalUpload from "@/components/home/GlobalUpload";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -8,7 +9,6 @@ import {
   buildFaqSchema,
   buildHowToSchema,
 } from "@/lib/structured-data";
-import ImageFormatConverterClient from "./ImageFormatConverterClient";
 
 export const metadata: Metadata = buildToolMetadata({
   toolName: "Image Converter",
@@ -164,7 +164,7 @@ export default function ImageFormatConverterPage() {
         benefits={BENEFITS}
         faqs={FAQS}
       >
-        <ImageFormatConverterClient />
+        <GlobalUpload />
       </ToolPageLayout>
     </>
   );

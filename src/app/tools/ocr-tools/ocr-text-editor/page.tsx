@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ToolPageLayout from "@/components/tools/ToolPageLayout";
 import JsonLd from "@/components/seo/JsonLd";
-import GlobalUpload from "@/components/home/GlobalUpload";
+import OcrTextEditorClient from "./OcrTextEditorClient";
 import { buildToolMetadata, SITE_URL } from "@/lib/metadata";
 import {
   buildWebAppSchema,
@@ -145,7 +145,7 @@ export default function OcrTextEditorPage() {
         ]}
         faqs={FAQS}
       >
-        <GlobalUpload />
+        <OcrTextEditorClient />
       </ToolPageLayout>
     </>
   );
