@@ -1,3 +1,4 @@
+import { siteStats } from "@/lib/mockdata";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,13 +9,6 @@ export const metadata: Metadata = {
     "Learn about toolify — who we are, what we build, and why we believe great tools should be free and fast for everyone.",
   alternates: { canonical: "/about" },
 };
-
-const stats = [
-  { value: "40+", label: "Free Tools" },
-  { value: "10K+", label: "Files Processed" },
-  { value: "180+", label: "Countries Reached" },
-  { value: "99.9%", label: "Uptime" },
-];
 
 const values = [
   {
@@ -168,7 +162,7 @@ export default function AboutPage() {
       <section className="border-b border-slate-100 bg-slate-50 px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            {stats.map((s) => (
+            {siteStats.map((s) => (
               <div key={s.label} className="text-center">
                 <p className="text-4xl font-medium tracking-tight text-slate-900">
                   {s.value}

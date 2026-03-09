@@ -1,26 +1,29 @@
+export const siteStats = [
+  { value: "40+", label: "Free Tools" },
+  { value: "10K+", label: "Files Processed" },
+  { value: "180+", label: "Countries Reached" },
+  { value: "99.9%", label: "Uptime" },
+];
+
 export const whyChooseData = [
   {
     icon: "lightning",
     title: "Lightning Fast",
-    description:
-      "Process files instantly in your browser. No waiting for uploads to remote servers.",
+    description: "Instant file processing directly in your browser.",
   },
   {
     icon: "shield",
     title: "100% Secure",
-    description:
-      "Your files never leave your device. We process everything locally when possible.",
+    description: "All processing happens on your device.",
   },
   {
     icon: "money",
     title: "Completely Free",
-    description:
-      "All core tools are free with no hidden fees. No registration required.",
+    description: "All core tools free. No fees, no sign-up.",
   },
   {
     icon: "world",
     title: "Works Everywhere",
-    description:
-      "Fully responsive design. Use on desktop, tablet, or mobile — any browser.",
+    description: "Use it on desktop, tablet, or mobile.",
   },
-]
+];

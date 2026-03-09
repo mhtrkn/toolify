@@ -116,7 +116,7 @@ const STEP_DEFS = [
 
 function StepperHeader({ step }: { step: number }) {
   return (
-    <div className="relative max-w-2xl mx-auto w-full px-0 mb-2">
+    <div className="relative max-w-3xl mx-auto w-full px-0 mb-2">
       {/* Track: spans between circle centers (left-5 = half of w-10 circle) */}
       <div className="absolute left-5 right-5 top-5 h-0.5 bg-slate-200" />
       {/* Progress fill — scaleX from origin-left */}
@@ -199,7 +199,7 @@ function SuccessScreen({ onConvertMore }: { onConvertMore: () => void }) {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.96, y: 8 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="flex flex-col items-center gap-6 rounded-2xl border border-slate-100 bg-white px-8 pt-8 pb-12 text-center shadow-sm max-w-2xl mx-auto w-full"
+      className="flex flex-col items-center gap-6 rounded-2xl border border-slate-100 bg-white px-8 pt-8 pb-12 text-center shadow-sm max-w-3xl mx-auto w-full"
     >
       <div className="flex-center h-40 aspect-square -my-10">
         <Lottie animationData={animationData} loop />
@@ -413,7 +413,7 @@ export default function GlobalUpload() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onClick={() => inputRef.current?.click()}
-              className={`cursor-pointer rounded-3xl max-w-2xl mx-auto border-2 border-dashed px-6 py-15 text-center transition-all duration-200 ${
+              className={`cursor-pointer rounded-3xl max-w-3xl mx-auto border-2 border-dashed px-6 py-15 text-center transition-all duration-200 ${
                 isDragging
                   ? "border-red-400 bg-red-50 scale-[1.01]"
                   : "border-slate-300 bg-white hover:border-red-300"
@@ -456,7 +456,7 @@ export default function GlobalUpload() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="max-w-2xl mx-auto w-full flex flex-col gap-4"
+            className="max-w-3xl mx-auto w-full flex flex-col gap-4"
           >
             {/* File card */}
             <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
@@ -510,7 +510,7 @@ export default function GlobalUpload() {
                   value={format || undefined}
                   onValueChange={(v) => handleFormatChange(v)}
                 >
-                  <SelectTrigger className="w-full rounded-xl px-3 py-2.5 text-sm text-slate-600">
+                  <SelectTrigger className="w-full rounded-xl px-3 py-2.5 text-sm text-slate-800">
                     <SelectValue placeholder="Choose output format…" />
                   </SelectTrigger>
                   <SelectContent>

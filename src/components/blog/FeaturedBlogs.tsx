@@ -28,7 +28,7 @@ export default function FeaturedBlogs() {
 
   return (
     <section className="border-t border-slate-100 bg-white px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
           From the Blog
         </p>
@@ -39,7 +39,7 @@ export default function FeaturedBlogs() {
           Learn how to get the most out of our free online tools.
         </p>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {posts.map((post) => {
             const colors = categoryColors[post.category] || {
               bg: "bg-slate-50",
@@ -50,10 +50,10 @@ export default function FeaturedBlogs() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group flex flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-200 hover:shadow-lg"
+                className="group flex gap-4 overflow-hidden rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-200 hover:shadow-md"
               >
                 {/* Cover */}
-                <div className="relative aspect-video overflow-hidden">
+                <div className="relative w-24 h-20 shrink-0 overflow-hidden rounded-lg">
                   <BlogCover
                     category={post.category}
                     title={post.title}
@@ -61,42 +61,40 @@ export default function FeaturedBlogs() {
                   />
                 </div>
 
-                <div className="flex flex-1 flex-col p-4">
-                  <div className="flex items-center justify-between gap-2 text-xs text-slate-400 mb-2">
+                <div className="flex flex-1 flex-col min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
                     <span
-                      className={`rounded-full px-2 py-0.5 font-medium ${colors.bg} ${colors.text}`}
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${colors.bg} ${colors.text}`}
                     >
                       {post.category}
                     </span>
-                    <time dateTime={post.publishedAt}>
-                      {formatDate(post.publishedAt)}
-                    </time>
                   </div>
 
-                  <h3 className="mt-2 line-clamp-2 text-sm font-semibold leading-snug text-slate-900 transition-colors group-hover:text-red-600">
+                  <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900 transition-colors group-hover:text-red-600">
                     {post.title}
                   </h3>
 
-                  <p className="mt-1.5 line-clamp-2 flex-1 text-xs leading-relaxed text-slate-500">
-                    {post.excerpt}
-                  </p>
-
-                  <span className="mt-3 flex items-center gap-1 text-xs font-medium text-red-600">
-                    Read more
-                    <svg
-                      className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </span>
+                  <div className="mt-auto flex items-center justify-between pt-2">
+                    <time className="text-xs text-slate-400" dateTime={post.publishedAt}>
+                      {formatDate(post.publishedAt)}
+                    </time>
+                    <span className="flex items-center gap-1 text-xs font-medium text-red-600">
+                      Read
+                      <svg
+                        className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
               </Link>
             );

@@ -2,7 +2,7 @@ import FeaturedBlogs from "@/components/blog/FeaturedBlogs";
 import GlobalUpload from "@/components/home/GlobalUpload";
 import JsonLd from "@/components/seo/JsonLd";
 import ToolCard from "@/components/tools/ToolCard";
-import { whyChooseData } from "@/lib/mockdata";
+import { siteStats, whyChooseData } from "@/lib/mockdata";
 import { buildHowToSchema, buildWebSiteSchema } from "@/lib/structured-data";
 import { CATEGORIES, getPopularTools } from "@/lib/tools";
 import type { Metadata } from "next";
@@ -134,7 +134,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative border-b border-slate-100 bg-white px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
-        <div className="relative mx-auto max-w-4xl min-h-97.75 transition duration-300">
+        <div className="relative mx-auto max-w-3xl min-h-97.75 transition duration-300">
           <h1 className="mt-4 text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl">
             Free Online Convert Tools
             <br />
@@ -155,7 +155,7 @@ export default function HomePage() {
 
       {/* How To */}
       <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-3xl">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 mb-3">
               How It Works
@@ -190,9 +190,30 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Stats */}
+      <section className="bg-slate-50 border-t border-slate-100 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {siteStats.map((stat) => (
+              <div
+                key={stat.label}
+                className="bg-white rounded-2xl border border-gray-200 p-6 py-8 text-center hover:shadow-md transition-shadow"
+              >
+                <div className="text-3xl sm:text-4xl font-medium text-gray-900 mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-gray-500 text-sm font-medium">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features / Trust Section */}
       <section className="bg-slate-50 px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <div className="mb-12 text-center">
             <p className="text-2xl sm:text-3xl font-semibold text-slate-900 mb-3">
               Why Toolify
@@ -207,7 +228,7 @@ export default function HomePage() {
               return (
                 <div
                   key={feature.title}
-                  className="flex flex-col items-center text-center bg-white rounded-xl p-6 shadow-sm"
+                  className="flex flex-col items-center text-center bg-white rounded-xl px-4 py-6 shadow-sm"
                 >
                   <div
                     className={`w-12 h-12 ${icon.bg} rounded-xl flex items-center justify-center mb-4`}
@@ -226,10 +247,10 @@ export default function HomePage() {
                       />
                     </svg>
                   </div>
-                  <h3 className="font-bold text-slate-900 mb-1">
+                  <h3 className="font-semibold text-sm text-slate-900 mb-1">
                     {feature.title}
                   </h3>
-                  <p className="text-slate-500 text-sm">
+                  <p className="text-slate-500 text-xs">
                     {feature.description}
                   </p>
                 </div>
@@ -241,7 +262,7 @@ export default function HomePage() {
 
       {/* Popular Tools */}
       <section className="border-t border-slate-100 bg-white px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
             Most Used
           </p>
@@ -282,7 +303,7 @@ export default function HomePage() {
 
       {/* Categories */}
       <section className="px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
             Browse
           </p>
@@ -292,7 +313,7 @@ export default function HomePage() {
           <p className="mt-2 text-slate-500">
             Choose a category to find the right tool for your task.
           </p>
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
@@ -323,7 +344,7 @@ export default function HomePage() {
 
       {/* SEO Text */}
       <section className="border-t border-slate-100 bg-white px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl prose prose-slate">
+        <div className="mx-auto max-w-3xl prose prose-slate">
           <h2 className="text-xl font-bold text-slate-900">
             The Best Free Online Tools for Everyday Tasks
           </h2>
