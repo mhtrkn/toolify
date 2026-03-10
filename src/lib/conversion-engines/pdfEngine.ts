@@ -1,6 +1,6 @@
 import type { ConversionEngine, ConversionResult } from "./types";
 import { pdfToImageBlobs, pdfToTxtBlob } from "@/lib/global-converters";
-import { convertPdfToDocx } from "@/lib/pdf-to-docx-client";
+import { generateDocxBlob } from "@/lib/docx-generator";
 
 /**
  * Convert PDF pages to images.
@@ -36,8 +36,11 @@ const pdfEngine: ConversionEngine = {
     }
 
     if (fmt === "docx") {
-      const { blob } = await convertPdfToDocx(file);
-      return blob;
+      // Extract text client-side with pdfjs, then wrap in a DOCX blob.
+      // Avoids server-side timeouts on Vercel Hobby (10s limit).
+      const txtBlob = await pdfToTxtBlob(file);
+      const text = await txtBlob.text();
+      return generateDocxBlob(text);
     }
 
     throw new Error(`Unsupported PDF conversion to "${targetFormat}"`);
