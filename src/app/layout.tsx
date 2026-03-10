@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
-    title: `Free Online Tools – PDF, Image, SEO, Developer & File Converter | toolify`,
+    title: `Free Online Converter Tools – PDF, Image & File Converter - SEO, Web, Social Media & Developer Tools | toolify`,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     images: [
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@fasttoolify",
-    title: `Free Online Tools – PDF, Image, SEO, Developer & File Converter | toolify`,
+    title: `Free Online Converter Tools – PDF, Image & File Converter - SEO, Web, Social Media & Developer Tools | toolify`,
     description:
       "Free online tools for PDF, image, SEO, and developer utilities. Merge PDFs, generate keywords, format code, decode JWTs — fast, secure, no registration.",
     images: [{ url: "/og-default.png", alt: "toolify – Free Online Tools" }],

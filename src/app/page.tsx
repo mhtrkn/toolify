@@ -146,7 +146,7 @@ const HOME_FAQS = [
 
 export const metadata: Metadata = {
   title:
-    "Free Online Converter Tools – PDF, Image, SEO, Developer & File Converter | toolify",
+    "Free Online Converter Tools – PDF, Image & File Converter - SEO, Web, Social Media & Developer Tools | toolify",
   description:
     "Free online converter tools for PDF, image, SEO, and developer utilities. Merge PDFs, compress images, convert Word to PDF, generate QR codes — fast, private, no registration.",
   alternates: { canonical: "/" },
@@ -182,7 +182,7 @@ export default function HomePage() {
       />
       <JsonLd
         data={buildWebPageSchema({
-          name: "Free Online Tools – PDF, Image, SEO, Developer & File Converter",
+          name: "Free Online Converter Tools – PDF, Image & File Converter - SEO, Web, Social Media & Developer Tools | toolify",
           description:
             "Free browser-based tools for PDF, image, OCR, SEO, developer utilities and file conversion. No signup, no installation.",
           url: SITE_URL,
@@ -206,9 +206,7 @@ export default function HomePage() {
           <h1 className="mt-4 text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl">
             Free Online Converter Tools
             <br />
-            <span className="text-red-600">
-              PDF, Images, Files & More
-            </span>
+            <span className="text-red-600">PDF, Images, Files & More</span>
           </h1>
 
           <p className="mx-auto font-light mt-2 max-w-2xl text-slate-500">
