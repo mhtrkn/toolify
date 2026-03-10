@@ -204,7 +204,7 @@ export default function HomePage() {
         <div className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative mx-auto max-w-3xl min-h-97.75 transition duration-300">
           <h1 className="mt-4 text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl">
-            Free Online Convert Tools
+            Free Online Converter Tools
             <br />
             <span className="text-red-600">PDF, Image & File Converter</span>
           </h1>
