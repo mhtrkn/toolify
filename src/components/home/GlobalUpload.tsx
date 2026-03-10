@@ -114,74 +114,78 @@ const STEP_DEFS = [
   },
 ];
 
-function StepperHeader({ step }: { step: number }) {
+function StepConnector({ filled }: { filled: boolean }) {
   return (
-    <div className="relative max-w-3xl mx-auto w-full px-0 mb-2">
-      {/* Track: spans between circle centers (left-5 = half of w-10 circle) */}
-      <div className="absolute left-5 right-5 top-5 h-0.5 bg-slate-200" />
-      {/* Progress fill — scaleX from origin-left */}
+    <div className="relative flex-1 mx-1 h-0.5 bg-slate-200 overflow-hidden mb-5">
       <motion.div
-        className="absolute left-5 right-5 top-5 h-0.5 bg-red-600 origin-left"
-        animate={{ scaleX: step === 1 ? 0 : step === 2 ? 0.5 : 1 }}
+        className="absolute inset-y-0 left-0 bg-red-600"
+        animate={{ scaleX: filled ? 1 : 0 }}
         initial={{ scaleX: 0 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
+        style={{ width: "100%", transformOrigin: "left" }}
       />
+    </div>
+  );
+}
 
-      <div className="relative flex justify-between">
-        {STEP_DEFS.map((s) => {
+function StepperHeader({ step }: { step: number }) {
+  return (
+    <div className="max-w-3xl mx-auto w-full mb-2">
+      {/* Top row: circles + connectors aligned */}
+      <div className="flex items-center">
+        {STEP_DEFS.map((s, i) => {
           const isCompleted = step > s.id;
           const isActive = step === s.id;
 
           return (
-            <div key={s.id} className="flex flex-col items-center gap-2">
-              <motion.div
-                initial={{
-                  backgroundColor:
-                    isActive || isCompleted ? "#dc2626" : "#e2e8f0",
-                }}
-                animate={{
-                  backgroundColor:
-                    isActive || isCompleted ? "#dc2626" : "#e2e8f0",
-                }}
-                transition={{ duration: 0.3 }}
-                className="flex h-10 w-10 items-center justify-center rounded-full"
-              >
-                <motion.span
-                  initial={{
-                    color: isCompleted || isActive ? "#ffffff" : "#94a3b8",
-                  }}
+            <div key={s.id} className="flex items-center flex-1 last:flex-none">
+              <div className="flex flex-col items-center gap-2 shrink-0">
+                <motion.div
                   animate={{
-                    color: isCompleted || isActive ? "#ffffff" : "#94a3b8",
+                    backgroundColor:
+                      isActive || isCompleted ? "#dc2626" : "#e2e8f0",
                   }}
                   transition={{ duration: 0.3 }}
-                  className="flex items-center justify-center"
+                  className="flex h-10 w-10 items-center justify-center rounded-full"
                 >
-                  {isCompleted ? (
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2.5}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  ) : (
-                    s.icon
-                  )}
-                </motion.span>
-              </motion.div>
-              <span
-                className={`text-xs font-medium whitespace-nowrap transition-colors duration-300 ${
-                  isActive || isCompleted ? "text-red-600" : "text-slate-400"
-                }`}
-              >
-                {s.label}
-              </span>
+                  <motion.span
+                    animate={{
+                      color: isCompleted || isActive ? "#ffffff" : "#94a3b8",
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="flex items-center justify-center"
+                  >
+                    {isCompleted ? (
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2.5}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    ) : (
+                      s.icon
+                    )}
+                  </motion.span>
+                </motion.div>
+                <span
+                  className={`text-xs font-medium whitespace-nowrap transition-colors duration-300 ${
+                    isActive || isCompleted ? "text-red-600" : "text-slate-400"
+                  }`}
+                >
+                  {s.label}
+                </span>
+              </div>
+              {/* Connector after every step except the last */}
+              {i < STEP_DEFS.length - 1 && (
+                <StepConnector filled={step > s.id} />
+              )}
             </div>
           );
         })}
@@ -195,51 +199,57 @@ function StepperHeader({ step }: { step: number }) {
 function SuccessScreen({ onConvertMore }: { onConvertMore: () => void }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.96, y: 8 }}
+      initial={{ opacity: 0, scale: 0.97, y: 10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.96, y: 8 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="flex flex-col items-center gap-6 rounded-2xl border border-slate-100 bg-white px-8 pt-8 pb-12 text-center shadow-sm max-w-3xl mx-auto w-full"
+      exit={{ opacity: 0, scale: 0.97, y: 10 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="relative flex flex-col items-center gap-5 rounded-3xl border border-slate-100 bg-white px-8 pt-6 pb-10 text-center shadow-sm max-w-3xl mx-auto w-full overflow-hidden"
     >
-      <div className="flex-center h-40 aspect-square -my-10">
+      {/* Subtle radial glow behind animation */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-40 bg-red-50 rounded-full blur-3xl opacity-60 pointer-events-none" />
+
+      {/* Lottie */}
+      <div className="relative z-10 w-36 h-36 -my-4">
         <Lottie animationData={animationData} loop />
       </div>
 
+      {/* Text */}
       <motion.div
-        initial={{ opacity: 0, y: 6 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.25 }}
+        transition={{ delay: 0.2, duration: 0.3 }}
+        className="relative z-10 flex flex-col items-center gap-1"
       >
-        <h3 className="text-2xl font-bold text-slate-800">All done!</h3>
-        <p className="mt-1.5 text-sm text-slate-500">
-          File converted and downloaded successfully
+        <h3 className="text-2xl font-bold text-slate-800">Conversion complete!</h3>
+        <p className="text-sm text-slate-400">
+          Your file has been downloaded successfully.
         </p>
       </motion.div>
 
+      {/* Divider */}
       <motion.div
-        initial={{ opacity: 0, y: 6 }}
+        initial={{ opacity: 0, scaleX: 0 }}
+        animate={{ opacity: 1, scaleX: 1 }}
+        transition={{ delay: 0.35, duration: 0.35 }}
+        className="w-16 h-px bg-slate-200 origin-center"
+      />
+
+      {/* CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.25 }}
-        className="flex w-full max-w-xs flex-col gap-2.5"
+        transition={{ delay: 0.4, duration: 0.3 }}
+        className="relative z-10 flex flex-col sm:flex-row gap-2.5 w-full max-w-sm"
       >
         <button
           onClick={onConvertMore}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-500 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-600"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-red-100 transition-all hover:bg-red-700 active:scale-[0.98]"
         >
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-            />
+          <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
           </svg>
-          Convert more files
+          Convert another file
         </button>
       </motion.div>
     </motion.div>
@@ -361,7 +371,7 @@ export default function GlobalUpload() {
   return (
     <div className="flex w-full flex-col gap-4">
       {/* Stepper header */}
-      <StepperHeader step={step} />
+      <StepperHeader step={showSuccess ? 4 : step} />
 
       {/* Hidden file input */}
       <input

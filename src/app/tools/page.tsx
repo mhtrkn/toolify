@@ -68,7 +68,7 @@ export default function AllToolsPage() {
             {CATEGORIES.map((cat) => (
               <a
                 key={cat.slug}
-                href={`#${cat.slug}`}
+                href={`${cat.slug}`}
                 className={`inline-flex items-center gap-2 rounded-lg border bg-linear-to-br px-3 py-2 text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${cat.bgColor} ${cat.borderColor} ${cat.color}`}
               >
                 <Image
