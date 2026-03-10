@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = buildToolMetadata({
   toolName: "OCR Image to Text",
   toolDescription:
-    "Extract text from images using AI-powered multilingual OCR. Supports English, Turkish, German, French, Spanish, Arabic, Russian and 100+ languages. Multi-file batch processing, DOCX export, and confidence highlighting — 100% free, no signup.",
+    "Extract text from images using AI-powered multilingual OCR. Supports English, Turkish, German, French, Spanish, Arabic, Russian, Chinese, Japanese, Korean and more — 14 languages total. Multi-file batch processing, DOCX export, and confidence highlighting — 100% free, no signup.",
   categorySlug: "ocr-tools",
   toolSlug: "ocr-image-to-text",
   keywords: [
