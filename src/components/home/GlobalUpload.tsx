@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import Lottie from "lottie-react";
@@ -116,7 +116,7 @@ const STEP_DEFS = [
 
 function StepConnector({ filled }: { filled: boolean }) {
   return (
-    <div className="relative flex-1 mx-1 h-0.5 bg-slate-200 overflow-hidden mb-5">
+    <div className="relative h-0.5 bg-slate-200 overflow-hidden">
       <motion.div
         className="absolute inset-y-0 left-0 bg-red-600"
         animate={{ scaleX: filled ? 1 : 0 }}
@@ -130,15 +130,14 @@ function StepConnector({ filled }: { filled: boolean }) {
 
 function StepperHeader({ step }: { step: number }) {
   return (
-    <div className="max-w-3xl mx-auto w-full mb-2">
-      {/* Top row: circles + connectors aligned */}
-      <div className="flex items-center">
+    <div className="max-w-3xl mx-auto w-full mb-2 px-4">
+      <div className="flex items-start">
         {STEP_DEFS.map((s, i) => {
           const isCompleted = step > s.id;
           const isActive = step === s.id;
 
           return (
-            <div key={s.id} className="flex items-center flex-1 last:flex-none">
+            <Fragment key={s.id}>
               <div className="flex flex-col items-center gap-2 shrink-0">
                 <motion.div
                   animate={{
@@ -182,11 +181,13 @@ function StepperHeader({ step }: { step: number }) {
                   {s.label}
                 </span>
               </div>
-              {/* Connector after every step except the last */}
+              {/* Connector between steps */}
               {i < STEP_DEFS.length - 1 && (
-                <StepConnector filled={step > s.id} />
+                <div className="flex-1 mt-4.75 mx-1 min-w-4">
+                  <StepConnector filled={step > s.id} />
+                </div>
               )}
-            </div>
+            </Fragment>
           );
         })}
       </div>

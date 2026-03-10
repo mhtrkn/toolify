@@ -206,7 +206,9 @@ export default function HomePage() {
           <h1 className="mt-4 text-2xl font-medium tracking-tight text-slate-900 sm:text-3xl">
             Free Online Converter Tools
             <br />
-            <span className="text-red-600">PDF, Image & File Converter</span>
+            <span className="text-red-600">
+              PDF, Images, Files & More
+            </span>
           </h1>
 
           <p className="mx-auto font-light mt-2 max-w-2xl text-slate-500">
