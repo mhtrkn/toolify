@@ -1,6 +1,6 @@
 import type { ConversionEngine, ConversionResult } from "./types";
 import { pdfToImageBlobs, pdfToTxtBlob } from "@/lib/global-converters";
-import { convertViaServer } from "@/lib/server-convert";
+import { convertPdfToDocx } from "@/lib/pdf-to-docx-client";
 
 /**
  * Convert PDF pages to images.
@@ -36,9 +36,8 @@ const pdfEngine: ConversionEngine = {
     }
 
     if (fmt === "docx") {
-      // Delegate to the server-side pipeline (pdf-parse + docx library) so that
-      // Unicode / Turkish characters in the source PDF are extracted correctly.
-      return convertViaServer(file, "docx");
+      const { blob } = await convertPdfToDocx(file);
+      return blob;
     }
 
     throw new Error(`Unsupported PDF conversion to "${targetFormat}"`);
